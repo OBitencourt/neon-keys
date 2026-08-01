@@ -8,8 +8,12 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inder);
-  --font-mono: var(--font-inter);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+
+  /* Fontes Customizadas integradas com o Next.js */
+  --font-inter: var(--font-inter);
+  --font-inder: var(--font-inder);
 
   /* Paleta Neon Keys */
   --color-neon-gray: #bfbfbf;
@@ -19,6 +23,7 @@
   --color-neon-orange: #fe5900;
   --color-neon-blue: #025cb7;
   --color-neon-pink: #f90ba3;
+  --color-neon-purple: #8b3fff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,10 +36,37 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Inter, Helvetica, sans-serif;
+  font-family: var(--font-inter);
 }
 
 /* Gradiente horizontal Neon Keys */
 @utility bg-neon-gradient {
   background-image: linear-gradient(to right, #eb0595, #f9325b, #fe5900);
+}
+
+/* Mesma paleta, em opacidade reduzida (para fundos "suaves") */
+@utility bg-neon-gradient-soft {
+  background-image: linear-gradient(
+    to right,
+    rgb(235 5 149 / 0.25),
+    rgb(249 50 91 / 0.25),
+    rgb(254 89 0 / 0.25)
+  );
+}
+
+/* Glow neon para texto (ex: link ativo do menu) */
+@utility text-glow-pink {
+  text-shadow:
+    0 0 4px var(--color-neon-pink),
+    0 0 12px var(--color-neon-pink),
+    0 0 24px var(--color-neon-pink),
+    0 0 48px var(--color-neon-pink);
+}
+
+/* Glow neon para elementos de fundo (ex: barrinha do underline) */
+@utility glow-neon-pink {
+  box-shadow:
+    0 0 4px var(--color-neon-pink),
+    0 0 10px var(--color-neon-pink),
+    0 0 20px var(--color-neon-pink);
 }
