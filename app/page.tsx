@@ -1,3 +1,4 @@
+import BestDeals from "@/src/sections/bestdeals";
 import CategoriesSection from "@/src/sections/categories";
 import HeroSection from "@/src/sections/hero";
 import WhyChooseUs from "@/src/sections/whychooseus";
@@ -9,6 +10,7 @@ export default function MainPage() {
       <HeroSection />
       <CategoriesSection />
       <WhyChooseUs />
+      <BestDeals />
     </div>
   );
 }

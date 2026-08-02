@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inder, Inter } from "next/font/google";
+import { Inder, Inter, Gabarito } from "next/font/google";
 import "./globals.css";
 import Header from "@/src/components/header";
 
@@ -7,6 +7,11 @@ const inder = Inder({
   variable: "--font-inder",
   subsets: ["latin"],
   weight: "400"
+});
+
+const gabarito = Gabarito({
+  variable: "--font-gabarito",
+  subsets: ["latin"],
 });
 
 const inter = Inter({
@@ -27,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inder.variable} ${inter.variable} h-full antialiased`}
+      className={`${inder.variable} ${gabarito.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full font-inter flex flex-col">
         <Header />

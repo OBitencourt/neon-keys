@@ -14,6 +14,7 @@
   /* Fontes Customizadas integradas com o Next.js */
   --font-inter: var(--font-inter);
   --font-inder: var(--font-inder);
+  --font-gabarito: var(--font-gabarito);
 
   /* Paleta Neon Keys */
   --color-neon-gray: #bfbfbf;
