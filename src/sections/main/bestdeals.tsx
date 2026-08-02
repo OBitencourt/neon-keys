@@ -1,5 +1,5 @@
-import ProductCard from "../components/productcard";
-import type { Product } from "../types/product";
+import ProductCard from "../../components/productcard";
+import type { Product } from "../../types/product";
 
 const deals: Product[] = [
   {
