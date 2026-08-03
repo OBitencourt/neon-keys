@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inder, Inter, Gabarito } from "next/font/google";
 import "./globals.css";
 import Header from "@/src/components/header";
+import Footer from "@/src/components/footer";
 
 const inder = Inder({
   variable: "--font-inder",
@@ -37,6 +38,7 @@ export default function RootLayout({
       <body className="min-h-full font-inter flex flex-col">
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

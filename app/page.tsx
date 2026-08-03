@@ -1,4 +1,3 @@
-import Footer from "@/src/components/footer";
 import BestDeals from "@/src/sections/main/bestdeals";
 import CategoriesSection from "@/src/sections/main/categories";
 import HeroSection from "@/src/sections/main/hero";
@@ -13,7 +12,6 @@ export default function MainPage() {
       <WhyChooseUs />
       <BestDeals />
       <Newsletter />
-      <Footer />
     </div>
   );
 }
