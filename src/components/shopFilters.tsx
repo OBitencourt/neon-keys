@@ -23,8 +23,12 @@ interface ShopFiltersProps {
 export default function ShopFilters({ onChange }: ShopFiltersProps) {
   const [category, setCategory] = useState(defaultFilters.category);
   const [genres, setGenres] = useState<GameGenre[]>(defaultFilters.genres);
-  const [platforms, setPlatforms] = useState<string[]>(defaultFilters.platforms);
-  const [priceRange, setPriceRange] = useState<[number, number]>(defaultFilters.priceRange);
+  const [platforms, setPlatforms] = useState<string[]>(
+    defaultFilters.platforms,
+  );
+  const [priceRange, setPriceRange] = useState<[number, number]>(
+    defaultFilters.priceRange,
+  );
 
   useEffect(() => {
     onChange({ category, genres, platforms, priceRange });
@@ -33,13 +37,15 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
 
   function toggleGenre(genre: GameGenre) {
     setGenres((prev) =>
-      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
+      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre],
     );
   }
 
   function togglePlatform(platform: string) {
     setPlatforms((prev) =>
-      prev.includes(platform) ? prev.filter((p) => p !== platform) : [...prev, platform]
+      prev.includes(platform)
+        ? prev.filter((p) => p !== platform)
+        : [...prev, platform],
     );
   }
 
@@ -55,10 +61,17 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
       <div className="rounded-2xl bg-black flex flex-col gap-8">
         <div>
           <div className="flex px-6 pt-6 items-center gap-2 mb-6">
-            <Image src="/icons-shop-1.svg" alt="Categories" width={30} height={30} />
-            <h3 className="text-white font-inder text-lg font-regular tracking-wide">CATEGORIES</h3>
+            <Image
+              src="/icons-shop-1.svg"
+              alt="Categories"
+              width={30}
+              height={30}
+            />
+            <h3 className="text-white font-inder text-lg font-regular tracking-wide">
+              CATEGORIES
+            </h3>
           </div>
-          
+
           <ul className="flex flex-col gap-1">
             {categoryOptions.map((opt) => {
               const active = category === opt.label;
@@ -74,7 +87,9 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
                     }`}
                   >
                     <span>{opt.label}</span>
-                    <span className="text-neon-gray text-xs">({opt.count})</span>
+                    <span className="text-neon-gray text-xs">
+                      ({opt.count})
+                    </span>
                   </button>
                 </li>
               );
@@ -85,8 +100,15 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
         {/* Gênero */}
         <div>
           <div className="flex px-6 pt-6 items-center gap-3 mb-6">
-            <Image src="/icons-shop-2.svg" alt="Genres" width={30} height={30} />
-            <h3 className="text-white font-inder text-lg font-regular tracking-wide">GENRES</h3>
+            <Image
+              src="/icons-shop-2.svg"
+              alt="Genres"
+              width={30}
+              height={30}
+            />
+            <h3 className="text-white font-inder text-lg font-regular tracking-wide">
+              GENRES
+            </h3>
           </div>
           <ul className="flex flex-col gap-2">
             {genreOptions.map((opt) => (
@@ -111,8 +133,15 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
         {/* Faixa de preço */}
         <div className="px-6">
           <div className="flex pt-6 items-center gap-3 mb-6">
-            <Image src="/icons-shop-3.svg" alt="Price Range" width={30} height={30} />
-            <h3 className="text-white font-inder text-lg font-regular tracking-wide">PRICE RANGE</h3>
+            <Image
+              src="/icons-shop-3.svg"
+              alt="Price Range"
+              width={30}
+              height={30}
+            />
+            <h3 className="text-white font-inder text-lg font-regular tracking-wide">
+              PRICE RANGE
+            </h3>
           </div>
           <div className="relative h-6 flex items-center ">
             {/* Trilho */}
@@ -131,7 +160,10 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
               max={PRICE_MAX}
               value={priceRange[0]}
               onChange={(e) =>
-                setPriceRange([Math.min(Number(e.target.value), priceRange[1] - 1), priceRange[1]])
+                setPriceRange([
+                  Math.min(Number(e.target.value), priceRange[1] - 1),
+                  priceRange[1],
+                ])
               }
               className="absolute w-full appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-neon-pink"
             />
@@ -141,7 +173,10 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
               max={PRICE_MAX}
               value={priceRange[1]}
               onChange={(e) =>
-                setPriceRange([priceRange[0], Math.max(Number(e.target.value), priceRange[0] + 1)])
+                setPriceRange([
+                  priceRange[0],
+                  Math.max(Number(e.target.value), priceRange[0] + 1),
+                ])
               }
               className="absolute w-full appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-neon-orange"
             />
@@ -155,8 +190,15 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
         {/* Plataforma */}
         <div>
           <div className="flex px-6 pt-6 items-center gap-3 mb-6">
-            <Image src="/icons-shop-4.svg" alt="Platform" width={30} height={30} />
-            <h3 className="text-white font-inder text-lg font-regular tracking-wide">PLATFORM</h3>
+            <Image
+              src="/icons-shop-4.svg"
+              alt="Platform"
+              width={30}
+              height={30}
+            />
+            <h3 className="text-white font-inder text-lg font-regular tracking-wide">
+              PLATFORM
+            </h3>
           </div>
           <ul className="flex flex-col gap-2 px-6">
             {platformOptions.map((opt) => (
@@ -178,17 +220,32 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
           </ul>
         </div>
 
-        {/* Reset */}
-        <button
-          type="button"
-          onClick={resetFilters}
-          className="bg-neon-gradient p-0.5 rounded-xl m-2"
-        >
-          <span className="flex justify-center items-center bg-black text-neon-white text-md font-regular gap-4 rounded-xl py-2.5 hover:bg-neon-white/5 transition-colors">
-            <Image src="/reload2.svg" alt="Reset Filters" width={20} height={20} />
-            RESET FILTERS
-          </span>
-        </button>
+        <div className="px-2 pb-2">
+
+            <div className="bg-neon-gradient p-0.5 rounded-xl w-full">
+            <button
+                type="button"
+                onClick={resetFilters}
+                className="group relative overflow-hidden flex w-full items-center justify-center gap-4 bg-black text-neon-white font-medium py-3 rounded-xl transition-colors"
+            >
+                {/* Camada de overlay */}
+                <span
+                className="absolute inset-0 bg-neon-gradient opacity-0 group-hover:opacity-50 group-active:opacity-70 transition-opacity duration-300"
+                aria-hidden="true"
+                />
+
+                <span className="relative flex items-center justify-center gap-4">
+                <Image
+                    src="/reload2.svg"
+                    alt="Reset Filters"
+                    width={20}
+                    height={20}
+                />
+                <span>RESET FILTERS</span>
+                </span>
+            </button>
+            </div>
+        </div>
       </div>
     </aside>
   );
