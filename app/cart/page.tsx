@@ -12,19 +12,19 @@ function formatPrice(value: number) {
 }
 
 const trustBadges = [
-  { icon: "/icon-secure.svg", label: "100% SECURE" },
-  { icon: "/icon-instant-delivery.svg", label: "INSTANT DELIVERY" },
-  { icon: "/icon-support.svg", label: "24/7 SUPPORT" },
-  { icon: "/icon-best-prices.svg", label: "BEST PRICES" },
+  { icon: "/why-icon1.png", label: "100% SECURE" },
+  { icon: "/why-icon2.png", label: "INSTANT DELIVERY" },
+  { icon: "/why-icon3.png", label: "24/7 SUPPORT" },
+  { icon: "/why-icon4.png", label: "BEST PRICES" },
 ];
 
 // Troque pelos ícones reais das bandeiras/carteiras
 const paymentIcons = [
-  "/payment-visa.svg",
-  "/payment-mastercard.svg",
-  "/payment-paypal.svg",
-  "/payment-gpay.svg",
-  "/payment-pix.svg",
+  "/visa-checkout.svg",
+  "/mastercards-checkout.svg",
+  "/paypal-checkout.svg",
+  "/googlepay-checkout.svg",
+  "/pix-checkout.svg",
 ];
 
 export default function CartPage() {
@@ -85,9 +85,10 @@ export default function CartPage() {
             <p className="text-neon-gray">Seu carrinho está vazio.</p>
           )}
 
-          <Link href="/shop" className="bg-neon-gradient self-start p-0.5 rounded-full">
-            <span className="flex items-center gap-2 bg-black text-neon-pink text-sm font-semibold rounded-full px-6 py-2.5 hover:bg-neon-white/5 transition-colors">
-              ← CONTINUE SHOPPING
+          <Link href="/shop" className="bg-neon-gradient self-start p-0.5 rounded-lg">
+            <span className="flex items-center gap-2 bg-black text-neon-pink text-sm font-semibold rounded-lg px-6 py-2.5 hover:bg-neon-white/5 transition-colors">
+              <Image src="/gradient-arrow-left.svg" alt="Continue Shopping" width={16} height={16} />
+              CONTINUE SHOPPING
             </span>
           </Link>
 
@@ -95,9 +96,9 @@ export default function CartPage() {
           <div className="bg-neon-gradient rounded-2xl p-[1.5px]">
             <div className="flex flex-wrap items-center justify-around gap-4 rounded-2xl bg-black px-6 py-4">
               {trustBadges.map((badge) => (
-                <div key={badge.label} className="flex items-center gap-2">
-                  <Image src={badge.icon} alt={badge.label} width={22} height={22} />
-                  <span className="text-neon-white text-sm font-semibold tracking-wide">
+                <div key={badge.label} className="flex items-center gap-3">
+                  <Image src={badge.icon} alt={badge.label} width={35} height={35} />
+                  <span className="text-neon-white text-md font-bold tracking-wide">
                     {badge.label}
                   </span>
                 </div>
@@ -108,53 +109,56 @@ export default function CartPage() {
 
         {/* Coluna direita — resumo do pedido */}
         <div className="flex flex-col gap-4">
-          <div className="bg-neon-gradient rounded-2xl p-[1.5px]">
+          <div className="bg-neon-gradient rounded-2xl p-px">
             <div className="rounded-2xl bg-black p-6">
-              <h2 className="text-neon-white text-sm font-bold tracking-wide mb-5">
+              <h2 className="text-neon-white text-2xl font-bold tracking-wide mb-5">
                 ORDER SUMMARY
               </h2>
 
               <div className="flex flex-col gap-4 mb-5">
                 {items.map(({ product, quantity }) => (
                   <div key={product.id} className="flex items-center gap-3">
-                    <div className="w-14 h-14 rounded-lg overflow-hidden border border-neon-gray/30 shrink-0 relative flex items-center justify-center text-neon-gray text-[9px]">
+                    <div className="w-20 h-20 rounded-lg overflow-hidden border border-neon-gray/30 shrink-0 relative flex items-center justify-center text-neon-gray text-[9px]">
                       {product.image ? (
                         <Image src={product.image} alt={product.name} fill className="object-cover" />
                       ) : (
                         "Capa"
                       )}
                     </div>
-                    <span className="flex-1 text-neon-white text-sm truncate">{product.name}</span>
-                    <span className="text-neon-white text-sm font-semibold whitespace-nowrap">
+
+                    <span className="flex-1 text-neon-white text-md truncate">{product.name}</span>
+
+                    <span className="text-neon-white text-lg font-semibold whitespace-nowrap">
                       {formatPrice(product.price * quantity)}
                     </span>
                   </div>
                 ))}
               </div>
 
-              <div className="border-t border-neon-white/10 pt-4 flex flex-col gap-2 text-sm">
+              <div className="border-t border-neon-white/10 pt-4 flex flex-col gap-2 text-lg font-gabarito font-medium">
                 <div className="flex justify-between text-neon-white">
                   <span>Subtotal</span>
-                  <span>{formatPrice(subtotal)}</span>
+                  <span className="font-inter">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-neon-green">
                   <span>Discount</span>
-                  <span>-{formatPrice(discount)}</span>
+                  <span className="font-inter">-{formatPrice(discount)}</span>
                 </div>
               </div>
 
-              <div className="border-t border-neon-white/10 mt-4 pt-4 flex items-center justify-between">
-                <span className="text-neon-white text-lg font-bold">Total</span>
-                <span className="text-neon-green text-2xl font-extrabold">
+              <div className="border-t border-neon-white/10 mt-4 pt-4 flex items-center font-gabarito justify-between">
+                <span className="text-neon-white text-2xl font-medium">Total</span>
+                <span className="text-neon-green text-2xl font-bold font-inter">
                   {formatPrice(total)}
                 </span>
               </div>
 
               <button
                 type="button"
-                className="w-full bg-neon-gradient text-neon-white font-bold text-sm tracking-wide rounded-full py-3.5 mt-6 flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+                className="w-full bg-neon-gradient cursor-pointer text-neon-white font-bold text-lg tracking-wide rounded-lg py-3.5 mt-6 flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
               >
-                PROCEED TO CHECKOUT →
+                PROCEED TO CHECKOUT 
+                <Image src="/white-arrow-right.svg" alt="Proceed to Checkout" width={16} height={16} />
               </button>
             </div>
           </div>
@@ -165,7 +169,7 @@ export default function CartPage() {
               <p className="text-neon-gray text-xs">We accept secure payments</p>
               <div className="flex items-center gap-4">
                 {paymentIcons.map((icon) => (
-                  <Image key={icon} src={icon} alt="Payment method" width={32} height={20} />
+                  <Image key={icon} src={icon} alt="Payment method" width={50} height={50} />
                 ))}
               </div>
             </div>
