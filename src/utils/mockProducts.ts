@@ -3,6 +3,16 @@ import type { Product } from "../types/product";
 const DEFAULT_DESCRIPTION = "Explore a breathtaking world, engage in intense combat, and uncover the truth behind a mercenary's destiny. Experience high-quality graphics and immersive gameplay in this next-generation title.";
 const DEFAULT_COUNTRIES = ["Brazil", "Portugal", "USA", "Germany", "Japan", "Canada", "Australia", "United Kingdom"];
 
+export function getProductById(id: string): Product | undefined {
+  return mockProducts.find((p) => p.id === id);
+}
+
+export function getRelatedProducts(product: Product, limit = 4): Product[] {
+  return mockProducts
+    .filter((p) => p.id !== product.id && (p.genre === product.genre || p.platform === product.platform))
+    .slice(0, limit);
+}
+
 export const mockProducts: Product[] = [
   { 
     id: "1", 

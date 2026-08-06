@@ -5,22 +5,24 @@ import {
   formatPrice,
   getDiscountPercent,
 } from "../../../../src/utils/priceFunctions";
+import { Product } from "@/src/types/product";
 
 interface ProductPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
-  params.then((resolvedParams) => {
-    console.log(resolvedParams);
-  });
+export default async function ProductPage({ params }: ProductPageProps) {
+  const resolvedParams = await params;
+  const productId = resolvedParams.id;
 
-  const product = mockProducts[0];
+  if (!productId) {
+    notFound();
+  }
+  const product = mockProducts.find((p: Product) => p.id === productId);
 
   if (!product) {
     notFound();
   }
-
   const discount = getDiscountPercent(product.price, product.originalPrice);
 
   return (
