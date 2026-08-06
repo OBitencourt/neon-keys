@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
 import type { Product } from "../types/product";
 import { formatPrice, getDiscountPercent } from "../utils/priceFunctions";
+import { getProductUrl } from "../utils/slug";
 
 interface ProductCardProps {
   product: Product;
@@ -24,7 +28,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const iconSrc = PLATFORM_ICONS[platform] || "/icon-default-platform.png";
 
   return (
-    <div className="group/card relative h-full w-full">
+    <Link href={getProductUrl(product)} className="group/card relative block h-full w-full">
       {/* Glow atrás, reage ao hover do card inteiro */}
       <div className="bg-neon-gradient absolute inset-0 rounded-3xl opacity-30 blur-sm transition duration-500 group-hover/card:opacity-40" />
 
@@ -84,10 +88,18 @@ export default function ProductCard({ product }: ProductCardProps) {
               </div>
             </div>
 
-            {/* Botão */}
+            {/* Botão — impede que o clique dispare a navegação do Link */}
             <div className="bg-neon-gradient mt-4 flex w-full items-center justify-center rounded-4xl p-0.5">
               <div className="flex w-full items-center justify-center rounded-4xl bg-black">
-                <button className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-full py-3 text-sm font-semibold transition-colors">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // TODO: lógica de adicionar ao carrinho
+                  }}
+                  className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-full py-3 text-sm font-semibold transition-colors"
+                >
                   <span
                     className="bg-neon-gradient absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-30 group-active:opacity-60"
                     aria-hidden="true"
@@ -104,6 +116,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

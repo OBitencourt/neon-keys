@@ -16,4 +16,13 @@ export interface Product {
   price: number;
   originalPrice?: number;
   genre: GameGenre;
+  region: string;
+  rating: number;
+  reviewsCount: number;
+  description: string;
+  type: string;
+  delivery: string;
+  allowedCountries: string[];
+  gallery?: string[];
+  stockStatus?: string;
 }

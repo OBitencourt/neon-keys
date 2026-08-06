@@ -7,18 +7,11 @@ import ShopFilters from "../../src/components/shopFilters";
 import ProductCard from "../../src/components/productcard";
 import type { Product } from "../../src/types/product"; 
 import { ShopFilterState, defaultFilters } from "../../src/utils/shopfilters";
+import { mockProducts } from "../../src/utils/mockProducts";
+import Link from "next/link";
 
 // Mock — troque por dados vindos da sua API/banco quando estiver pronto.
-const mockProducts: Product[] = [
-  { id: "1", name: "Human: Fall Flat Steam Key LATAM", image: "", platform: "Steam", price: 10.99, originalPrice: 17.99, genre: "Adventure" },
-  { id: "2", name: "Capote Steam(PC) Key LATAM", image: "", platform: "Steam", price: 8.99, originalPrice: 11.99, genre: "Adventure" },
-  { id: "3", name: "Ori and the Blind Forest (Definitive Edition) Steam (PC) Key GLOBAL", image: "", platform: "Steam", price: 22.99, originalPrice: 39.9, genre: "Adventure" },
-  { id: "4", name: "HumanitZ Steam Key LATAM", image: "", platform: "Steam", price: 10.99, originalPrice: 17.99, genre: "Simulation" },
-  { id: "5", name: "Crimson Desert Deluxe Edition Steam Key LATAM", image: "", platform: "Steam", price: 245.99, originalPrice: 299.99, genre: "Action" },
-  { id: "6", name: "Elden Ring Steam Key GLOBAL", image: "", platform: "Steam", price: 129.99, originalPrice: 199.99, genre: "RPG" },
-  { id: "7", name: "Call of Duty: Modern Warfare II Steam Key GLOBAL", image: "", platform: "Steam", price: 149.99, originalPrice: 249.99, genre: "Action" },
-  { id: "8", name: "Forza Horizon 5 Steam Key GLOBAL", image: "", platform: "Steam", price: 99.99, originalPrice: 179.99, genre: "Racing" },
-];
+
 
 const sortOptions = [
   { value: "best-selling", label: "Best selling" },
@@ -126,7 +119,13 @@ export default function ShopPage() {
   );
 }
 
-function ShopSection({ image, title, products }: { image: string; title: string; products: Product[] }) {
+interface ShopSectionProps {
+  image: string;
+  title: string;
+  products: Product[];
+}
+
+export  function ShopSection({ image, title, products }: ShopSectionProps) {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -146,3 +145,4 @@ function ShopSection({ image, title, products }: { image: string; title: string;
     </div>
   );
 }
+
