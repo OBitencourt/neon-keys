@@ -29,7 +29,7 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="bg-black px-6 py-20">
+    <section className="bg-black rounded-3xl px-6 py-20">
       {/* Título da Seção com linhas em gradiente maiores */}
       <div className="mb-16 flex items-center justify-center gap-6">
         <div className="bg-linear-to-r from-transparent to-neon-pink h-1 w-24 rounded-full md:w-40" />
@@ -43,9 +43,7 @@ export default function WhyChooseUs() {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-10 md:flex-row md:items-stretch md:gap-0">
         {features.map((feature, index) => (
           <div key={feature.id} className="flex flex-1 flex-col items-center md:flex-row md:items-stretch">
-            {/* Bloco de cada feature */}
             <div className="flex w-full flex-1 flex-col justify-center items-center text-center px-4 md:px-8">
-              {/* Ícone maior (64px) com Glow expandido */}
               <div className="relative mb-6 flex items-center justify-center">
                 <div
                   className="bg-neon-gradient absolute inset-0 rounded-full opacity-50 blur-2xl"
@@ -74,7 +72,7 @@ export default function WhyChooseUs() {
             {/* Divisória Vertical (Desktop) / Horizontal (Mobile) */}
             {index < features.length - 1 && (
               <>
-                <div className="bg-white hidden h-54 w-1 rounded-full  md:block" aria-hidden="true" />
+                <div className="bg-white hidden h-54 w-0.5 rounded-full  md:block" aria-hidden="true" />
                 <div className="bg-white my-4 h-px w-3/4 md:hidden" aria-hidden="true" />
               </>
             )}
