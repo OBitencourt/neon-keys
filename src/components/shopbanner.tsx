@@ -51,9 +51,9 @@ export default function ShopBanner() {
       </div>
 
       {/* Ilustração — troque pela imagem/render final do carrinho com os jogos */}
-      <div className="w-full max-w-sm aspect-video rounded-2xl border border-dashed border-neon-gray/40 flex items-center justify-center text-neon-gray text-sm shrink-0">
+      {/*<div className="w-full max-w-sm aspect-video rounded-2xl border border-dashed border-neon-gray/40 flex items-center justify-center text-neon-gray text-sm shrink-0">
         Ilustração do carrinho (placeholder)
-      </div>
+      </div>*/}
     </section>
   );
 }
