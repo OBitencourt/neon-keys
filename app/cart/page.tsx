@@ -6,10 +6,7 @@ import Image from "next/image";
 import CartItemsList from "../../src/components/cartitemslist";
 import { initialCartItems } from "../../src/utils/cartmock";
 import type { CartItem } from "../../src/types/cart";
-
-function formatPrice(value: number) {
-  return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
-}
+import { formatPrice } from "@/src/utils/priceFunctions";
 
 const trustBadges = [
   { icon: "/why-icon1.png", label: "100% SECURE" },
