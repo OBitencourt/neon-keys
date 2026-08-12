@@ -51,7 +51,7 @@ export const ProfileSidebar = () => {
             />
 
             <ProfileNavItem
-              href="/games"
+              href="/profile/mygames"
               icon="/pink-controller.svg"
               label="My Games"
             />
