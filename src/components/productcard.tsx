@@ -61,7 +61,6 @@ export default function ProductCard({ product }: ProductCardProps) {
               {name}
             </h3>
 
-            {/* Plataforma com ícone mapeado */}
             <div className="text-white font-semibold font-gabarito mt-2 flex items-center gap-1.5 text-lg">
               <Image src={iconSrc} alt={platform} width={30} height={30} />
               <span className="uppercase tracking-wide">{platform}</span>
@@ -75,12 +74,12 @@ export default function ProductCard({ product }: ProductCardProps) {
               )}
               <div className="relative">
                 <span
-                  className="absolute inset-0 text-3xl font-bold text-[#62D33D] blur-sm"
+                  className="absolute inset-0 text-3xl font-bold text-neon-green blur-sm"
                   aria-hidden="true"
                 >
                   {formatPrice(price)}
                 </span>
-                <span className="text-3xl font-bold text-[#62D33D]">{formatPrice(price)}</span>
+                <span className="text-3xl font-bold text-neon-green">{formatPrice(price)}</span>
               </div>
             </div>
 

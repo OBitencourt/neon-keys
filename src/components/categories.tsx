@@ -58,10 +58,10 @@ export default function Categories() {
         <Image src="/xbox3.png" alt="Xbox" width={80} height={80} className="mb-5" />
         
         <div className="relative mb-3">
-          <h3 className="font-inder text-[#62D33D] absolute inset-0 text-2xl font-regular tracking-wide blur-md" aria-hidden="true">
+          <h3 className="font-inder text-neon-green absolute inset-0 text-2xl font-regular tracking-wide blur-md" aria-hidden="true">
             XBOX GAMES
           </h3>
-          <h3 className="font-inder text-[#62D33D] relative text-2xl font-regular tracking-wide">
+          <h3 className="font-inder text-neon-green relative text-2xl font-regular tracking-wide">
             XBOX GAMES
           </h3>
         </div>

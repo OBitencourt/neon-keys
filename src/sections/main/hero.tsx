@@ -121,12 +121,12 @@ export default function HeroSection() {
                   </span>
                   <div className="relative">
                     <span
-                      className="absolute inset-0 text-3xl font-bold text-[#62D33D] blur-sm"
+                      className="absolute inset-0 text-3xl font-bold text-neon-green blur-sm"
                       aria-hidden="true"
                     >
                       R$10,99
                     </span>
-                    <span className="text-3xl font-bold text-[#62D33D]">
+                    <span className="text-3xl font-bold text-neon-green">
                       R$10,99
                     </span>
                   </div>

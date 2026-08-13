@@ -60,7 +60,7 @@ export default function WhyChooseUs() {
                 {feature.title}
               </h3>
 
-              <p className="text-[#585757] text-base font-medium leading-relaxed">
+              <p className="text-neon-dark text-base font-medium leading-relaxed">
                 {feature.description}
               </p>
             </div>

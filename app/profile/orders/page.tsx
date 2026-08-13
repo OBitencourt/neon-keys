@@ -8,6 +8,7 @@ import { OrderStatus } from "@/src/types/order";
 import { mockOrders } from "@/src/utils/mockOrders";
 import { FilterSelect } from "@/src/components/orders/filterSelect";
 import { StatusBadge } from "@/src/components/orders/statusBadge";
+import { StatCard } from "@/src/components/orders/statCard";
 
 
 const ITEMS_PER_PAGE = 6;
