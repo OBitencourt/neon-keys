@@ -31,12 +31,10 @@ export function ProfileNavItem({
         }
       `}
     >
-      {/* Active background */}
       {active && (
         <span className="absolute inset-0 bg-neon-gradient opacity-20" />
       )}
 
-      {/* Icon */}
       <Image
         src={icon}
         alt=""
@@ -44,8 +42,6 @@ export function ProfileNavItem({
         height={23}
         className="relative z-10 shrink-0"
       />
-
-      {/* Label */}
       <span className="relative z-10">{label}</span>
     </Link>
   );

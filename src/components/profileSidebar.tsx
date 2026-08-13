@@ -18,13 +18,10 @@ export const ProfileSidebar = () => {
     <aside className="hidden w-71.5 shrink-0 lg:block">
       <div className="rounded-2xl bg-neon-gradient p-[1.5px]">
         <div className="overflow-hidden rounded-2xl bg-black">
-          {/* User */}
           <div className="p-5">
             <div className="flex items-center gap-4">
-              {/* Avatar */}
               <div className="h-17 w-17 shrink-0 rounded-full bg-neon-gradient p-0.5">
                 <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-neon-gray">
-                  {/* PLACEHOLDER DO AVATAR */}
                   <span className="text-3xl">🦊</span>
                 </div>
               </div>
@@ -41,7 +38,6 @@ export const ProfileSidebar = () => {
             </div>
           </div>
 
-          {/* Navigation */}
           <nav className="flex flex-col">
             <ProfileNavItem
               href="/profile"
@@ -62,7 +58,6 @@ export const ProfileSidebar = () => {
               label="Orders"
             />
 
-            {/* Logout */}
             <button
               type="button"
               onClick={handleLogout}
@@ -85,10 +80,8 @@ export const ProfileSidebar = () => {
             </button>
           </nav>
 
-          {/* Divider */}
           <div className="mx-5 my-4 h-px bg-neon-gray/40" />
 
-          {/* Help */}
           <div className="p-5 pt-1">
             <h3 className="text-base font-bold text-neon-pink">NEED HELP?</h3>
 

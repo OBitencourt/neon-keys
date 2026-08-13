@@ -4,26 +4,11 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import { ProfileSidebar } from "@/src/components/profileSidebar";
+import { OrderStatus } from "@/src/types/order";
+import { mockOrders } from "@/src/utils/mockOrders";
+import { FilterSelect } from "@/src/components/orders/filterSelect";
+import { StatusBadge } from "@/src/components/orders/statusBadge";
 
-type OrderStatus = "completed" | "pending" | "refunded";
-
-type Order = {
-  id: string;
-  orderNumber: string;
-  date: string;
-  itemName: string;
-  total: number;
-  status: OrderStatus;
-};
-
-const mockOrders: Order[] = [
-  { id: "1", orderNumber: "#NK231561", date: "May 14, 2026", itemName: "Human fall flat", total: 19.99, status: "completed" },
-  { id: "2", orderNumber: "#NK23568", date: "May 12, 2026", itemName: "Crimsom Desert...", total: 249.99, status: "completed" },
-  { id: "3", orderNumber: "#NK23568", date: "May 12, 2026", itemName: "Cyberpunk 2077", total: 120.98, status: "completed" },
-  { id: "4", orderNumber: "#NK23568", date: "May 12, 2026", itemName: "GTA VI", total: 140.99, status: "pending" },
-  { id: "5", orderNumber: "#NK23568", date: "May 12, 2026", itemName: "Project Zomboid", total: 120.98, status: "completed" },
-  { id: "6", orderNumber: "#NK23568", date: "May 12, 2026", itemName: "Stardew Valley", total: 120.98, status: "refunded" },
-];
 
 const ITEMS_PER_PAGE = 6;
 
@@ -339,133 +324,8 @@ export default function OrdersPage() {
             </div>
 
           </div>
-
         </section>
-
       </div>
     </main>
-  );
-}
-
-function StatCard({
-  label,
-  value,
-  color,
-  iconSrc,
-}: {
-  label: string;
-  value: string;
-  color: "pink" | "green" | "orange";
-  iconSrc: string;
-}) {
-  const borderColor =
-    color === "pink"
-      ? "border-neon-pink"
-      : color === "green"
-      ? "border-neon-green"
-      : "border-orange-500";
-
-  return (
-    <div className={`rounded-lg border ${borderColor} bg-black px-5 py-4`}>
-
-      <div className="flex items-center gap-3">
-
-        <Image src={iconSrc} alt="" width={24} height={24} />
-
-        <div>
-
-          <p className="text-xs font-medium tracking-wide text-neon-gray">
-            {label}
-          </p>
-
-          <p className="mt-0.5 text-2xl font-bold text-neon-white">
-            {value}
-          </p>
-
-        </div>
-
-      </div>
-
-    </div>
-  );
-}
-
-
-function StatusBadge({ status }: { status: OrderStatus }) {
-  if (status === "completed") {
-    return (
-      <span className="flex items-center gap-1.5 text-sm font-medium text-neon-green">
-        <Image src="/green-check.svg" alt="" width={16} height={16} />
-        Completed
-      </span>
-    );
-  }
-
-  if (status === "pending") {
-    return (
-      <span className="flex items-center gap-1.5 text-sm font-medium text-yellow-400">
-        <Image src="/yellow-clock.svg" alt="" width={16} height={16} />
-        Pending
-      </span>
-    );
-  }
-
-  return (
-    <span className="flex items-center gap-1.5 text-sm font-medium text-red-500">
-      <Image src="/red-refunded.svg" alt="" width={16} height={16} />
-      Refunded
-    </span>
-  );
-}
-
-
-function FilterSelect({
-  value,
-  onChange,
-  options,
-}: {
-  value: string;
-  onChange: (value: string) => void;
-  options: { value: string; label: string }[];
-}) {
-  return (
-    <div className="relative">
-
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="
-          h-11
-          w-full
-          appearance-none
-          rounded-md
-          border
-          border-neon-gray/40
-          bg-black
-          pl-4
-          pr-9
-          text-sm
-          text-neon-white
-          outline-none
-          focus:border-neon-pink
-          sm:w-44
-        "
-      >
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value} className="bg-black text-neon-white">
-            {opt.label}
-          </option>
-        ))}
-      </select>
-
-      <Image
-        src="/icons/chevron-down-icon.svg"
-        alt=""
-        width={16}
-        height={16}
-        className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2"
-      />
-
-    </div>
   );
 }

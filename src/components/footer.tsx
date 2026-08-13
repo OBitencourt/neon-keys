@@ -28,6 +28,7 @@ const paymentMethods = [
   { name: "Apple Pay", icon: "/applepay1.svg" },
 ];
 
+
 function FooterColumn({ title, links }: { title: string; links: string[] }) {
   return (
     <div>
@@ -52,7 +53,6 @@ export default function Footer() {
   return (
     <footer className="bg-black px-8 pt-16 pb-8">
       <div className="flex flex-col md:flex-row gap-12 md:gap-0 max-w-390 mx-auto items-start">
-        {/* Marca */}
         <div className="md:w-72 shrink-0">
           <div className="text-4xl font-semibold tracking-tight mb-4">
             <span className="text-neon-white">NEON</span>{" "}
@@ -66,7 +66,6 @@ export default function Footer() {
 
         <div className="hidden md:block w-0.5 self-stretch bg-white rounded-full mx-10" />
 
-        {/* Colunas de links */}
         <div className="flex flex-1 flex-col sm:flex-row justify-between gap-10">
           <FooterColumn title="SHOP" links={shopLinks} />
           <FooterColumn title="SUPPORT" links={supportLinks} />
@@ -75,7 +74,6 @@ export default function Footer() {
 
         <div className="hidden md:block w-0.5 self-stretch bg-white rounded-full mx-10" />
 
-        {/* Formas de pagamento */}
         <div className="shrink-0 flex flex-col items-center">
           <h4 className="text-neon-white text-lg font-semibold mb-5 tracking-wide">
             WE ACCEPT
@@ -98,7 +96,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Linha inferior */}
       <div className="mt-14 pt-6 max-w-390 mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-neon-gray text-sm">
         <span>© 2024 Neon Keys, All rights reserved.</span>
         <span>Made with love by Neon Keys</span>

@@ -15,7 +15,6 @@ export default function ShopBanner() {
         </p>
 
         <div className="mt-6 flex flex-wrap items-center gap-8">
-          {/* Feature 1: Instant Delivery */}
           <div className="flex items-center gap-3">
             <div className="rounded-full border border-neon-pink px-3 py-1.5"> 
               <Image src="/raio-icon.svg" alt="Instant Delivery" width={30} height={30} />
@@ -26,7 +25,6 @@ export default function ShopBanner() {
             </div>
           </div>
 
-          {/* Feature 2: 100% Secure */}
           <div className="flex items-center gap-3">
             <div className="rounded-full border border-neon-orange px-2 py-1.5"> 
               <Image src="/escudo1.svg" alt="100% Secure" width={40} height={40} />
@@ -49,11 +47,6 @@ export default function ShopBanner() {
           </div>
         </div>
       </div>
-
-      {/* Ilustração — troque pela imagem/render final do carrinho com os jogos */}
-      {/*<div className="w-full max-w-sm aspect-video rounded-2xl border border-dashed border-neon-gray/40 flex items-center justify-center text-neon-gray text-sm shrink-0">
-        Ilustração do carrinho (placeholder)
-      </div>*/}
     </section>
   );
 }

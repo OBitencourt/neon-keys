@@ -3,12 +3,9 @@ import Image from "next/image";
 export default function Newsletter() {
   return (
     <section className="bg-black px-8 py-10">
-      {/* Borda em gradiente ao redor do card inteiro */}
       <div className="bg-neon-gradient max-w-6xl mx-auto rounded-2xl p-[1.5px]">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 rounded-2xl bg-black px-10 py-8">
-          {/* Coluna esquerda — ícone + texto */}
           <div className="flex items-center gap-6">
-            {/* Troque pelo ícone de envelope da sua escolha */}
             <Image src="/mail2.png" alt="Envelope" width={120} height={120} />
 
             <div>

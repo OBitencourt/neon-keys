@@ -10,7 +10,6 @@ interface ProductCardProps {
   product: Product;
 }
 
-// Mapeamento direto: Plataforma -> Caminho do Ícone
 const PLATFORM_ICONS: Record<string, string> = {
   Steam: "/icon-steam.svg",
   Xbox: "/icon-xbox.png",
@@ -24,18 +23,15 @@ export default function ProductCard({ product }: ProductCardProps) {
   const { name, image, price, originalPrice, platform } = product;
   const discount = getDiscountPercent(price, originalPrice);
 
-  // Busca o ícone mapeado ou usa um fallback genérico caso a plataforma não esteja listada
   const iconSrc = PLATFORM_ICONS[platform] || "/icon-default-platform.png";
 
   return (
     <Link href={getProductUrl(product)} className="group/card relative block h-full w-full">
-      {/* Glow atrás, reage ao hover do card inteiro */}
       <div className="bg-neon-gradient absolute inset-0 rounded-3xl opacity-30 blur-sm transition duration-500 group-hover/card:opacity-40" />
 
       {/* Borda em gradiente */}
       <div className="bg-neon-gradient relative h-full w-full rounded-2xl p-0.5">
         <div className="relative flex h-full flex-col items-center  rounded-2xl bg-black">
-          {/* Badge de desconto */}
           {discount !== null && (
             <span className="bg-neon-gradient text-neon-white absolute -top-2 font-gabarito -left-6 z-10 rounded-full px-3 py-1 text-lg tracking-wider font-bold">
               -{discount}%

@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 const Header = () => {
   const pathname = usePathname();
 
-  // Mapeamento das rotas
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Shop", href: "/shop" },

@@ -30,7 +30,6 @@ const features = [
 export default function WhyChooseUs() {
   return (
     <section className="bg-black rounded-3xl px-6 py-20">
-      {/* Título da Seção com linhas em gradiente maiores */}
       <div className="mb-16 flex items-center justify-center gap-6">
         <div className="bg-linear-to-r from-transparent to-neon-pink h-1 w-24 rounded-full md:w-40" />
         <h2 className="font-inder text-neon-white text-3xl font-regular tracking-wide whitespace-nowrap md:text-5xl">
@@ -39,7 +38,6 @@ export default function WhyChooseUs() {
         <div className="bg-linear-to-l from-transparent to-neon-orange h-1 w-24 rounded-full md:w-40" />
       </div>
 
-      {/* Grid / Flex preenchendo o max-w-6xl completo */}
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-10 md:flex-row md:items-stretch md:gap-0">
         {features.map((feature, index) => (
           <div key={feature.id} className="flex flex-1 flex-col items-center md:flex-row md:items-stretch">
@@ -58,18 +56,15 @@ export default function WhyChooseUs() {
                 />
               </div>
 
-              {/* Título maior com fonte Inder */}
               <h3 className="font-inter text-neon-white mb-3 text-base font-bold tracking-wider md:text-xl">
                 {feature.title}
               </h3>
 
-              {/* Descrição expandida */}
               <p className="text-[#585757] text-base font-medium leading-relaxed">
                 {feature.description}
               </p>
             </div>
 
-            {/* Divisória Vertical (Desktop) / Horizontal (Mobile) */}
             {index < features.length - 1 && (
               <>
                 <div className="bg-white hidden h-54 w-0.5 rounded-full  md:block" aria-hidden="true" />

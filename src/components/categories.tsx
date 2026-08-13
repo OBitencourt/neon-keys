@@ -3,7 +3,6 @@ import Image from "next/image";
 export default function Categories() {
   return (
     <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3">
-      {/* GAMES — pink */}
       <div className="flex flex-col items-center justify-center rounded-xl border-2 border-neon-pink p-10 text-center shadow-[0_0_14px_#f90ba34d] transition-all duration-300 hover:bg-neon-pink/20 hover:shadow-[0_0_24px_#f90ba380]">
         <Image src="/controller3.png" alt="Games" width={80} height={80} className="mb-5" />
         
@@ -21,7 +20,6 @@ export default function Categories() {
         </a>
       </div>
 
-      {/* STEAM GAMES — blue */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-neon-blue p-10 text-center shadow-[0_0_14px_#025cb74d] transition-all duration-300 hover:bg-neon-blue/20 hover:shadow-[0_0_22px_#025cb780]">
         <Image src="/steam2.svg" alt="Steam" width={80} height={80} className="mb-5" />
         
@@ -38,8 +36,6 @@ export default function Categories() {
           Explore games <span className="text-neon-blue">→</span>
         </a>
       </div>
-
-      {/* EPIC GAMES — orange */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-neon-orange p-10 text-center shadow-[0_0_14px_#fe59004d] transition-all duration-300 hover:bg-neon-orange/20 hover:shadow-[0_0_24px_#fe590080]">
         <Image src="/epicgames1.png" alt="Epic Games" width={80} height={80} className="mb-5" />
         
@@ -75,7 +71,6 @@ export default function Categories() {
         </a>
       </div>
 
-      {/* PLAYSTATION GAMES — purple */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-neon-purple p-10 text-center shadow-[0_0_14px_#8b3fff4d] transition-all duration-300 hover:bg-neon-purple/20 hover:shadow-[0_0_24px_#8b3fff80]">
         <Image src="/playstation2.png" alt="PlayStation" width={80} height={80} className="mb-5" />
         
@@ -93,7 +88,6 @@ export default function Categories() {
         </a>
       </div>
 
-      {/* GIFT CARDS — pink */}
       <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-neon-pink p-10 text-center shadow-[0_0_14px_#f90ba34d] transition-all duration-300 hover:bg-neon-pink/20 hover:shadow-[0_0_24px_#f90ba380]">
         <Image src="/gift1.png" alt="Gift Cards" width={80} height={80} className="mb-5" />
         

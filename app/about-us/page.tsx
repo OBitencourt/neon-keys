@@ -5,7 +5,6 @@ export default function AboutPage() {
   return (
     <div className="bg-black min-h-screen text-neon-white font-inter">
       <div className="max-w-380 mx-auto px-8 py-16">
-        {/* Hero Section */}
         <section className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-24">
           <div className="flex-1">
             <div className="bg-neon-gradient inline-block rounded-full p-0.5 mb-6">
@@ -28,7 +27,6 @@ export default function AboutPage() {
             </p>
 
             <div className="mt-6 flex items-center gap-8">
-              {/* Feature 1: Instant Delivery */}
               <div className="flex items-center gap-3">
                 <div className="rounded-full  px-3 py-1.5">
                   <Image
@@ -48,7 +46,6 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Feature 2: 100% Secure */}
               <div className="flex items-center gap-3">
                 <div className="rounded-full  px-2 py-1.5">
                   <Image
@@ -68,7 +65,6 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Feature 3: 24/7 Support */}
               <div className="flex items-center gap-3">
                 <div className="rounded-full  px-2 py-2">
                   <Image
@@ -96,8 +92,6 @@ export default function AboutPage() {
             height={500}
           />
         </section>
-
-        {/* Stats Section */}
         <section className="bg-neon-gray p-px rounded-3xl mb-24">
           <div className="bg-black rounded-[23px] py-12 px-8 flex flex-wrap justify-around gap-12">
             <div className="text-center flex flex-col items-center gap-2">
@@ -154,8 +148,6 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
-
-        {/* Mission Section */}
         <section className="bg-neon-gradient p-px rounded-3xl mb-24 overflow-hidden">
           <div className="bg-black rounded-[23px] flex flex-col lg:flex-row">
             <div className="flex-1 p-12 flex flex-col justify-center">
@@ -203,7 +195,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Values Section */}
         <section className="mb-24 text-center">
           <span className="text-neon-pink text-lg font-medium uppercase tracking-widest mb-2 block">
             Our Values
@@ -252,7 +243,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Why Choose Us Section */}
         <section className="bg-neon-gradient p-px rounded-3xl">
           <div className="bg-black rounded-[23px] p-12 flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-1/3 flex justify-center">

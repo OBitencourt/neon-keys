@@ -14,12 +14,9 @@ import {
 } from "../utils/shopfilters";
 
 interface ShopFiltersProps {
-  /** Chamado sempre que algum filtro muda, com o estado completo atualizado */
   onChange: (filters: ShopFilterState) => void;
 }
 
-// Componente client-side: guarda o estado dos filtros e avisa a página (via onChange)
-// toda vez que algo muda, pra ela poder filtrar a lista de produtos.
 export default function ShopFilters({ onChange }: ShopFiltersProps) {
   const [category, setCategory] = useState(defaultFilters.category);
   const [genres, setGenres] = useState<GameGenre[]>(defaultFilters.genres);
@@ -97,7 +94,6 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
           </ul>
         </div>
 
-        {/* Gênero */}
         <div>
           <div className="flex px-6 pt-6 items-center gap-3 mb-6">
             <Image
@@ -130,7 +126,6 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
           </ul>
         </div>
 
-        {/* Faixa de preço */}
         <div className="px-6">
           <div className="flex pt-6 items-center gap-3 mb-6">
             <Image
@@ -187,7 +182,6 @@ export default function ShopFilters({ onChange }: ShopFiltersProps) {
           </div>
         </div>
 
-        {/* Plataforma */}
         <div>
           <div className="flex px-6 pt-6 items-center gap-3 mb-6">
             <Image
