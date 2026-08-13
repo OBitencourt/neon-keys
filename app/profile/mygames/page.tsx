@@ -13,8 +13,7 @@ import OwnedGameCard from "@/src/components/mygames/ownedGameCard";
 import RevealKeyModal from "@/src/components/mygames/revealKeyModal";
 import ActivationGuide from "@/src/components/activationGuide";
 
-
-const initialGames: OwnedGame[] = [ 
+const initialGames: OwnedGame[] = [
   {
     id: initialCartItems[0].product.id,
     name: initialCartItems[0].product.name,
@@ -51,8 +50,8 @@ export default function MyGamesPage() {
               ...game,
               keyRevealed: true,
             }
-          : game
-      )
+          : game,
+      ),
     );
   }
 
@@ -63,46 +62,32 @@ export default function MyGamesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-black px-4 py-6 lg:px-8">
-      <div className="mx-auto flex w-full max-w-350 gap-8">
+    <div>
+      <header className="mb-8">
+        <h1 className="text-4xl font-bold text-neon-white lg:text-5xl">
+          Welcome back, Neon Player
+        </h1>
 
-        <ProfileSidebar />
+        <p className="mt-1 text-sm text-neon-gray lg:text-base">
+          here you can find all the games you have purchased
+        </p>
+      </header>
 
-        <section className="min-w-0 flex-1">
-        
-          <header className="mb-8">
-
-            <h1 className="text-4xl font-bold text-neon-white lg:text-5xl">
-              Welcome back, Neon Player
-            </h1>
-
-            <p className="mt-1 text-sm text-neon-gray lg:text-base">
-              here you can find all the games you have purchased
-            </p>
-
-          </header>
-
-          <div className="flex flex-col gap-4">
-
-            {games.length > 0 ? (
-              games.map((game) => (
-                <OwnedGameCard
-                  key={game.id}
-                  game={game}
-                  onOpenRevealModal={() => setModalGame(game)}
-                />
-              ))
-            ) : (
-              <EmptyGames />
-            )}
-
-          </div>
-
-          <ActivationGuide />
-
-        </section>
-
+      <div className="flex flex-col gap-4">
+        {games.length > 0 ? (
+          games.map((game) => (
+            <OwnedGameCard
+              key={game.id}
+              game={game}
+              onOpenRevealModal={() => setModalGame(game)}
+            />
+          ))
+        ) : (
+          <EmptyGames />
+        )}
       </div>
+
+      <ActivationGuide />
 
       {modalGame && (
         <RevealKeyModal
@@ -111,17 +96,14 @@ export default function MyGamesPage() {
           onConfirm={handleConfirmReveal}
         />
       )}
-
-    </main>
+    </div>
   );
 }
 
 function EmptyGames() {
   return (
     <div className="rounded-xl bg-neon-gradient p-[1.5px]">
-
       <div className="flex flex-col items-center justify-center rounded-xl bg-black px-6 py-16 text-center">
-
         <h2 className="text-xl font-bold text-neon-white">
           You haven't purchased any games yet
         </h2>
@@ -136,9 +118,7 @@ function EmptyGames() {
         >
           BROWSE GAMES
         </Link>
-
       </div>
-
     </div>
   );
 }

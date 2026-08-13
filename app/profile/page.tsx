@@ -58,32 +58,21 @@ export default function ProfilePage() {
     });
   }
 
-  
-
   return (
-    <main className="min-h-screen bg-black px-4 py-6 lg:px-8">
-      <div className="mx-auto flex w-full max-w-350 gap-8">
-        
-        <ProfileSidebar />
+    <div>
+      <header className="mb-6">
+        <h1 className="text-4xl font-bold text-neon-white lg:text-5xl">
+          Your profile
+        </h1>
 
-        <section className="min-w-0 flex-1">
+        <p className="mt-1 text-sm text-neon-gray lg:text-base">
+          manage your personal information and account preferences.
+        </p>
+      </header>
 
-          <header className="mb-6">
-
-            <h1 className="text-4xl font-bold text-neon-white lg:text-5xl">
-              Your profile
-            </h1>
-
-            <p className="mt-1 text-sm text-neon-gray lg:text-base">
-              manage your personal information and account preferences.
-            </p>
-
-          </header>
-
-          <section className="rounded-xl bg-neon-gradient p-[1.5px]">
-
-            <div
-              className="
+      <section className="rounded-xl bg-neon-gradient p-[1.5px]">
+        <div
+          className="
                 flex
                 flex-col
                 gap-5
@@ -95,38 +84,28 @@ export default function ProfilePage() {
                 sm:justify-between
                 lg:p-6
               "
-            >
-              <div className="flex items-center gap-4">
-
-                <div className="h-16 w-16 shrink-0 rounded-full bg-neon-gradient p-0.5">
-
-                  <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-neon-gray">
-
-                    <span className="text-3xl">
-                      🦊
-                    </span>
-
-                  </div>
-
-                </div>
-
-                <div>
-
-                  <h2 className="text-lg font-bold text-neon-white lg:text-xl">
-                    Neon Player
-                  </h2>
-
-                  <p className="mt-1 text-xs text-neon-gray">
-                    member since May 16, 2026
-                  </p>
-
-                </div>
-
+        >
+          <div className="flex items-center gap-4">
+            <div className="h-16 w-16 shrink-0 rounded-full bg-neon-gradient p-0.5">
+              <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-neon-gray">
+                <span className="text-3xl">🦊</span>
               </div>
+            </div>
 
-              <button
-                type="button"
-                className="
+            <div>
+              <h2 className="text-lg font-bold text-neon-white lg:text-xl">
+                Neon Player
+              </h2>
+
+              <p className="mt-1 text-xs text-neon-gray">
+                member since May 16, 2026
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="
                   flex
                   items-center
                   justify-center
@@ -135,9 +114,9 @@ export default function ProfilePage() {
                   bg-neon-gradient
                   p-[1.5px]
                 "
-              >
-                <span
-                  className="
+          >
+            <span
+              className="
                     flex
                     items-center
                     justify-center
@@ -156,69 +135,51 @@ export default function ProfilePage() {
                     lg:py-3
                     lg:text-base
                   "
-                >
-                  <Image
-                    src="/pink-camera.svg"
-                    alt=""
-                    width={21}
-                    height={21}
-                  />
+            >
+              <Image src="/pink-camera.svg" alt="" width={21} height={21} />
+              CHANGE PHOTO
+            </span>
+          </button>
+        </div>
+      </section>
 
-                  CHANGE PHOTO
-                </span>
-              </button>
+      <div className="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
+        <section className="rounded-xl bg-neon-gradient p-[1.5px]">
+          <div className="rounded-xl bg-black p-6">
+            <h2 className="text-base font-bold text-neon-white lg:text-lg">
+              Personal information
+            </h2>
 
+            <div className="mt-5 flex flex-col gap-4">
+              <ProfileInput label="Name" value={name} onChange={setName} />
+
+              <ProfileInput
+                label="Email address"
+                value={email}
+                onChange={setEmail}
+                disabled
+              />
+
+              <ProfileInput
+                label="Date of birth"
+                type="date"
+                value={dateOfBirth}
+                onChange={setDateOfBirth}
+              />
             </div>
 
-          </section>
-
-
-          <div className="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
-
-            <section className="rounded-xl bg-neon-gradient p-[1.5px]">
-
-              <div className="rounded-xl bg-black p-6">
-
-                <h2 className="text-base font-bold text-neon-white lg:text-lg">
-                  Personal information
-                </h2>
-
-                <div className="mt-5 flex flex-col gap-4">
-                  <ProfileInput
-                    label="Name"
-                    value={name}
-                    onChange={setName}
-                  />
-
-                  <ProfileInput
-                    label="Email address"
-                    value={email}
-                    onChange={setEmail}
-                    disabled
-                  />
-
-                  <ProfileInput
-                    label="Date of birth"
-                    type="date"
-                    value={dateOfBirth}
-                    onChange={setDateOfBirth}
-                  />
-
-                </div>
-
-                <div className="mt-5 grid grid-cols-2 gap-4 mb-10">
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setName("Neon Player");
-                      setEmail("neonplayer@gmail.com");
-                      setDateOfBirth("2004-07-29");
-                    }}
-                    className="rounded-lg bg-neon-gradient p-[1.5px]"
-                  >
-                    <span
-                      className="
+            <div className="mt-5 grid grid-cols-2 gap-4 mb-10">
+              <button
+                type="button"
+                onClick={() => {
+                  setName("Neon Player");
+                  setEmail("neonplayer@gmail.com");
+                  setDateOfBirth("2004-07-29");
+                }}
+                className="rounded-lg bg-neon-gradient p-[1.5px]"
+              >
+                <span
+                  className="
                         flex
                         w-full
                         items-center
@@ -233,14 +194,14 @@ export default function ProfilePage() {
                         transition-colors
                         hover:bg-neon-white/5
                       "
-                    >
-                      CANCEL
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleSaveChanges}
-                    className="
+                >
+                  CANCEL
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={handleSaveChanges}
+                className="
                       rounded-lg
                       bg-neon-gradient
                       px-4
@@ -251,63 +212,49 @@ export default function ProfilePage() {
                       transition-opacity
                       hover:opacity-90
                     "
-                  >
-                    SAVE CHANGES
-                  </button>
+              >
+                SAVE CHANGES
+              </button>
+            </div>
+          </div>
+        </section>
 
-                </div>
+        <section className="rounded-xl bg-neon-gradient p-[1.5px]">
+          <div className="rounded-xl bg-black p-6">
+            <h2 className="text-base font-bold text-neon-white lg:text-lg">
+              Change Password
+            </h2>
 
-              </div>
+            <div className="mt-5 flex flex-col gap-4">
+              <ProfileInput
+                label="Current password"
+                type="password"
+                value={currentPassword}
+                onChange={setCurrentPassword}
+              />
+              <ProfileInput
+                label="New Password"
+                type="password"
+                value={newPassword}
+                onChange={setNewPassword}
+              />
 
-            </section>
+              <ProfileInput
+                label="Confirm password"
+                type="password"
+                value={confirmPassword}
+                onChange={setConfirmPassword}
+              />
+            </div>
 
-            <section className="rounded-xl bg-neon-gradient p-[1.5px]">
-
-              <div className="rounded-xl bg-black p-6">
-
-                <h2 className="text-base font-bold text-neon-white lg:text-lg">
-                  Change Password
-                </h2>
-
-                <div className="mt-5 flex flex-col gap-4">
-
-                  {/* Current password */}
-                  <ProfileInput
-                    label="Current password"
-                    type="password"
-                    value={currentPassword}
-                    onChange={setCurrentPassword}
-                  />
-
-                  {/* New password */}
-                  <ProfileInput
-                    label="New Password"
-                    type="password"
-                    value={newPassword}
-                    onChange={setNewPassword}
-                  />
-
-                  {/* Confirm password */}
-                  <ProfileInput
-                    label="Confirm password"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={setConfirmPassword}
-                  />
-
-                </div>
-
-                {/* Update password */}
-
-                <div className="flex justify-center">
-
-                  <button
-                    type="button"
-                    onClick={handleUpdatePassword}
-                    className="mt-5 mb-4 rounded-lg bg-neon-gradient p-[1.5px]"
-                  >
-                    <span
-                      className="
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={handleUpdatePassword}
+                className="mt-5 mb-4 rounded-lg bg-neon-gradient p-[1.5px]"
+              >
+                <span
+                  className="
                         flex
                         items-center
                         justify-center
@@ -322,17 +269,15 @@ export default function ProfilePage() {
                         transition-colors
                         hover:bg-neon-white/5
                       "
-                    >
+                >
+                  UPDATE PASSWORD
+                </span>
+              </button>
+            </div>
 
-                      UPDATE PASSWORD
-                    </span>
-                  </button>
-                </div>
-
-                {/* Forgot password */}
-                <Link
-                  href="/forgot-password"
-                  className="
+            <Link
+              href="/forgot-password"
+              className="
                     mt-2
                     block
                     text-center
@@ -342,34 +287,15 @@ export default function ProfilePage() {
                     transition-colors
                     hover:text-neon-white
                   "
-                >
-                  forget your password?
-                </Link>
-
-              </div>
-
-            </section>
-
+            >
+              forget your password?
+            </Link>
           </div>
-
         </section>
-
       </div>
-    </main>
+    </div>
   );
 }
-
-
-/* ================================================= */
-/* PROFILE NAVIGATION ITEM */
-/* ================================================= */
-
-
-
-
-/* ================================================= */
-/* PROFILE INPUT */
-/* ================================================= */
 
 function ProfileInput({
   label,
@@ -386,11 +312,8 @@ function ProfileInput({
 }) {
   return (
     <label className="flex flex-col gap-2">
-
       {/* Label */}
-      <span className="text-sm text-neon-white">
-        {label}
-      </span>
+      <span className="text-sm text-neon-white">{label}</span>
 
       {/* Input */}
       <input
@@ -417,7 +340,6 @@ function ProfileInput({
           }
         `}
       />
-
     </label>
   );
 }
