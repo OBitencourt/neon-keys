@@ -57,7 +57,7 @@ export const ProfileSidebar = () => {
             />
 
             <ProfileNavItem
-              href="/orders"
+              href="/profile/orders"
               icon="/pink-paper.svg"
               label="Orders"
             />

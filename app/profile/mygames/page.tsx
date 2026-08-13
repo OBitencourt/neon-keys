@@ -195,17 +195,14 @@ function OwnedGameCard({
 
         <div className="flex min-w-0 flex-1 flex-col justify-between self-stretch py-1">
 
-          {/* Game name */}
           <div>
 
             <h2 className="truncate text-xl font-bold text-neon-white lg:text-2xl">
               {game.name}
             </h2>
 
-            {/* Platform + country */}
             <div className="mt-1 flex flex-wrap items-center gap-4">
 
-              {/* Steam */}
               <div className="flex items-center gap-1.5">
 
                 <Image
@@ -257,12 +254,12 @@ function OwnedGameCard({
 
         </div>
 
-        <div className="flex w-full shrink-0 items-center sm:w-[275px]">
+        <div className="flex w-full shrink-0 items-center sm:w-68.75">
 
           {game.keyRevealed ? (
             <div className="flex w-full items-center gap-2">
 
-              <div className="flex h-[42px] flex-1 items-center justify-center rounded-md border border-neon-gray bg-neon-gray/10 px-3 text-sm font-medium text-neon-white">
+              <div className="flex h-10.5 flex-1 items-center justify-center rounded-md border border-neon-gray bg-neon-gray/10 px-3 text-sm font-medium text-neon-white">
                 {game.key}
               </div>
 
@@ -276,8 +273,8 @@ function OwnedGameCard({
                 }}
                 className="
                   flex
-                  h-[42px]
-                  w-[42px]
+                  h-10.5
+                  w-10.5
                   shrink-0
                   items-center
                   justify-center
@@ -479,7 +476,7 @@ function RevealKeyModal({
 
             <p className="mb-1 text-xs text-neon-gray">Your Key</p>
 
-            <div className="flex h-[42px] items-center justify-center rounded-md border border-neon-gray/40 bg-neon-gray/10 text-sm tracking-widest text-neon-white">
+            <div className="flex h-10.5 items-center justify-center rounded-md border border-neon-gray/40 bg-neon-gray/10 text-sm tracking-widest text-neon-white">
               {maskedKey}
             </div>
 
