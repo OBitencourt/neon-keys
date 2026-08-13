@@ -35,19 +35,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* COLUNA ESQUERDA: Imagem Principal e Galeria */}
           <div className="lg:col-span-5 flex flex-col gap-4">
-            {/* Card da Imagem Principal com Borda Neon e Aspect Ratio Fixo */}
             <div className="relative w-full aspect-3/4 rounded-2xl p-[1.5px] bg-neon-gradient shadow-[0_0_30px_rgba(249,11,163,0.15)]">
               <div className="relative w-full h-full rounded-[15px] bg-zinc-950">
-                {/* Badge de desconto */}
                 {discount !== null && (
                   <span className="bg-neon-gradient text-neon-white absolute -top-2 font-gabarito -left-6 z-10 rounded-full px-3 py-1 text-lg tracking-wider font-bold">
                     -{discount}%
                   </span>
                 )}
 
-                {/* Imagem configurada para carregar corretamente */}
                 <Image
                   src={product.image || "/crimson-desert-placeholder.jpg"}
                   alt={product.name}
@@ -59,7 +55,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
             </div>
 
-            {/* Galeria de Imagens com Moldura Neon */}
             <div className="relative flex items-center gap-2 p-[1.5px] rounded-2xl bg-neon-gradient">
               <div className="w-full bg-black rounded-[15px] p-3 flex items-center justify-between gap-2">
                 <button className="text-neon-pink text-lg font-bold px-1 hover:scale-110 transition-transform">
@@ -93,9 +88,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
           </div>
 
-          {/* COLUNA DIREITA: Detalhes do Produto */}
           <div className="lg:col-span-7 flex flex-col gap-6">
-            {/* Tag Best Seller */}
             <div>
               <div className="inline-flex items-center gap-2 px-0.5 py-0.5 rounded-full text-xs  bg-neon-gradient">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-black tracking-wider">
@@ -142,10 +135,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </span>
             </div>
 
-            {/* Bloco de Preço: Gradiente Neon + Glow em Fundo */}
             <div className="flex flex-wrap items-center gap-4 py-2">
               {product.originalPrice && (
-                <span className="text-[#989393] text-2xl tracking-tight font-medium line-through">
+                <span className="text-neon-gray text-2xl tracking-tight font-medium line-through">
                   {formatPrice(product.originalPrice)}
                 </span>
               )}
@@ -156,7 +148,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
               {discount !== null && (
                 <div className="px-0.5 py-0.5 rounded-full bg-neon-gradient font-medium text-md">
-                  <div className="flex items-center gap-1 py-2 px-3 bg-black rounded-full text-[#989393]">
+                  <div className="flex items-center gap-1 py-2 px-3 bg-black rounded-full text-neon-gray">
                     You save{" "}
                     <span className="text-neon-pink">
                       {formatPrice(product.originalPrice! - product.price)} (
@@ -166,17 +158,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               )}
             </div>
-
-            {/* Instant Delivery: Fundo com opacidade baixa e borda neon com opacidade alta */}
             <div className="bg-neon-gradient p-[1.5px] rounded-xl shadow-[0_0_15px_rgba(249,11,163,0.2)]">
               <div className=" relative bg-black rounded-[10.5px] p-6 flex items-center gap-4">
-                {/* Camada de fundo gradiente com opacidade sutil (20%), subindo no hover (50%) e active (70%) */}
                 <span
                   className="absolute inset-0 bg-neon-gradient opacity-20 transition-opacity duration-300 pointer-events-none"
                   aria-hidden="true"
                 />
 
-                {/* Conteúdo mantido acima do overlay gradiente */}
                 <Image
                   src="/raio-icon.svg"
                   alt="Instant Delivery"
@@ -215,7 +203,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </span>
             </div>
 
-            {/* Botões de Ação */}
             <div className="flex gap-4 pt-2">
               <button className="flex-1 rounded-xl bg-neon-gradient font-medium text-white text-lg flex items-center justify-center gap-2 hover:brightness-110 transition-all">
                 <Image
@@ -241,7 +228,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
               Express Checkout ⓘ
             </p>
 
-            {/* Badges de Segurança */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 justify-items-center items-center">
               <div className="flex items-center gap-2 text-zinc-400 justify-center">
                 <Image
@@ -300,7 +286,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
 
-        {/* Faixa Inferior de Informações */}
         <div className="mt-14 p-[1.5px] rounded-2xl bg-neon-gradient">
           <div className="bg-black rounded-[14.5px] py-6 px-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="flex flex-col items-center">
@@ -324,8 +309,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
           </div>
         </div>
-
-        {/* Informações Detalhadas */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
           <div className="p-[1.5px] rounded-2xl bg-neon-pink/90">
             <div className="bg-black rounded-[14.5px] p-6 h-full">
