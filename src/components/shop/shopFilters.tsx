@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import type { GameGenre } from "../types/product";
+import type { GameGenre } from "../../types/product";
 import {
   ShopFilterState,
   defaultFilters,
@@ -11,7 +11,7 @@ import {
   categoryOptions,
   genreOptions,
   platformOptions,
-} from "../utils/shopfilters";
+} from "../../utils/shopfilters";
 
 interface ShopFiltersProps {
   onChange: (filters: ShopFilterState) => void;

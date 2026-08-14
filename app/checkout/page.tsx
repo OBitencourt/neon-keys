@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { initialCartItems } from "../../src/utils/cartmock";
+import { initialCartItems } from "../../src/mocks/cartmock";
 import type { CartItem } from "../../src/types/cart";
 import { formatPrice } from "@/src/utils/priceFunctions";
 
@@ -157,7 +157,6 @@ export default function CheckoutPage() {
 
   return (
     <main className="min-h-screen bg-black px-6 py-8 lg:px-8">
-      {/* Breadcrumb */}
       <div className="max-w-380 mx-auto mb-2 text-sm">
         <div className="flex items-center gap-2 text-neon-gray">
           <Link
@@ -195,16 +194,12 @@ export default function CheckoutPage() {
         </p>
       </div>
 
-      {/* Main grid */}
       <div className="max-w-380 mx-auto grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 items-start">
-        {/* LEFT SIDE */}
         <div className="flex flex-col gap-4">
 
-          {/* CONTACT + BILLING */}
           <div className="bg-neon-gradient rounded-xl p-[1.5px]">
             <div className="rounded-xl bg-black overflow-hidden">
 
-              {/* Contact information */}
               <section className="p-5">
                 <CheckoutSectionTitle
                   number="1"
@@ -233,7 +228,6 @@ export default function CheckoutPage() {
 
               <div className="h-px bg-neon-gradient" />
 
-              {/* Billing information */}
               <section className="p-5">
                 <CheckoutSectionTitle
                   number="2"
@@ -242,7 +236,6 @@ export default function CheckoutPage() {
 
                 <div className="flex flex-col gap-4">
 
-                  {/* Country */}
                   <div>
                     <label className="block text-xs text-neon-white mb-1.5">
                       Country/Region
@@ -274,8 +267,6 @@ export default function CheckoutPage() {
                       </span>
                     </div>
                   </div>
-
-                  {/* Name + Postal */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                     <CheckoutInput
@@ -320,7 +311,6 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* PAYMENT */}
           <div className="bg-neon-gradient rounded-xl p-[1.5px]">
             <div className="rounded-xl bg-black p-5">
 
@@ -356,7 +346,6 @@ export default function CheckoutPage() {
                         }
                       `}
                     >
-                      {/* Radio */}
                       <span
                         className={`
                           shrink-0
@@ -376,7 +365,6 @@ export default function CheckoutPage() {
                         )}
                       </span>
 
-                      {/* Information */}
                       <span className="flex flex-col flex-1">
                         <span className="text-xs font-medium text-neon-white">
                           {method.name}
@@ -387,7 +375,6 @@ export default function CheckoutPage() {
                         </span>
                       </span>
 
-                      {/* Payment icon placeholder */}
                       <div className="flex items-center justify-center gap-1 shrink-0">
                         <div className="w-16 h-6 rounded bg-neon-gray/20 flex items-center justify-center text-[8px] text-neon-gray">
                           ICON
@@ -398,7 +385,6 @@ export default function CheckoutPage() {
                 })}
               </div>
 
-              {/* Future Stripe Payment Element */}
               {paymentMethod === "card" && (
                 <div className="mt-3">
                   {/*
@@ -440,7 +426,6 @@ export default function CheckoutPage() {
                 </span>
               </label>
 
-              {/* Complete purchase */}
               <button
                 type="button"
                 disabled={isProcessing}
@@ -463,7 +448,6 @@ export default function CheckoutPage() {
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
         <aside className="bg-neon-gradient rounded-xl p-[1.5px]">
           <div className="rounded-xl bg-black p-5">
 

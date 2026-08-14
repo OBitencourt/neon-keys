@@ -1,4 +1,4 @@
-import { ProfileSidebar} from "@/src/components/profileSidebar";
+import { ProfileSidebar} from "@/src/profile/profileSidebar";
 
 export default function ProfileLayout({
   children,

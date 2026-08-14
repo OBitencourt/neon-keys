@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { mockProducts } from "../../../../src/utils/mockProducts";
+import { mockProducts } from "../../../../src/mocks/mockProducts";
 import {
   formatPrice,
   getDiscountPercent,

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import CartItemsList from "../../src/components/cartitemslist";
-import { initialCartItems } from "../../src/utils/cartmock";
+import { initialCartItems } from "../../src/mocks/cartmock";
 import type { CartItem } from "../../src/types/cart";
 import { formatPrice } from "@/src/utils/priceFunctions";
 
@@ -15,7 +15,6 @@ const trustBadges = [
   { icon: "/why-icon4.png", label: "BEST PRICES" },
 ];
 
-// Troque pelos ícones reais das bandeiras/carteiras
 const paymentIcons = [
   "/visa-checkout.svg",
   "/mastercards-checkout.svg",
@@ -37,9 +36,6 @@ export default function CartPage() {
     setItems((prev) => prev.filter((item) => item.product.id !== productId));
   }
 
-  // Subtotal = soma pelo preço "cheio" (originalPrice, quando existir)
-  // Total = soma pelo preço final cobrado
-  // Discount = a diferença entre os dois
   const subtotal = items.reduce(
     (sum, { product, quantity }) => sum + (product.originalPrice ?? product.price) * quantity,
     0
@@ -57,7 +53,6 @@ export default function CartPage() {
         <span className="mx-1">›</span> <span className="text-neon-pink">Cart</span>
       </div>
 
-      {/* Cabeçalho */}
       <div className="max-w-7xl mx-auto flex items-center gap-4 mb-8">
         <h1 className="text-4xl font-bold text-neon-white">YOUR CART</h1>
         <div className="bg-neon-gradient rounded-full p-[1.5px]">
@@ -70,7 +65,6 @@ export default function CartPage() {
       </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 items-start">
-        {/* Coluna esquerda */}
         <div className="flex flex-col gap-6">
           {items.length > 0 ? (
             <CartItemsList
@@ -104,7 +98,6 @@ export default function CartPage() {
           </div>
         </div>
 
-        {/* Coluna direita — resumo do pedido */}
         <div className="flex flex-col gap-4">
           <div className="bg-neon-gradient rounded-2xl p-px">
             <div className="rounded-2xl bg-black p-6">
@@ -160,7 +153,6 @@ export default function CartPage() {
             </div>
           </div>
 
-          {/* Pagamentos aceitos */}
           <div className="bg-neon-gradient rounded-2xl p-[1.5px]">
             <div className="rounded-2xl bg-black py-4 flex flex-col items-center gap-3">
               <p className="text-neon-gray text-xs">We accept secure payments</p>

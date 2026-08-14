@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ProfileNavItem } from "@/src/components/profileNavItem";
-import { ProfileSidebar } from "@/src/components/profileSidebar";
+import { ProfileNavItem } from "@/src/profile/profileNavItem";
+import { ProfileSidebar } from "@/src/profile/profileSidebar";
 
 export default function ProfilePage() {
   const [name, setName] = useState("Neon Player");
