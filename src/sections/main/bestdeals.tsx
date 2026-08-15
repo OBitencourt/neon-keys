@@ -10,6 +10,14 @@ const deals: Product[] = [
     price: 8.99,
     originalPrice: 11.99,
     genre: "Adventure",
+    region: "LATAM",
+    rating: 4.3,
+    reviewsCount: 128,
+    description:
+      "Capote is an adventure game with a unique art style and an engaging story.",
+    type: "Key",
+    delivery: "Instant delivery",
+    allowedCountries: ["Brazil", "Argentina", "Chile", "Mexico"],
   },
   {
     id: "human-fall-flat-steam-latam",
@@ -19,6 +27,14 @@ const deals: Product[] = [
     price: 10.99,
     originalPrice: 17.99,
     genre: "Adventure",
+    region: "LATAM",
+    rating: 4.7,
+    reviewsCount: 5420,
+    description:
+      "A hilarious physics-based puzzle platformer set in floating dreamscapes.",
+    type: "Key",
+    delivery: "Instant delivery",
+    allowedCountries: ["Brazil", "Argentina", "Chile", "Mexico"],
   },
   {
     id: "ori-blind-forest-global",
@@ -28,6 +44,14 @@ const deals: Product[] = [
     price: 22.99,
     originalPrice: 39.9,
     genre: "Adventure",
+    region: "GLOBAL",
+    rating: 4.9,
+    reviewsCount: 8931,
+    description:
+      "A visually stunning platformer following Ori's emotional journey through a vibrant forest.",
+    type: "Key",
+    delivery: "Instant delivery",
+    allowedCountries: ["Worldwide"],
   },
   {
     id: "humanitz-steam-latam",
@@ -37,6 +61,14 @@ const deals: Product[] = [
     price: 10.99,
     originalPrice: 17.99,
     genre: "Simulation",
+    region: "LATAM",
+    rating: 4.1,
+    reviewsCount: 342,
+    description:
+      "A brutal zombie survival simulation where every decision determines your fate.",
+    type: "Key",
+    delivery: "Instant delivery",
+    allowedCountries: ["Brazil", "Argentina", "Chile", "Mexico"],
   },
   {
     id: "crimson-desert-deluxe-latam",
@@ -46,6 +78,14 @@ const deals: Product[] = [
     price: 245.99,
     originalPrice: 299.99,
     genre: "Action",
+    region: "LATAM",
+    rating: 4.6,
+    reviewsCount: 89,
+    description:
+      "An open-world action game with visceral combat and a rich, dynamic world.",
+    type: "Key",
+    delivery: "Instant delivery",
+    allowedCountries: ["Brazil", "Argentina", "Chile", "Mexico"],
   },
 ];
 

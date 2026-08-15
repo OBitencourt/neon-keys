@@ -164,8 +164,6 @@ export default function ContactPage() {
             </form>
           </div>
         </div>
-
-        {/* Informações de contato */}
         <div>
           <h2 className="text-neon-white text-2xl font-bold">Contact information</h2>
           <p className="text-neon-gray text-sm mt-1 mb-6">Choose the best way to reach us.</p>
@@ -201,7 +199,6 @@ export default function ContactPage() {
         </div>
       </div>
 
-      {/* Reaproveitando o WhyChooseUs, agora dentro de um card com borda em gradiente */}
       <div className="max-w-7xl mx-auto bg-neon-gradient rounded-2xl p-[1.5px] mt-16">
         <div className="rounded-2xl bg-black">
           <WhyChooseUs />
