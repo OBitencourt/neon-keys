@@ -8,9 +8,8 @@ export default function MainPage() {
   return (
     <div className="bg-black min-h-screen">
       <HeroSection />
-      <CategoriesSection />
-      <WhyChooseUs />
       <BestDeals />
+      <CategoriesSection />
       <Newsletter />
     </div>
   );
