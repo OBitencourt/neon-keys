@@ -94,8 +94,8 @@ export default function BestDeals() {
     <section className="bg-black px-8 py-16">
       <div className="flex items-center justify-center gap-4 mb-10">
         <div className="h-px w-28 bg-linear-to-r from-transparent to-neon-pink" />
-        <h2 className="text-2xl font-bold text-neon-white tracking-wide whitespace-nowrap">
-          BEST DEALS
+        <h2 className="text-5xl font-regular bg-neon-gradient bg-clip-text text-transparent font-inder tracking-wide whitespace-nowrap">
+          NEON DEALS
         </h2>
         <div className="h-px w-28 bg-linear-to-l from-transparent to-neon-orange" />
       </div>
