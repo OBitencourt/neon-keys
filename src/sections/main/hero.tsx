@@ -1,164 +1,188 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import useEmblaCarousel from "embla-carousel-react";
+import { useCallback, useEffect, useState } from "react";
+import { mockProducts } from "../../mocks/mockProducts";
+import type { Product } from "../../types/product";
+import { formatPrice, getDiscountPercent } from "../../utils/priceFunctions";
+import { getProductUrl } from "../../utils/slug";
+
+// Seleciona os produtos com melhor avaliação para o hero
+const heroProducts: Product[] = [...mockProducts]
+  .sort((a, b) => b.rating - a.rating)
+  .slice(0, 5);
 
 export default function HeroSection() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "center",
+  });
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+  }, [emblaApi, onSelect]);
+
   return (
-      <section className="grid md:grid-cols-2 gap-12 items-center px-8 py-8 max-w-7xl mx-auto">
-        <div>
-          <div className="relative inline-block">
+    <div className="relative w-full px-4 py-10 sm:px-8">
+      <div className="overflow-x-hidden" ref={emblaRef}>
+        <div className="flex">
+          {heroProducts.map((product, index) => (
             <div
-              className="absolute inset-0 rounded-full bg-neon-gradient blur-lg opacity-60"
-              aria-hidden="true"
-            />
-            <div className="relative bg-neon-gradient p-[1.5px] rounded-full">
-              <span className="flex items-center gap-2 bg-black rounded-full px-4 py-1.5">
-                <Image src="/raio-icon.svg" alt="Raio" width={18} height={18} />
-                <span className="bg-neon-gradient bg-clip-text text-transparent text-sm font-semibold">
-                  FAST DELIVERY
-                </span>
-              </span>
-            </div>
-          </div>
-
-          <div className="relative mt-6 inline-block">
-            <h1
-              className="absolute inset-0 text-8xl font-extrabold bg-neon-gradient bg-clip-text text-transparent blur-xl opacity-50 select-none pointer-events-none"
-              aria-hidden="true"
+              key={product.id}
+              className="min-w-0 flex-[0_0_80%] px-3 sm:flex-[0_0_65%]"
             >
-              Neon Keys
-            </h1>
-            <h1 className="relative text-8xl font-extrabold bg-neon-gradient bg-clip-text text-transparent leading-tight">
-              Neon Keys
-            </h1>
-          </div>
-
-          <p className="mt-3 text-xl font-semibold text-neon-white">
-            Digital game distribution &amp; reselling
-          </p>
-
-          <p className="mt-4 text-neon-gray max-w-md">
-            Premium game keys at the best prices, instant delivery. 100% secure.
-          </p>
-
-          <div className="mt-8 flex items-center gap-4">
-            <div className="bg-neon-gradient p-0.5 rounded-full">
-              <button className="group relative overflow-hidden flex items-center gap-4 bg-black text-neon-white font-medium pl-4 pr-5 py-3 rounded-full transition-colors">
-                <span
-                  className="absolute inset-0 bg-neon-gradient opacity-0 group-hover:opacity-50 group-active:opacity-70 transition-opacity duration-300"
-                  aria-hidden="true"
-                />
-                <div className="relative flex items-center justify-center w-14 h-14 border-2 p-2 border-neon-pink rounded-full">
-                  <Image
-                    src="/controller3.png"
-                    alt="Controle de jogo"
-                    width={50}
-                    height={50}
-                  />
-                </div>
-                <span className="relative">BROWSE PRODUCTS</span>
-              </button>
+              <HeroSlide product={product} isActive={index === selectedIndex} />
             </div>
+          ))}
+        </div>
+      </div>
 
-            <div className="bg-neon-gradient p-0.5 rounded-full">
-              <button className="flex items-center gap-4 bg-neon-gradient-soft text-neon-white font-semibold pl-4 pr-7 py-3 rounded-full hover:opacity-90 transition-opacity">
-                <div className="flex items-center justify-center w-14 h-14 border-2 p-2 border-black rounded-full">
-                  <Image
-                    src="/contact-icon.svg"
-                    alt="Envelope"
-                    width={30}
-                    height={30}
-                  />
-                </div>
-                CONTACT US
-              </button>
-            </div>
-          </div>
+      {/* Setas */}
+      <button
+        type="button"
+        onClick={() => emblaApi?.scrollPrev()}
+        disabled={!canScrollPrev}
+        className="absolute left-2 top-1/2 z-10 flex h-14 w-14  -translate-y-1/2 items-center justify-center rounded-full border-2 border-neon-pink bg-zinc-600 text-neon-white transition hover:bg-zinc-800 disabled:opacity-30 sm:left-20"
+      >
+        <Image
+          src="/carousel-prev.svg"
+          alt="Seta anterior"
+          width={20}
+          height={20}
+          className="w-4 h-auto absolute left-4"
+        />
+      </button>
+
+      <button
+        type="button"
+        onClick={() => emblaApi?.scrollNext()}
+        disabled={!canScrollNext}
+        className="absolute right-2 top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border-2 border-neon-orange bg-zinc-600 text-neon-white transition hover:bg-zinc-800 disabled:opacity-30 sm:right-20"
+      >
+        <Image
+          src="/carousel-next.svg"
+          alt="Seta seguinte"
+          width={20}
+          height={20}
+          className="w-4 h-auto absolute right-4"
+        />
+      </button>
+    </div>
+  );
+}
+
+function HeroSlide({
+  product,
+  isActive,
+}: {
+  product: Product;
+  isActive: boolean;
+}) {
+  const {
+    name,
+    image,
+    price,
+    originalPrice,
+    description,
+    rating,
+    reviewsCount,
+  } = product;
+  const discount = getDiscountPercent(price, originalPrice);
+
+  return (
+    <Link
+      href={getProductUrl(product)}
+      className={`relative block aspect-video w-full  rounded-2xl transition-all duration-500 ${
+        isActive ? "scale-100 opacity-100" : "scale-95 opacity-40"
+      }`}
+    >
+      {image ? (
+        <Image src={image} alt={name} fill className="object-cover" />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center bg-neon-gray/10 text-neon-gray">
+          Capa do jogo (placeholder)
+        </div>
+      )}
+
+      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-black/10" />
+
+      {discount !== null && (
+        <span className="bg-neon-gradient text-neon-white absolute top-2 -left-6 z-10 rounded-full px-3 py-1 font-gabarito text-lg font-bold tracking-wider">
+          -{discount}%
+        </span>
+      )}
+
+      <div className="absolute right-4 top-4 inline-flex items-center overflow-hidden rounded-lg border border-zinc-500 bg-black/90 font-sans text-neon-white">
+        {/* Bloco da Nota / Estrela */}
+        <div className="flex items-center gap-2 border-r border-zinc-500 px-3 py-1.5">
+          <Image
+            src="/star-gradient.svg"
+            alt="Estrela"
+            width={20}
+            height={20}
+            className="h-6 w-6"
+          />
+          <span className="text-sm font-semibold">{rating}</span>
         </div>
 
-        <div className="flex flex-col items-center">
-          <div className="flex items-center gap-2 bg-neon-gradient bg-clip-text text-transparent font-bold text-3xl mb-4">
-            <div className="h-1 w-12 bg-linear-to-r from-black via-neon-pink/50 to-neon-pink rounded-full"></div>
-            <Image src="/star-pink.svg" alt="Estrela" width={14} height={14} />
-            <Image src="/star-pink.svg" alt="Estrela" width={20} height={20} />
-            BEST SELLER
+        {/* Bloco do Total de Avaliações */}
+        <div className="px-3 py-1.5 text-sm font-semibold">
+          {(reviewsCount / 1000).toFixed(1)}K avaliações
+        </div>
+      </div>
+
+      <div className="absolute bottom-0 left-0 w-full p-6 sm:p-10">
+        <h2 className="font-inder text-3xl font-bold text-neon-white sm:text-4xl">
+          {name}
+        </h2>
+
+        <p className="mt-2 line-clamp-2 max-w-md text-sm text-neon-white/80 sm:text-sm">
+          {description}
+        </p>
+
+        <div className="mt-2 flex items-end justify-between">
+          <button
+            type="button"
+            className="bg-neon-gradient flex items-center gap-6 rounded-md px-6 py-3 text-lg font-medium text-neon-white transition-opacity hover:opacity-90"
+          >
             <Image
-              src="/star-yellow1.svg"
-              alt="Estrela"
-              width={20}
-              height={20}
+              src="/shopping-cart-white.svg"
+              alt="Carrinho de compras"
+              width={24}
+              height={24}
+              className="h-6 w-6"
             />
-            <Image
-              src="/star-yellow1.svg"
-              alt="Estrela"
-              width={14}
-              height={14}
-            />
-            <div className="h-1 w-12 bg-linear-to-l from-black via-amber-400750 to-amber-400 rounded-full"></div>
-          </div>
+            <span>Comprar Agora</span>
+          </button>
 
-
-          <div className="group/card relative w-full max-w-md">
-            <div className="bg-neon-gradient absolute inset-0 rounded-3xl opacity-30 blur-sm transition duration-500 group-hover/card:opacity-40"></div>
-
-            <div className="bg-neon-gradient relative w-full rounded-2xl p-0.5">
-              <div className="flex flex-col items-center rounded-2xl bg-black p-5">
-                <div className="border-neon-gray/40 text-neon-gray flex h-120 w-[80%] flex-col items-center justify-center gap-2 rounded-lg border border-dashed">
-                  <Image
-                    src="/image-placeholder-icon.svg"
-                    alt="Placeholder"
-                    width={28}
-                    height={28}
-                  />
-                  <span className="text-xs">Capa do jogo (placeholder)</span>
-                </div>
-
-                <h3 className="text-neon-white mt-4 text-center text-xl font-semibold">
-                  Human: Fall Flat Steam Key GLOBAL
-                </h3>
-
-                <div className="relative mt-2 flex items-center gap-2">
-                  <span className="text-neon-gray text-lg font-semibold line-through">
-                    R$17,99
-                  </span>
-                  <div className="relative">
-                    <span
-                      className="absolute inset-0 text-3xl font-bold text-neon-green blur-sm"
-                      aria-hidden="true"
-                    >
-                      R$10,99
-                    </span>
-                    <span className="text-3xl font-bold text-neon-green">
-                      R$10,99
-                    </span>
-                  </div>
-                </div>
-
-                {/* Botão com seu próprio escopo 'group' */}
-                <div className="bg-neon-gradient mt-4 flex w-[90%] items-center justify-center rounded-4xl p-0.5">
-                  <div className="flex w-full items-center justify-center rounded-4xl bg-black">
-                    <button className="group relative flex w-full items-center justify-center gap-4 overflow-hidden rounded-full py-3 text-md font-semibold transition-colors">
-                      <span
-                        className="bg-neon-gradient absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-30 group-active:opacity-60"
-                        aria-hidden="true"
-                      />
-
-                      <div className="relative z-10 flex items-center justify-center gap-4">
-                        <Image
-                          src="/cart-icon.svg"
-                          alt="Carrinho"
-                          width={30}
-                          height={30}
-                        />
-                        <span className="bg-neon-gradient bg-clip-text text-transparent">
-                          ADD TO BAG
-                        </span>
-                      </div>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="text-right">
+            {originalPrice && (
+              <span className="block text-lg text-neon-gray line-through">
+                {formatPrice(originalPrice)}
+              </span>
+            )}
+            <span className="text-2xl font-bold text-neon-green sm:text-4xl">
+              {formatPrice(price)}
+            </span>
           </div>
         </div>
-      </section>
-  )
+      </div>
+    </Link>
+  );
 }
