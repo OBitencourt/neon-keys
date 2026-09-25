@@ -29,7 +29,6 @@ export default function ProductCard({ product }: ProductCardProps) {
     <Link href={getProductUrl(product)} className="group/card relative block h-full w-full">
       <div className="bg-neon-gradient absolute inset-0 rounded-3xl opacity-30 blur-sm transition duration-500 group-hover/card:opacity-40" />
 
-      {/* Borda em gradiente */}
       <div className="bg-neon-gradient relative h-full w-full rounded-3xl p-0.5">
         <div className="relative flex h-full flex-col rounded-3xl bg-black">
           {discount !== null && (
@@ -39,7 +38,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
 
           <div className="flex h-full w-full flex-col">
-            {/* Capa do jogo */}
             <div
               className={`relative aspect-3/4 w-full overflow-hidden rounded-t-2xl ${
                 !image ? "border border-dashed border-neon-gray/40" : ""
@@ -60,9 +58,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                 </div>
               )}
 
-              {/* Ícone da plataforma sobreposto */}
-              <div className="absolute -bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full border-4 border-black bg-white">
-                <Image src={iconSrc} alt={platform} width={20} height={20} />
+              <div className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full border-4 border-black">
+                <Image src={iconSrc} alt={platform} width={50} height={50} />
               </div>
             </div>
 
@@ -80,8 +77,6 @@ export default function ProductCard({ product }: ProductCardProps) {
                 </span>
               </div>
 
-              {/* Preço + botão ficam colados um no outro, e esse bloco inteiro
-                  é empurrado para o fundo do card via mt-auto */}
               <div className="mt-auto">
 
                 <div className="relative mt-3 flex items-center gap-2">
@@ -101,7 +96,6 @@ export default function ProductCard({ product }: ProductCardProps) {
                   </div>
                 </div>
 
-                {/* Botão — impede que o clique dispare a navegação do Link */}
                 <div className="bg-neon-gradient mt-4 mb-4 flex w-full items-center justify-center rounded-4xl p-0.5">
                   <div className="flex w-full items-center justify-center rounded-4xl bg-black">
                     <button
