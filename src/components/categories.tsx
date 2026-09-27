@@ -42,7 +42,8 @@ export default function Categories() {
             <Image
               src={category.image}
               alt={category.label}
-              fill
+              width={900}
+              height={500}
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
 

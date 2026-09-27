@@ -21,14 +21,11 @@ const Header = () => {
 
   return (
     <header className="flex flex-col bg-black border-t border-b border-neon-white/10">
-      {/* Barra de contato */}
       <div className="w-full  border-neon-white/10 py-2 text-center text-xs tracking-wide text-white">
         BUSINESS@NEON-KEYS.COM
       </div>
 
-      {/* Linha principal: logo + busca + ações */}
       <div className="mx-auto flex w-full max-w-7xl items-center gap-6 px-6 py-4">
-        {/* Logo */}
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2 text-3xl font-extrabold tracking-tight"
@@ -88,7 +85,6 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Ações: idioma, carrinho, perfil */}
         <div className="flex shrink-0 items-center gap-6">
           <button className="flex items-center gap-1 text-sm text-neon-white/80 transition-colors hover:text-neon-white">
             PT
@@ -126,7 +122,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Navegação — alinhada centralmente com a search bar */}
       <div className="flex w-full justify-center pb-4">
         <nav className="hidden w-full max-w-xl items-center justify-center gap-8 text-sm font-medium md:flex">
           {navLinks.map((link) => {

@@ -54,35 +54,40 @@ export default function HeroSection() {
       </div>
 
       {/* Setas */}
-      <button
-        type="button"
-        onClick={() => emblaApi?.scrollPrev()}
-        disabled={!canScrollPrev}
-        className="absolute left-2 top-1/2 z-10 flex h-14 w-14  -translate-y-1/2 items-center justify-center rounded-full border-2 border-neon-pink bg-zinc-600 text-neon-white transition hover:bg-zinc-800 disabled:opacity-30 sm:left-20"
-      >
-        <Image
-          src="/carousel-prev.svg"
-          alt="Seta anterior"
-          width={20}
-          height={20}
-          className="w-4 h-auto absolute left-4"
-        />
-      </button>
+      <div className="bg-neon-gradient absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full p-0.5 sm:left-20">
+        <button
+          type="button"
+          onClick={() => emblaApi?.scrollPrev()}
+          disabled={!canScrollPrev}
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-zinc-900 text-neon-white transition hover:bg-zinc-800 disabled:opacity-30"
+        >
+          <Image
+            src="/carousel-prev.svg"
+            alt="Seta anterior"
+            width={20}
+            height={20}
+            className="h-auto w-4"
+          />
+        </button>
+      </div>
 
-      <button
-        type="button"
-        onClick={() => emblaApi?.scrollNext()}
-        disabled={!canScrollNext}
-        className="absolute right-2 top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border-2 border-neon-orange bg-zinc-600 text-neon-white transition hover:bg-zinc-800 disabled:opacity-30 sm:right-20"
-      >
-        <Image
-          src="/carousel-next.svg"
-          alt="Seta seguinte"
-          width={20}
-          height={20}
-          className="w-4 h-auto absolute right-4"
-        />
-      </button>
+      {/* Seta Seguinte */}
+      <div className="bg-neon-gradient absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full p-0.5 sm:right-20">
+        <button
+          type="button"
+          onClick={() => emblaApi?.scrollNext()}
+          disabled={!canScrollNext}
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-zinc-900 text-neon-white transition hover:bg-zinc-800 disabled:opacity-30"
+        >
+          <Image
+            src="/carousel-next.svg"
+            alt="Seta seguinte"
+            width={20}
+            height={20}
+            className="h-auto w-4"
+          />
+        </button>
+      </div>
     </div>
   );
 }
@@ -113,9 +118,14 @@ function HeroSlide({
       }`}
     >
       {image ? (
-        <Image src={image} alt={name} fill className="object-cover" />
+        <Image
+          src={image}
+          alt={name}
+          fill
+          className="object-cover rounded-2xl"
+        />
       ) : (
-        <div className="flex h-full w-full items-center justify-center bg-neon-gray/10 text-neon-gray">
+        <div className="flex h-full w-full items-center justify-center rounded-2xl bg-neon-gray/10 text-neon-gray">
           Capa do jogo (placeholder)
         </div>
       )}

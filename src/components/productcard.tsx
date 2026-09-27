@@ -39,7 +39,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           <div className="flex h-full w-full flex-col">
             <div
-              className={`relative aspect-3/4 w-full overflow-hidden rounded-t-2xl ${
+              className={`relative aspect-4/4 w-full overflow-hidden rounded-t-2xl ${
                 !image ? "border border-dashed border-neon-gray/40" : ""
               }`}
             >
@@ -63,7 +63,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               </div>
             </div>
 
-            <div className="flex flex-1 flex-col px-4 pt-4">
+            <div className="flex flex-1 flex-col px-3 pt-3">
               <h3 className="text-neon-white text-left font-gabarito text-2xl font-regular leading-snug">
                 {name}
               </h3>
@@ -79,7 +79,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
               <div className="mt-auto">
 
-                <div className="relative mt-3 flex items-center gap-2">
+                <div className="relative ml-2 flex items-center gap-2">
                   {originalPrice && (
                     <span className="text-neon-gray text-md font-regular line-through">
                       {formatPrice(originalPrice)}
@@ -96,7 +96,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                   </div>
                 </div>
 
-                <div className="bg-neon-gradient mt-4 mb-4 flex w-full items-center justify-center rounded-4xl p-0.5">
+                <div className="bg-neon-gradient mt-3 mb-3 flex w-full items-center justify-center rounded-4xl p-0.5">
                   <div className="flex w-full items-center justify-center rounded-4xl bg-black">
                     <button
                       type="button"
