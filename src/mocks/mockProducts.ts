@@ -17,7 +17,7 @@ export const mockProducts: Product[] = [
   { 
     id: "1", 
     name: "Human: Fall Flat Steam Key LATAM", 
-    image: "", 
+    image: "/", 
     platform: "Steam", 
     price: 10.99, 
     originalPrice: 17.99, 

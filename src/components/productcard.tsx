@@ -28,21 +28,21 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={getProductUrl(product)}
-      className="group/card relative block h-[460px] w-full max-w-[300px] mx-auto"
+      className="group/card relative block h-[500px] w-full max-w-[250px] mx-auto"
     >
       <div className="bg-neon-gradient absolute inset-0 rounded-3xl opacity-30 blur-sm transition duration-500 group-hover/card:opacity-40" />
 
       <div className="bg-neon-gradient relative h-full w-full rounded-3xl p-px">
         <div className="relative flex h-full flex-col rounded-3xl bg-black">
           {discount !== null && (
-            <span className="bg-neon-gradient text-neon-white absolute -top-2 -left-6 z-10 rounded-full px-3 py-1 font-gabarito text-lg font-bold tracking-wider">
+            <span className="bg-neon-gradient text-neon-white absolute -top-6 -left-8 z-10 rounded-full px-3 py-1 font-gabarito text-lg font-bold tracking-wider">
               -{discount}%
             </span>
           )}
 
           <div className="flex h-full w-full flex-col">
             <div
-              className={`relative h-[250px] w-full shrink-0 overflow-hidden rounded-t-2xl ${
+              className={`relative h-[300px] w-full shrink-0 overflow-hidden rounded-t-3xl ${
                 !image ? "border border-dashed border-neon-gray/40" : ""
               }`}
             >
@@ -73,7 +73,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               </h3>
 
               <div className="mt-1.5 flex flex-wrap gap-2">
-                <span className="rounded-md bg-neon-gray/15 px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wide text-neon-gray">
+                <span className="rounded-md bg-neon-gray/15 border border-neon-gray/15 px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wide text-white">
                   {genre}
                 </span>
               </div>
@@ -105,7 +105,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                         e.stopPropagation();
                         // TODO: lógica de adicionar ao carrinho
                       }}
-                      className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full py-3 text-xs font-semibold text-neon-white transition-colors"
+                      className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full py-2 text-xs font-semibold text-neon-white transition-colors"
                     >
                       <span
                         className="bg-neon-gradient absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-30 group-active:opacity-60"
