@@ -32,9 +32,8 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       <div className="bg-neon-gradient absolute inset-0 rounded-3xl opacity-30 blur-sm transition duration-500 group-hover/card:opacity-40" />
 
-      <div className="bg-neon-gradient relative h-full w-full rounded-3xl p-0.5">
+      <div className="bg-neon-gradient relative h-full w-full rounded-3xl p-px">
         <div className="relative flex h-full flex-col rounded-3xl bg-black">
-          {/* Selo 100% original */}
           {discount !== null && (
             <span className="bg-neon-gradient text-neon-white absolute -top-2 -left-6 z-10 rounded-full px-3 py-1 font-gabarito text-lg font-bold tracking-wider">
               -{discount}%
@@ -42,7 +41,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
 
           <div className="flex h-full w-full flex-col">
-            {/* Apenas aqui mudou: h-[250px] fixa e shrink-0 para dar mais altura à imagem */}
             <div
               className={`relative h-[250px] w-full shrink-0 overflow-hidden rounded-t-2xl ${
                 !image ? "border border-dashed border-neon-gray/40" : ""

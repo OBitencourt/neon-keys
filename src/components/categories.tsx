@@ -20,9 +20,7 @@ const categories: Category[] = [
 export default function Categories() {
   return (
     <section className="w-full px-4 py-16 sm:px-8">
-      {/* Container expandido para max-w-[1240px] (400px * 3 + 20px * 2 gaps) */}
       <div className="mx-auto w-full max-w-[1240px]">
-        {/* Título mantido alinhado à esquerda na borda do grid */}
         <h2 className="mb-6 font-gabarito text-3xl font-bold tracking-wide text-left sm:text-5xl">
           <span className="text-neon-white font-medium">CATEGORIAS </span>
           <span className="bg-neon-gradient font-bold bg-clip-text text-transparent">
