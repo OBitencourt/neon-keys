@@ -17,7 +17,7 @@ const categories: Category[] = [
   { id: "corrida", label: "CORRIDA", image: "/race-category.png", href: "/shop" },
 ];
 
-export default function Categories() {
+export default function CategoriesMap() {
   return (
     <section className="w-full px-4 py-16 sm:px-8">
       <div className="mx-auto w-full max-w-[1240px]">

@@ -21,7 +21,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={getProductUrl(product)}
-      className="group/card relative block h-[500px] w-full max-w-[250px] mx-auto"
+      className="group/card relative block h-125 w-full max-w-62.5 mx-auto"
     >
       <div className="bg-neon-gradient absolute inset-0 rounded-3xl opacity-30 blur-sm transition duration-500 group-hover/card:opacity-40" />
 
