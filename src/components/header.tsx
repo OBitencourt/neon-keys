@@ -22,7 +22,7 @@ const Header = () => {
     "text-neon-white/80 hover:text-neon-white transition-colors";
 
   return (
-    <header className="flex flex-col border-t border-b border-neon-white/10 bg-black">
+    <header className="flex flex-col border-b border-t border-neon-white/10 bg-black">
       <div className="w-full border-neon-white/10 py-2 text-center text-[10px] tracking-wide text-white sm:text-xs">
         BUSINESS@NEON-KEYS.COM
       </div>
@@ -66,19 +66,26 @@ const Header = () => {
             </svg>
           </button>
 
-          {/* Ícone de pesquisa (mobile): abre/fecha a barra */}
+          {/* Ícone de pesquisa (mobile): altera entre a lupa gradiente (fechado) e a lupa normal (aberto) */}
           <button
             type="button"
             onClick={() => setSearchOpen((open) => !open)}
             aria-label={searchOpen ? "Fechar pesquisa" : "Abrir pesquisa"}
             aria-expanded={searchOpen}
-            className="flex h-9 w-9 items-center justify-center rounded-md bg-neon-gradient transition-opacity hover:opacity-90 md:hidden"
+            className={`flex h-7 w-7 items-center justify-center rounded-md transition-opacity hover:opacity-90 md:hidden ${
+              searchOpen ? "bg-neon-gradient p-1" : ""
+            }`}
           >
             <Image
-              src="/lupa-searchbar.svg"
+              src={
+                searchOpen
+                  ? "/lupa-searchbar.svg"
+                  : "/lupa-gradient-searchbar.svg"
+              }
               alt=""
-              width={18}
-              height={18}
+              width={30}
+              height={30}
+              className="h-7 w-7 md:h-[30px] md:w-[30px]"
             />
           </button>
 
@@ -90,7 +97,7 @@ const Header = () => {
               height={30}
               className="h-7 w-7 md:h-[30px] md:w-[30px]"
             />
-            <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-extrabold text-black">
+            <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-extrabold text-black">
               0
             </span>
           </Link>
@@ -99,9 +106,9 @@ const Header = () => {
             <Image
               src="/profile-icon.svg"
               alt="Perfil"
-              width={35}
-              height={35}
-              className="h-8 w-8 md:h-[35px] md:w-[35px]"
+              width={30}
+              height={30}
+              className="h-7 w-7 md:h-[30px] md:w-[30px]"
             />
           </Link>
         </div>
@@ -128,7 +135,7 @@ const Header = () => {
               >
                 {link.name}
                 {isActive && (
-                  <span className="absolute left-0 -bottom-1 h-0.5 w-full rounded-full bg-neon-pink shadow-[0_0_4px_#f90ba3,0_0_10px_#f90ba3,0_0_20px_#f90ba3]" />
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-neon-pink shadow-[0_0_4px_#f90ba3,0_0_10px_#f90ba3,0_0_20px_#f90ba3]" />
                 )}
               </Link>
             );
@@ -154,19 +161,21 @@ function SearchBar({ autoFocus = false }: { autoFocus?: boolean }) {
           border-neon-white/20
           bg-black
           pl-4
-          pr-14
+          pr-4
           text-sm
           text-neon-white
           placeholder:text-neon-white/40
           outline-none
           focus:border-neon-pink
+          md:pr-14
         "
       />
 
+      {/* Botão de busca: oculto no mobile (hidden), visível apenas no desktop (md:flex) */}
       <button
         type="button"
         aria-label="Pesquisar"
-        className="absolute right-0 top-0 flex h-full w-12 items-center justify-center rounded-r-md bg-neon-gradient transition-opacity hover:opacity-90"
+        className="absolute right-0 top-0 hidden h-full w-12 items-center justify-center rounded-r-md bg-neon-gradient transition-opacity hover:opacity-90 md:flex"
       >
         <Image src="/lupa-searchbar.svg" alt="" width={18} height={18} />
       </button>
