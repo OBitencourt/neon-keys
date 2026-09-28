@@ -91,24 +91,26 @@ const deals: Product[] = [
 
 export default function BestDeals() {
   return (
-    <section className="bg-black px-8 py-16">
-      <div className="flex items-center justify-center gap-4 mb-10">
-        <div className="h-px w-28 bg-linear-to-r from-transparent to-neon-pink" />
-        <h2 className="text-5xl font-regular bg-neon-gradient bg-clip-text text-transparent font-inder tracking-wide whitespace-nowrap">
+    <section className="bg-black px-4 py-12 sm:px-8 sm:py-16">
+      <div className="mb-8 flex items-center justify-center gap-3 sm:mb-10 sm:gap-4">
+        <div className="h-px w-8 bg-linear-to-r from-transparent to-neon-pink sm:w-28" />
+        <h2 className="font-inder text-3xl font-regular tracking-wide whitespace-nowrap bg-neon-gradient bg-clip-text text-transparent sm:text-5xl">
           NEON DEALS
         </h2>
-        <div className="h-px w-28 bg-linear-to-l from-transparent to-neon-orange" />
+        <div className="h-px w-8 bg-linear-to-l from-transparent to-neon-orange sm:w-28" />
       </div>
 
-      <div className="grid grid-cols-5 w-full max-w-[1550px] mx-auto px-20">
+      <div className="mx-auto grid w-full max-w-[1550px] grid-cols-1 justify-items-center gap-8 px-6 sm:grid-cols-2 sm:gap-6 sm:px-0 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 2xl:px-20">
         {deals.map((deal) => (
-          <ProductCard key={deal.id} product={deal} />
+          <div key={deal.id} className="w-full max-w-sm sm:max-w-none">
+            <ProductCard product={deal} />
+          </div>
         ))}
       </div>
 
-      <div className="flex justify-center mt-10">
-        <div className="bg-neon-gradient p-[1.5px] rounded-full">
-          <button className="bg-black text-neon-white text-lg font-regular tracking-wide px-8 py-3 rounded-full hover:bg-neon-white/5 transition-colors">
+      <div className="mt-10 flex justify-center">
+        <div className="bg-neon-gradient rounded-full p-[1.5px]">
+          <button className="rounded-full bg-black px-6 py-3 text-base font-regular tracking-wide text-neon-white transition-colors hover:bg-neon-white/5 sm:px-8 sm:text-lg">
             VIEW ALL DEALS
           </button>
         </div>
