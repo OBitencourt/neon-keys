@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function ShopBanner() {
   return (
-    <section className="bg-black px-8 pt-12 pb-8 flex flex-col md:flex-row items-center justify-between gap-8 max-w-420 mx-auto">
+    <section className="bg-black px-22 pt-12 pb-8 flex flex-col md:flex-row items-center justify-between gap-8 max-w-420 mx-auto">
       <div>
         <h1 className="text-7xl font-extrabold bg-neon-gradient bg-clip-text text-transparent">
           Shop

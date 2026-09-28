@@ -58,7 +58,7 @@ export default function ShopPage() {
     <div className="bg-black min-h-screen">
       <ShopBanner />
 
-      <div className="px-8 pb-16 max-w-450 mx-auto flex flex-col md:flex-row gap-8 items-start">
+      <div className="px-36 pb-16 max-w-450 mx-auto flex flex-col md:flex-row gap-8 items-start">
         <ShopFilters onChange={setFilters} />
 
         <div className="flex-1 w-full">
@@ -83,7 +83,7 @@ export default function ShopPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
