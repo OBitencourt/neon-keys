@@ -22,7 +22,7 @@ const deals: Product[] = [
   {
     id: "human-fall-flat-steam-latam",
     name: "Human: Fall Flat Steam Key LATAM",
-    image: "",
+    image: "/capa-watchdogs.png",
     platform: "Steam",
     price: 10.99,
     originalPrice: 17.99,
@@ -100,7 +100,7 @@ export default function BestDeals() {
         <div className="h-px w-28 bg-linear-to-l from-transparent to-neon-orange" />
       </div>
 
-      <div className="grid grid-cols-5 gap-6 w-full max-w-[1800px] mx-auto px-4">
+      <div className="grid grid-cols-5 w-full max-w-[1550px] mx-auto px-20">
         {deals.map((deal) => (
           <ProductCard key={deal.id} product={deal} />
         ))}
