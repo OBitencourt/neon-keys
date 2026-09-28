@@ -5,25 +5,18 @@ import Link from "next/link";
 import type { Product } from "../types/product";
 import { formatPrice, getDiscountPercent } from "../utils/priceFunctions";
 import { getProductUrl } from "../utils/slug";
+import { PLATFORM_ICONS, DEFAULT_PLATFORM_ICON } from "../utils/platformIcons";
 
 interface ProductCardProps {
   product: Product;
 }
 
-const PLATFORM_ICONS: Record<string, string> = {
-  Steam: "/icon-steam.svg",
-  Xbox: "/icon-xbox.png",
-  "Epic Games": "/icon-epic.png",
-  PlayStation: "/icon-playstation.png",
-  PSN: "/icon-playstation.png",
-  Nintendo: "/icon-nintendo.png",
-};
+
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { name, image, price, originalPrice, platform, genre } = product;
   const discount = getDiscountPercent(price, originalPrice);
-
-  const iconSrc = PLATFORM_ICONS[platform] || "/icon-default-platform.png";
+  const iconSrc = PLATFORM_ICONS[platform] || DEFAULT_PLATFORM_ICON;
 
   return (
     <Link

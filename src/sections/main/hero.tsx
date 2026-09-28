@@ -8,8 +8,11 @@ import { mockProducts } from "../../mocks/mockProducts";
 import type { Product } from "../../types/product";
 import { formatPrice, getDiscountPercent } from "../../utils/priceFunctions";
 import { getProductUrl } from "../../utils/slug";
+import {
+  PLATFORM_ICONS,
+  DEFAULT_PLATFORM_ICON,
+} from "../../utils/platformIcons";
 
-// Seleciona os produtos com melhor avaliação para o hero
 const heroProducts: Product[] = [...mockProducts]
   .sort((a, b) => b.rating - a.rating)
   .slice(0, 5);
@@ -107,8 +110,10 @@ function HeroSlide({
     description,
     rating,
     reviewsCount,
+    platform,
   } = product;
   const discount = getDiscountPercent(price, originalPrice);
+  const iconSrc = PLATFORM_ICONS[platform] || DEFAULT_PLATFORM_ICON;
 
   return (
     <Link
@@ -127,13 +132,18 @@ function HeroSlide({
       ) : (
         <div className="flex h-full w-full items-center justify-center rounded-2xl bg-neon-gray/10 text-neon-gray">
           Capa do jogo (placeholder)
+          {platform}
         </div>
       )}
 
       <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-black/10" />
 
+      <div className="absolute left-8 top-12 z-10 flex h-10 w-10 items-center justify-center rounded-full ">
+        <Image src={iconSrc} alt={platform} width={35} height={35} />
+      </div>
+
       {discount !== null && (
-        <span className="bg-neon-gradient text-neon-white absolute top-2 -left-6 z-10 rounded-full px-3 py-1 font-gabarito text-lg font-bold tracking-wider">
+        <span className="bg-neon-gradient text-neon-white absolute top-2 -left-6 z-10 rounded-lg px-3 py-1 font-gabarito text-lg font-bold tracking-wider">
           -{discount}%
         </span>
       )}

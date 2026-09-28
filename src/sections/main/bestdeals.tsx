@@ -22,7 +22,7 @@ const deals: Product[] = [
   {
     id: "human-fall-flat-steam-latam",
     name: "Human: Fall Flat Steam Key LATAM",
-    image: "/capa-watchdogs.png",
+    image: "",
     platform: "Steam",
     price: 10.99,
     originalPrice: 17.99,
