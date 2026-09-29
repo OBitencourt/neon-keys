@@ -191,28 +191,29 @@ function HeroSlide({
           {description}
         </p>
 
-        <div className="mt-3 flex items-end justify-between gap-3 sm:mt-2">
+        {/* Alterações aplicadas no container dos botões/preço */}
+        <div className="mt-3 flex items-center justify-between gap-2 sm:mt-2 sm:gap-4">
           <button
             type="button"
-            className="bg-neon-gradient flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium text-neon-white transition-opacity hover:opacity-90 sm:gap-6 sm:px-6 sm:py-3 sm:text-lg"
+            className="bg-neon-gradient shrink-0 flex items-center justify-center gap-2 rounded-md px-3 py-2 text-xs font-medium text-neon-white whitespace-nowrap transition-opacity hover:opacity-90 sm:gap-6 sm:px-6 sm:py-3 sm:text-lg"
           >
             <Image
               src="/shopping-cart-white.svg"
               alt="Carrinho de compras"
               width={24}
               height={24}
-              className="h-5 w-5 sm:h-6 sm:w-6"
+              className="h-4 w-4 shrink-0 sm:h-6 sm:w-6"
             />
             <span>Comprar Agora</span>
           </button>
 
-          <div className="text-right">
+          <div className="shrink-0 text-right">
             {originalPrice && (
-              <span className="block text-sm text-neon-gray line-through sm:text-lg">
+              <span className="block text-xs text-neon-gray line-through sm:text-lg">
                 {formatPrice(originalPrice)}
               </span>
             )}
-            <span className="text-2xl font-bold text-neon-green sm:text-4xl">
+            <span className="text-xl font-bold text-neon-green sm:text-4xl">
               {formatPrice(price)}
             </span>
           </div>
