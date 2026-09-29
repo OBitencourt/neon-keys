@@ -31,7 +31,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
         {/* Breadcrumbs */}
         <div className="text-sm text-neon-gray/70 mb-8 flex items-center gap-2">
           <span>Home</span> &gt; <span>Shop</span> &gt; <span>Action</span> &gt;{" "}
-          <span className="text-neon-white font-medium truncate">{product.name}</span>
+          <span className="text-neon-white font-medium truncate">
+            {product.name}
+          </span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-10 items-start">
@@ -105,9 +107,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               </div>
             </div>
-            
-            <div className="flex flex-col gap-3 sm:gap-2">
 
+            <div className="flex flex-col gap-3 sm:gap-2">
               <h1 className="text-2xl sm:text-4xl md:text-5xl font-gabarito font-regular text-white leading-tight">
                 {product.name}
               </h1>
@@ -141,7 +142,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
 
             {/* Preço — já ajustado por você, só troquei py-2 por py-1 no desktop */}
-            <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4 py-1">
+            {/* Preço */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 py-1">
               <div className="flex flex-col">
                 {product.originalPrice && (
                   <span className="text-neon-gray text-lg sm:text-xl tracking-tight font-medium line-through">
@@ -149,13 +151,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </span>
                 )}
 
-                <span className="relative text-3xl sm:text-5xl font-bold tracking-tighter bg-neon-gradient bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(249,11,163,0.6)]">
+                <span className="relative text-4xl sm:text-5xl font-bold tracking-tighter bg-neon-gradient bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(249,11,163,0.6)]">
                   {formatPrice(product.price)}
                 </span>
               </div>
 
               {discount !== null && (
-                <div className="px-0.5 py-0.5 rounded-full sm:bg-neon-gradient font-medium text-sm sm:text-md">
+                <div className="sm:px-0.5 py-0.5 rounded-full sm:bg-neon-gradient font-medium text-sm sm:text-md self-start sm:self-auto">
                   <div className="flex items-center gap-1 py-1.5 px-3 sm:py-1.5 sm:bg-black rounded-full text-neon-gray">
                     You save{" "}
                     <span className="text-neon-pink font-semibold">
@@ -165,32 +167,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </div>
                 </div>
               )}
-            </div>
-
-            {/* Instant Delivery — mais compacto no desktop também */}
-            <div className="bg-neon-gradient p-[1.5px] rounded-xl shadow-[0_0_15px_rgba(249,11,163,0.2)]">
-              <div className="relative bg-black rounded-[10.5px] p-3 sm:p-4 flex items-center gap-3 sm:gap-4">
-                <span
-                  className="absolute inset-0 bg-neon-gradient opacity-20 transition-opacity duration-300 pointer-events-none"
-                  aria-hidden="true"
-                />
-
-                <Image
-                  src="/raio-icon.svg"
-                  alt="Instant Delivery"
-                  width={20}
-                  height={20}
-                  className="relative z-10 shrink-0 sm:w-6 sm:h-6"
-                />
-                <div className="relative z-10">
-                  <p className="text-[#EA0058] font-medium text-sm sm:text-base">
-                    Instant Delivery
-                  </p>
-                  <p className="text-white text-xs sm:text-sm">
-                    Your key will be delivered instantly to your email
-                  </p>
-                </div>
-              </div>
             </div>
 
             {/* Controles de Quantidade */}
@@ -236,111 +212,41 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </button>
             </div>
 
+            {/* Instant Delivery — mais compacto no desktop também */}
+            <div className="bg-neon-gradient p-[1.5px] rounded-xl shadow-[0_0_15px_rgba(249,11,163,0.2)]">
+              <div className="relative bg-black rounded-[10.5px] p-3 sm:p-4 flex items-center gap-3 sm:gap-4">
+                <span
+                  className="absolute inset-0 bg-neon-gradient opacity-20 transition-opacity duration-300 pointer-events-none"
+                  aria-hidden="true"
+                />
+
+                <Image
+                  src="/raio-icon.svg"
+                  alt="Instant Delivery"
+                  width={20}
+                  height={20}
+                  className="relative z-10 shrink-0 sm:w-6 sm:h-6"
+                />
+                <div className="relative z-10">
+                  <p className="text-[#EA0058] font-medium text-sm sm:text-base">
+                    Instant Delivery
+                  </p>
+                  <p className="text-white text-xs sm:text-sm">
+                    Your key will be delivered instantly to your email
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <p className="text-zinc-500 text-sm text-center font-regular">
               Express Checkout ⓘ
             </p>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 justify-items-center items-center">
-              <div className="flex items-center gap-2 text-zinc-400 justify-center">
-                <Image
-                  src="/gradient-lock.svg"
-                  alt="Secure"
-                  width={50}
-                  height={50}
-                />
-                <div>
-                  <p className="text-white text-md font-medium">100% Secure</p>
-                  <p className="text-sm text-neon-gray">SSL Encrypted</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 text-zinc-400 justify-center">
-                <Image
-                  src="/gradient-certified.svg"
-                  alt="Official Key"
-                  width={50}
-                  height={50}
-                />
-                <div>
-                  <p className="text-white text-md font-medium">
-                    Official Keys
-                  </p>
-                  <p className="text-sm text-neon-gray">Guaranteed</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 text-zinc-400 justify-center">
-                <Image
-                  src="/gradient-talk.svg"
-                  alt="Support"
-                  width={50}
-                  height={50}
-                />
-                <div>
-                  <p className="text-white text-md font-medium">24/7 Support</p>
-                  <p className="text-sm text-neon-gray">We're here to help</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 text-zinc-400 justify-center">
-                <Image
-                  src="/gradient-price.svg"
-                  alt="Best Price"
-                  width={50}
-                  height={50}
-                />
-                <div>
-                  <p className="text-white text-md font-medium">Best Price</p>
-                  <p className="text-sm text-neon-gray">Guaranteed</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
-        <div className="mt-14 p-[1.5px] rounded-2xl bg-neon-gradient">
-          <div className="bg-black rounded-[14.5px] py-6 px-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="flex flex-col items-center">
-              <p className="text-zinc-500 text-xs mb-1">Platform</p>
-              <p className="text-white font-bold text-sm">{product.platform}</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <Image
-                src="/gradient-region.svg"
-                alt="Region"
-                width={50}
-                height={50}
-                className="mb-2"
-              />
-              <p className="text-zinc-500 text-xs mb-1">Region</p>
-              <p className="text-white font-bold text-sm">{product.region}</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <Image
-                src="/gradient-price-2.svg"
-                alt="Type"
-                width={50}
-                height={50}
-                className="mb-2"
-              />
-              <p className="text-zinc-500 text-xs mb-1">Type</p>
-              <p className="text-white font-bold text-sm">{product.type}</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <Image
-                src="/gradient-check.svg"
-                alt="Region"
-                width={50}
-                height={50}
-                className="mb-2"
-              />
-              <p className="text-zinc-500 text-xs mb-1">Delivery</p>
-              <p className="text-white font-bold text-sm">{product.delivery}</p>
-            </div>
-          </div>
-        </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
-          <div className="p-[1.5px] rounded-2xl bg-neon-pink/90">
+          {/* Bloco 1: About this game (no mobile fica em 2º / no desktop volta ao normal) */}
+          <div className="p-[1.5px] rounded-2xl bg-neon-pink/90 order-2 lg:order-none">
             <div className="bg-black rounded-[14.5px] p-6 h-full">
               <h2 className="text-white font-bold text-lg pb-3">
                 About this game
@@ -352,7 +258,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-8">
+          {/* Bloco 2: Regiões + Informações (no mobile fica em 1º / no desktop volta ao normal) */}
+          <div className="flex flex-col gap-8 order-1 lg:order-none">
             <div className="p-[1.5px] rounded-2xl bg-neon-pink/90">
               <div className="bg-black rounded-[14.5px] p-6">
                 <h2 className="text-white font-bold text-lg mb-4 flex items-center gap-2">

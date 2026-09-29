@@ -19,7 +19,7 @@ const categories: Category[] = [
 
 export default function CategoriesMap() {
   return (
-    <section className="w-full px-4 py-16 sm:px-8">
+    <section className="w-full py-16 sm:px-8">
       <div className="mx-auto w-full max-w-[1240px]">
         <h2 className="mb-6 font-gabarito text-3xl font-bold tracking-wide text-left sm:text-5xl">
           <span className="text-neon-white font-medium">CATEGORIAS </span>
@@ -28,25 +28,25 @@ export default function CategoriesMap() {
           </span>
         </h2>
 
-        <div className="grid w-full grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid w-full grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
           {categories.map((category) => (
             <Link
               key={category.id}
               href={category.href}
-              className="group relative block h-[260px] w-full max-w-[400px] overflow-hidden rounded-2xl"
+              className="group relative block h-[140px] sm:h-[260px] w-full overflow-hidden rounded-xl sm:rounded-2xl"
             >
               <Image
                 src={category.image}
                 alt={category.label}
                 fill
-                sizes="(max-width: 768px) 100vw, 400px"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 400px"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
 
               {/* Overlay para garantir legibilidade do título */}
               <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/10 to-transparent" />
 
-              <h3 className="absolute bottom-5 left-5 font-gabarito text-xl font-semibold tracking-wide text-neon-white sm:text-2xl">
+              <h3 className="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 font-gabarito text-sm font-semibold tracking-wide text-neon-white sm:text-2xl">
                 {category.label}
               </h3>
             </Link>
