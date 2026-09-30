@@ -1,3 +1,6 @@
+"use client";
+
+import useEmblaCarousel from "embla-carousel-react";
 import ProductCard from "../../components/productcard";
 import type { Product } from "../../types/product";
 
@@ -90,8 +93,14 @@ const deals: Product[] = [
 ];
 
 export default function BestDeals() {
+  const [emblaRef] = useEmblaCarousel({
+    loop: false,
+    align: "start",
+  });
+
   return (
-    <section className="bg-black px-4 py-12 sm:px-8 sm:py-16">
+    <section className="w-full overflow-x-clip bg-black px-4 py-12 sm:px-8 sm:py-16">
+      {/* Título da seção */}
       <div className="mb-8 flex items-center justify-center gap-3 sm:mb-10 sm:gap-4">
         <div className="h-px w-8 bg-linear-to-r from-transparent to-neon-pink sm:w-28" />
         <h2 className="font-inder text-3xl font-regular tracking-wide whitespace-nowrap bg-neon-gradient bg-clip-text text-transparent sm:text-5xl">
@@ -100,11 +109,23 @@ export default function BestDeals() {
         <div className="h-px w-8 bg-linear-to-l from-transparent to-neon-orange sm:w-28" />
       </div>
 
-      <div className="mx-auto grid w-full max-w-[1550px] grid-cols-1 justify-items-center gap-8 px-6 sm:grid-cols-2 sm:gap-6 sm:px-0 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 2xl:px-20">
-        {deals.map((deal) => (
-          <div key={deal.id} className="w-full max-w-sm sm:max-w-none">
-            <ProductCard product={deal} />
+      {/* Mobile - Carrossel Embla */}
+      <div className="w-full sm:hidden">
+        <div ref={emblaRef} className="w-full overflow-x-clip py-2">
+          <div className="flex touch-pan-y">
+            {deals.map((deal) => (
+              <div key={deal.id} className="min-w-0 flex-[0_0_75%] px-2">
+                <ProductCard product={deal} />
+              </div>
+            ))}
           </div>
+        </div>
+      </div>
+
+      {/* Tablet/Desktop: grid normal */}
+      <div className="mx-auto hidden w-full max-w-[1550px] grid-cols-2 justify-items-center gap-6 px-0 sm:grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 2xl:px-20">
+        {deals.map((deal) => (
+          <ProductCard key={deal.id} product={deal} />
         ))}
       </div>
 
