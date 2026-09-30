@@ -12,7 +12,6 @@ interface PriceDealsProps {
   limit?: number;
 }
 
-// Hook simples: true = mobile (abaixo do breakpoint sm do Tailwind, 640px)
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
@@ -36,10 +35,11 @@ export default function PriceDeals({
 }: PriceDealsProps) {
   const isMobile = useIsMobile();
 
+  // Configuração otimizada para encaixe suave card por card
   const [emblaRef] = useEmblaCarousel({
     loop: false,
     align: "start",
-    containScroll: "trimSnaps",
+    duration: 25, // Controla a velocidade/suavidade da animação ao travar no card
   });
 
   const deals = useMemo(() => {
@@ -50,7 +50,8 @@ export default function PriceDeals({
     return limit ? filtered.slice(0, limit) : filtered;
   }, [minPrice, maxPrice, limit]);
 
-  const sectionTitle = `ATÉ R$${maxPrice}`;
+  const sectionTitle =
+    title || (minPrice > 0 ? `R$${minPrice} - R$${maxPrice}` : `ATÉ R$${maxPrice}`);
 
   if (deals.length === 0) return null;
 
@@ -67,7 +68,7 @@ export default function PriceDeals({
       {isMobile === true && (
         <div className="w-full">
           <div ref={emblaRef} className="w-full overflow-x-clip py-2">
-            <div className="flex touch-pan-y">
+            <div className="flex touch-pan-y select-none">
               {deals.map((deal) => (
                 <div key={deal.id} className="min-w-0 flex-[0_0_75%] px-2">
                   <ProductCard product={deal} />
