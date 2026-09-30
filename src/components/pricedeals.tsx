@@ -35,23 +35,24 @@ export default function PriceDeals({
 }: PriceDealsProps) {
   const isMobile = useIsMobile();
 
-  // Configuração otimizada para encaixe suave card por card
   const [emblaRef] = useEmblaCarousel({
     loop: false,
-    align: "start",
-    duration: 25, // Controla a velocidade/suavidade da animação ao travar no card
+    align: "center",
+    duration: 25,
   });
 
   const deals = useMemo(() => {
     const filtered = mockProducts.filter((p) => {
-      const aboveMin = minPrice === 0 ? p.price >= minPrice : p.price > minPrice;
+      const aboveMin =
+        minPrice === 0 ? p.price >= minPrice : p.price > minPrice;
       return aboveMin && p.price <= maxPrice;
     });
     return limit ? filtered.slice(0, limit) : filtered;
   }, [minPrice, maxPrice, limit]);
 
   const sectionTitle =
-    title || (minPrice > 0 ? `R$${minPrice} - R$${maxPrice}` : `ATÉ R$${maxPrice}`);
+    title ||
+    (minPrice > 0 ? `R$${minPrice} - R$${maxPrice}` : `ATÉ R$${maxPrice}`);
 
   if (deals.length === 0) return null;
 
@@ -68,12 +69,18 @@ export default function PriceDeals({
       {isMobile === true && (
         <div className="w-full">
           <div ref={emblaRef} className="w-full overflow-x-clip py-2">
-            <div className="flex touch-pan-y select-none">
+            <div className="flex touch-pan-y select-none gap-4">
+              {/* Espaçador invisível na esquerda para afastar o primeiro card sem encolhê-lo */}
+              <div className="shrink-0 w-8" />
+
               {deals.map((deal) => (
                 <div key={deal.id} className="min-w-0 flex-[0_0_75%] px-2">
                   <ProductCard product={deal} />
                 </div>
               ))}
+
+              {/* Espaçador no final para o último card também ter margem */}
+              <div className="shrink-0 w-8" />
             </div>
           </div>
         </div>
