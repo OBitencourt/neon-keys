@@ -67,17 +67,16 @@ export default function PriceDeals({
       {isMobile === true && (
         <div className="w-full">
           <div ref={emblaRef} className="w-full overflow-x-clip py-2">
-            <div className="flex touch-pan-y select-none gap-4">
-              <div className="shrink-0 w-8" />
+            <div className="flex touch-pan-y select-none gap-1">
+              <div className="shrink-0 w-18" />
 
               {deals.map((deal) => (
-                <div key={deal.id} className="min-w-0 flex-[0_0_75%] px-2">
+                <div key={deal.id} className="min-w-0 flex-[0_0_55%] px-0">
                   <ProductCard product={deal} />
                 </div>
               ))}
 
-              {/* Espaçador no final para o último card também ter margem */}
-              <div className="shrink-0 w-8" />
+              <div className="shrink-0 w-18" />
             </div>
           </div>
         </div>

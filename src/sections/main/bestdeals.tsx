@@ -95,7 +95,7 @@ const deals: Product[] = [
 export default function BestDeals() {
   const [emblaRef] = useEmblaCarousel({
     loop: false,
-    align: "start",
+    align: "center",
   });
 
   return (
@@ -112,12 +112,16 @@ export default function BestDeals() {
       {/* Mobile - Carrossel Embla */}
       <div className="w-full sm:hidden">
         <div ref={emblaRef} className="w-full overflow-x-clip py-2">
-          <div className="flex touch-pan-y">
+          <div className="flex touch-pan-y gap-1">
+            <div className="shrink-0 w-18" />
+
             {deals.map((deal) => (
-              <div key={deal.id} className="min-w-0 flex-[0_0_75%] px-2">
+              <div key={deal.id} className="min-w-0 flex-[0_0_55%] px-0">
                 <ProductCard product={deal} />
               </div>
             ))}
+
+            <div className="shrink-0 w-18" />
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ShopBanner from "../../src/components/shop/shopbanner";
 import ShopFilters from "../../src/components/shop/shopFilters";
 import ProductCard from "../../src/components/productcard";
@@ -20,7 +20,6 @@ const sortOptions = [
 function applyFilters(products: Product[], filters: ShopFilterState) {
   return products.filter((p) => {
     if (filters.category !== "All Products" && filters.category !== "Gift Cards") {
-      // ex: "Steam Games" -> "Steam"
       const platformFromCategory = filters.category.replace(" Games", "");
       if (p.platform !== platformFromCategory) return false;
     }
@@ -41,38 +40,71 @@ function sortProducts(products: Product[], sortBy: string) {
     case "name-asc":
       return sorted.sort((a, b) => a.name.localeCompare(b.name));
     default:
-      return sorted; // "best-selling" mantém a ordem original (mock)
+      return sorted;
   }
 }
 
 export default function ShopPage() {
   const [filters, setFilters] = useState<ShopFilterState>(defaultFilters);
   const [sortBy, setSortBy] = useState("best-selling");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const filteredProducts = useMemo(
     () => sortProducts(applyFilters(mockProducts, filters), sortBy),
     [filters, sortBy]
   );
 
+  // Trava o scroll da página enquanto o modal de filtros está aberto (mobile)
+  useEffect(() => {
+    document.body.style.overflow = filtersOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [filtersOpen]);
+
   return (
     <div className="bg-black min-h-screen">
       <ShopBanner />
 
-      <div className="px-36 pb-16 max-w-450 mx-auto flex flex-col md:flex-row gap-8 items-start">
-        <ShopFilters onChange={setFilters} />
+      <div className="px-4 pb-16 sm:px-8 md:px-16 lg:px-36 max-w-420 mx-auto flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+        <div
+          onClick={() => setFiltersOpen(false)}
+          className={`${
+            filtersOpen
+              ? "fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+              : "hidden"
+          } md:contents md:z-auto md:bg-transparent md:p-0`}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative mx-auto w-full max-w-sm max-h-[85vh] overflow-y-auto md:contents md:max-h-none"
+          >
+            {/* Botão de fechar — só aparece no modal mobile */}
+            <button
+              type="button"
+              onClick={() => setFiltersOpen(false)}
+              aria-label="Fechar filtros"
+              className="absolute right-0.5 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-neon-gradient text-lg font-bold text-neon-white shadow-lg md:hidden"
+            >
+              ×
+            </button>
 
-        <div className="flex-1 w-full">
+            <ShopFilters onChange={setFilters} />
+          </div>
+        </div>
+
+        <div className="w-full min-w-0 flex-1">
           {/* Barra superior: contagem de resultados + Sort by */}
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-neon-gray text-sm">
+          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-end text-neon-gray">
               Showing {filteredProducts.length} of {mockProducts.length}+ results
             </p>
 
-            <div className="bg-neon-gradient rounded-lg p-0.5">
+            <div className="self-end rounded-lg bg-neon-gradient p-0.5 sm:self-auto">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-black text-neon-white text-md rounded-lg px-4 py-2 outline-none appearance-none cursor-pointer"
+                className="cursor-pointer appearance-none rounded-lg bg-black px-3 py-2 text-sm text-neon-white outline-none sm:px-4 sm:text-md"
               >
                 {sortOptions.map((opt) => (
                   <option key={opt.value} value={opt.value} className="bg-black">
@@ -83,13 +115,25 @@ export default function ShopPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 lg:gap-10">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </div>
       </div>
+
+      {/* Botão flutuante de filtros — mobile apenas */}
+      <button
+        type="button"
+        onClick={() => setFiltersOpen(true)}
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full bg-neon-gradient px-5 py-3 text-sm font-semibold text-neon-white shadow-[0_0_20px_rgba(249,11,163,0.5)] md:hidden"
+      >
+        <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4">
+          <path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+        Filters
+      </button>
     </div>
   );
 }
