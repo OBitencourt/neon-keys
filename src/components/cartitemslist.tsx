@@ -32,16 +32,16 @@ export default function CartItemsList({
             key={product.id}
             className="bg-neon-gradient rounded-2xl p-[1.5px]"
           >
-            <div className="relative flex items-start gap-4 rounded-2xl bg-black p-4">
+            <div className="relative flex items-start gap-3 rounded-2xl bg-black p-3 md:gap-4 md:p-4">
               {/* Badge de desconto */}
               {discount !== null && (
-                <span className="bg-neon-gradient text-neon-white absolute -top-2 font-gabarito -left-6 z-10 rounded-full px-3 py-1 text-lg tracking-wider font-bold">
+                <span className="bg-neon-gradient text-neon-white absolute -top-2 -left-3 z-10 rounded-full px-2 py-0.5 font-gabarito text-sm font-bold tracking-wider md:-left-6 md:px-3 md:py-1 md:text-lg">
                   -{discount}%
                 </span>
               )}
 
               {/* Capa */}
-              <div className="w-45 h-45 rounded-lg overflow-hidden border border-neon-gray/30 shrink-0 flex items-center justify-center text-neon-gray relative">
+              <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-neon-gray/30 text-neon-gray md:h-45 md:w-45">
                 {product.image ? (
                   <Image
                     src={product.image}
@@ -56,18 +56,18 @@ export default function CartItemsList({
 
               {/* Infos */}
               <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="text-neon-white text-2xl font-semibold font-gabarito truncate max-w-90">
+                <div className="flex min-w-0 flex-col gap-2 md:flex-row md:items-start md:justify-between md:gap-3">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="line-clamp-2 max-w-full text-base font-semibold leading-tight font-gabarito text-neon-white md:max-w-90 md:text-2xl">
                       {product.name}
                     </h3>
-                    <p className="text-[#989393] font-bold font-inter flex flex-col text-xl">
+                    <p className="flex flex-col text-sm font-bold font-inter text-[#989393] md:text-xl">
                       {product.platform} Key {product.region ?? ""}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-6">
-                    <span className="text-neon-green text-xl font-bold">
+                  <div className="mt-2 flex w-full items-center justify-between gap-2 md:mt-0 md:w-auto md:gap-6">
+                    <span className="whitespace-nowrap text-base font-bold text-neon-green md:text-xl">
                         {formatPrice(product.price)}
                     </span>
 
@@ -80,22 +80,23 @@ export default function CartItemsList({
                         <Image
                         src="/gradient-trash.svg"
                         alt="Remover"
-                        width={50}
-                        height={20}
-                        className="w-6"
+                        width={24}
+                        height={24}
+                        className="h-5 w-5 md:h-6 md:w-6"
                         />
                     </button>
                   </div>
                 </div>
 
-                <div className="flex flex-col  gap-3 mt-3 text-[#989393] tracking-wider text-sm">
+                <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs tracking-wider text-[#989393] md:mt-3 md:flex-col md:items-start md:gap-3 md:text-sm">
                   <span className="flex items-center gap-1.5">
                     Platform
                     <Image
                       src={platformIconPath(product.platform)}
                       alt={product.platform}
-                      width={25}
-                      height={25}
+                      width={18}
+                      height={18}
+                      className="md:h-[25px] md:w-[25px]"
                     />
                     <span className="uppercase font-semibold font-gabarito">{product.platform}</span>
                   </span>
@@ -104,21 +105,22 @@ export default function CartItemsList({
                     <Image
                       src="/gray-globe.svg"
                       alt="Região"
-                      width={25}
-                      height={25}
+                      width={18}
+                      height={18}
+                      className="md:h-[25px] md:w-[25px]"
                     />
                     <span className="uppercase font-semibold font-gabarito">{product.region ?? "—"}</span>
                   </span>
                 </div>
 
-                <div className="flex justify-end mt-3">
+                <div className="mt-3 flex justify-end md:mt-3">
                   
 
                   <div className="flex bg-neon-gradient p-0.5 items-center rounded-lg overflow-hidden">
                     <div className="bg-zinc-950 rounded-md">
                       <button
                         aria-label="Diminuir quantidade"
-                        className="px-3 py-1.5 rounded-tl-sm rounded-bl-sm border-transparent border-r hover:border-zinc-600 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+                        className="rounded-tl-sm rounded-bl-sm border-transparent border-r px-2 py-1 text-zinc-400 transition-colors hover:border-zinc-600 hover:bg-zinc-800 hover:text-white md:px-3 md:py-1.5"
                         onClick={() =>
                           onQuantityChange(
                             product.id,
@@ -128,12 +130,12 @@ export default function CartItemsList({
                       >
                         -
                       </button>
-                      <span className="px-4 py-1.5 text-white font-semibold text-sm">
+                      <span className="px-3 py-1 text-sm font-semibold text-white md:px-4 md:py-1.5">
                         {quantity}
                       </span>
                       <button
                         aria-label="Aumentar quantidade"
-                        className="px-3 py-1.5 rounded-tr-sm rounded-br-sm border-transparent border-l hover:border-zinc-600 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+                        className="rounded-tr-sm rounded-br-sm border-transparent border-l px-2 py-1 text-zinc-400 transition-colors hover:border-zinc-600 hover:bg-zinc-800 hover:text-white md:px-3 md:py-1.5"
                         onClick={() =>
                           onQuantityChange(product.id, quantity + 1)
                         }
