@@ -50,9 +50,7 @@ export default function PriceDeals({
     return limit ? filtered.slice(0, limit) : filtered;
   }, [minPrice, maxPrice, limit]);
 
-  const sectionTitle =
-    title ||
-    (minPrice > 0 ? `R$${minPrice} - R$${maxPrice}` : `ATÉ R$${maxPrice}`);
+  const sectionTitle = `ATÉ R$${maxPrice}`;
 
   if (deals.length === 0) return null;
 
@@ -70,7 +68,6 @@ export default function PriceDeals({
         <div className="w-full">
           <div ref={emblaRef} className="w-full overflow-x-clip py-2">
             <div className="flex touch-pan-y select-none gap-4">
-              {/* Espaçador invisível na esquerda para afastar o primeiro card sem encolhê-lo */}
               <div className="shrink-0 w-8" />
 
               {deals.map((deal) => (

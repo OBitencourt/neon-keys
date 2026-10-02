@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Header = () => {
@@ -147,10 +147,27 @@ const Header = () => {
 };
 
 function SearchBar({ autoFocus = false }: { autoFocus?: boolean }) {
+  const router = useRouter();
+  const [query, setQuery] = useState("");
+
+  function handleSearch() {
+    const trimmed = query.trim();
+    if (!trimmed) return;
+    router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+  }
+
   return (
-    <div className="relative w-full">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSearch();
+      }}
+      className="relative w-full"
+    >
       <input
         type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
         autoFocus={autoFocus}
         placeholder="Search for a game..."
         className="
@@ -161,25 +178,24 @@ function SearchBar({ autoFocus = false }: { autoFocus?: boolean }) {
           border-neon-white/20
           bg-black
           pl-4
-          pr-4
+          pr-14
           text-sm
           text-neon-white
           placeholder:text-neon-white/40
           outline-none
           focus:border-neon-pink
-          md:pr-14
         "
       />
 
-      {/* Botão de busca: oculto no mobile (hidden), visível apenas no desktop (md:flex) */}
+      {/* Botão de busca — agora visível em todos os tamanhos */}
       <button
-        type="button"
+        type="submit"
         aria-label="Pesquisar"
-        className="absolute right-0 top-0 hidden h-full w-12 items-center justify-center rounded-r-md bg-neon-gradient transition-opacity hover:opacity-90 md:flex"
+        className="absolute right-0 top-0 flex h-full w-12 items-center justify-center rounded-r-md bg-neon-gradient transition-opacity hover:opacity-90"
       >
         <Image src="/lupa-searchbar.svg" alt="" width={18} height={18} />
       </button>
-    </div>
+    </form>
   );
 }
 
