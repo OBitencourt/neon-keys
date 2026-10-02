@@ -3,10 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ProfileNavItem } from "@/src/profile/profileNavItem";
 import { ProfileSidebar } from "@/src/profile/profileSidebar";
 
 export default function ProfilePage() {
+  const pathname = usePathname();
   const [name, setName] = useState("Neon Player");
   const [email, setEmail] = useState("neonplayer@gmail.com");
   const [dateOfBirth, setDateOfBirth] = useState("2004-07-29");
@@ -121,6 +123,7 @@ export default function ProfilePage() {
                     items-center
                     justify-center
                     gap-3
+                    w-full
                     rounded-lg
                     bg-black
                     px-5

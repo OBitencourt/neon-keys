@@ -7,6 +7,7 @@ import CartItemsList from "../../src/components/cartitemslist";
 import { initialCartItems } from "../../src/mocks/cartmock";
 import type { CartItem } from "../../src/types/cart";
 import { formatPrice } from "@/src/utils/priceFunctions";
+import { useRouter } from "next/navigation";
 
 const trustBadges = [
   { icon: "/why-icon1.png", label: "100% SECURE" },
@@ -25,6 +26,8 @@ const paymentIcons = [
 
 export default function CartPage() {
   const [items, setItems] = useState<CartItem[]>(initialCartItems);
+
+  const router = useRouter();
 
   function handleQuantityChange(productId: string, quantity: number) {
     setItems((prev) =>
@@ -145,6 +148,7 @@ export default function CartPage() {
 
               <button
                 type="button"
+                onClick={() => router.push("/checkout")}
                 className="w-full bg-neon-gradient cursor-pointer text-neon-white font-bold text-lg tracking-wide rounded-lg py-3.5 mt-6 flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
               >
                 PROCEED TO CHECKOUT 
