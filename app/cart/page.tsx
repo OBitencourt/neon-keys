@@ -86,7 +86,6 @@ export default function CartPage() {
             </span>
           </Link>
 
-          {/* Selo de confiança */}
           <div className="hidden rounded-2xl bg-neon-gradient p-[1.5px] md:block">
             <div className="flex flex-wrap items-center justify-around gap-3 rounded-2xl bg-black px-3 py-3 md:gap-4 md:px-6 md:py-4">
               {trustBadges.map((badge) => (
