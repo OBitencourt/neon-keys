@@ -60,7 +60,8 @@ export const ProfileSidebar = () => {
               label="Orders"
             />
 
-            <button
+            <Link
+              href="/login"
               type="button"
               onClick={handleLogout}
               className="
@@ -79,7 +80,7 @@ export const ProfileSidebar = () => {
               <Image src="/pink-logout.svg" alt="" width={23} height={23} />
 
               <span>Log out</span>
-            </button>
+            </Link>
           </nav>
 
           <div className="mx-5 my-4 h-px bg-neon-gray/40" />

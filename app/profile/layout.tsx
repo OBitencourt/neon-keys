@@ -88,13 +88,12 @@ export default function ProfileLayout({
             </div>
 
             {/* Botão de Logout separado abaixo */}
-            <button
+            <Link
               type="button"
               onClick={handleLogout}
-              className="w-full rounded-lg border border-neon-pink/70 px-3 py-2 text-[11px] font-bold tracking-wide text-neon-pink transition-colors hover:bg-neon-pink/10"
-            >
+              className="w-full rounded-lg border border-neon-pink/70 px-3 py-2 text-[11px] font-bold tracking-wide text-neon-pink transition-colors hover:bg-neon-pink/10" href={""}            >
               LOG OUT
-            </button>
+            </Link>
           </nav>
 
           {children}
