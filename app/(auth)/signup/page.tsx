@@ -6,10 +6,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, type SignupFormData } from "../../../src/utils/auth";
+import { useRouter } from "next/navigation";
+import { signUp } from "@/src/lib/auth-client";
 
 export default function SignupPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
+  const [serverError, setServerError] = useState<string | undefined>(undefined);
 
   const {
     register,
@@ -20,13 +23,16 @@ export default function SignupPage() {
   });
 
   async function onSubmit(data: SignupFormData) {
-    setServerError(null);
-    // TODO: plugar com better-auth, ex:
-    // const { error } = await authClient.signUp.email({
-    //   name: data.name, email: data.email, password: data.password,
-    // });
-    // if (error) setServerError(error.message);
-    console.log(data);
+    setServerError(undefined);
+    const { name, email, password } = data;
+    const result = await signUp.email({ name, email, password });
+
+    if(result.error) {
+      setServerError(result.error.message);
+      return;
+    }
+    console.log(data)
+    router.push("/shop");
   }
 
   return (

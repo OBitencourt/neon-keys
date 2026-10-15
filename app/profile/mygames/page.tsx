@@ -7,7 +7,7 @@ import type { OwnedGame } from "@/src/types/ownedGame";
 
 import { initialCartItems } from "@/src/mocks/cartmock";
 
-import { ProfileSidebar } from "@/src/profile/profileSidebar";
+import { ProfileSidebar } from "@/src/components/profile/profileSidebar";
 
 import OwnedGameCard from "@/src/components/mygames/ownedGameCard";
 import RevealKeyModal from "@/src/components/mygames/revealKeyModal";
