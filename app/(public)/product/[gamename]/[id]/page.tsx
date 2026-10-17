@@ -1,11 +1,12 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { mockProducts } from "../../../../src/mocks/mockProducts";
+import { mockProducts } from "@/src/mocks/mockProducts";
 import {
   formatPrice,
   getDiscountPercent,
-} from "../../../../src/utils/priceFunctions";
+} from "@/src/utils/priceFunctions";
 import { Product } from "@/src/types/product";
+import AddToCartButton from "@/src/components/addToCartButton";
 
 interface ProductPageProps {
   params: Promise<{ id: string }>;
@@ -190,16 +191,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
 
             <div className="flex gap-3 sm:gap-4">
-              <button className="flex-1 rounded-xl bg-neon-gradient font-medium text-white text-base sm:text-lg flex items-center justify-center gap-2 py-3 sm:py-3.5 hover:brightness-110 transition-all">
-                <Image
-                  src="/shopping-cart-white.svg"
-                  alt="Add to Cart"
-                  width={20}
-                  height={20}
-                  className="sm:w-6 sm:h-6"
-                />
-                <span>Add to Cart</span>
-              </button>
+              <AddToCartButton product={product} />
 
               <button className="p-4 sm:p-5 rounded-xl border border-neon-pink/40 bg-zinc-950 text-neon-pink hover:bg-neon-pink/10 hover:text-white transition-all">
                 <Image

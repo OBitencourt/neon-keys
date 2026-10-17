@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import ShopBanner from "../../src/components/shop/shopbanner";
-import ShopFilters from "../../src/components/shop/shopFilters";
-import ProductCard from "../../src/components/productcard";
-import type { Product } from "../../src/types/product";
-import { ShopFilterState, defaultFilters } from "../../src/utils/shopfilters";
-import { mockProducts } from "../../src/mocks/mockProducts";
+import ShopBanner from "@/src/components/shop/shopbanner";
+import ShopFilters from "@/src/components/shop/shopFilters";
+import ProductCard from "@/src/components/productcard";
+import type { Product } from "@/src/types/product";
+import { ShopFilterState, defaultFilters } from "@/src/utils/shopfilters";
+import { mockProducts } from "@/src/mocks/mockProducts";
 
 // Mock — troque por dados vindos da sua API/banco quando estiver pronto.
 

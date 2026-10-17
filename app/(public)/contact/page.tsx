@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import WhyChooseUs from "../../src/sections/main/whychooseus";
+import WhyChooseUs from "@/src/sections/main/whychooseus";
 
 const quickFacts = [
   { icon: "/gradient-email.svg", label: "Email Us", value: "support@neon-keys.com", isEmail: true },

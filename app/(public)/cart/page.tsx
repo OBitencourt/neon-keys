@@ -1,13 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import CartItemsList from "../../src/components/cartitemslist";
-import { initialCartItems } from "../../src/mocks/cartmock";
-import type { CartItem } from "../../src/types/cart";
+import CartItemsList from "@/src/components/cartitemslist";
 import { formatPrice } from "@/src/utils/priceFunctions";
 import { useRouter } from "next/navigation";
+import { useCart } from "@/src/context/cartContext";
 
 const trustBadges = [
   { icon: "/why-icon1.png", label: "100% SECURE" },
@@ -25,19 +23,8 @@ const paymentIcons = [
 ];
 
 export default function CartPage() {
-  const [items, setItems] = useState<CartItem[]>(initialCartItems);
-
+  const { items, hydrated, updateQuantity, removeItem } = useCart();
   const router = useRouter();
-
-  function handleQuantityChange(productId: string, quantity: number) {
-    setItems((prev) =>
-      prev.map((item) => (item.product.id === productId ? { ...item, quantity } : item))
-    );
-  }
-
-  function handleRemove(productId: string) {
-    setItems((prev) => prev.filter((item) => item.product.id !== productId));
-  }
 
   const subtotal = items.reduce(
     (sum, { product, quantity }) => sum + (product.originalPrice ?? product.price) * quantity,
@@ -61,7 +48,7 @@ export default function CartPage() {
         <div className="bg-neon-gradient rounded-full p-[1.5px]">
           <div className="block rounded-full bg-black px-3 py-1 text-xs font-semibold text-neon-white md:px-4 md:py-1.5 md:text-sm">
             <span className="bg-neon-gradient bg-clip-text text-transparent">
-                {items.length} {items.length === 1 ? "ITEM" : "ITEMS"}
+              {items.length} {items.length === 1 ? "ITEM" : "ITEMS"}
             </span>
           </div>
         </div>
@@ -69,11 +56,11 @@ export default function CartPage() {
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-5 lg:grid-cols-[1fr_380px] lg:gap-8">
         <div className="flex flex-col gap-5 md:gap-6">
-          {items.length > 0 ? (
+          {!hydrated ? null : items.length > 0 ? (
             <CartItemsList
               items={items}
-              onQuantityChange={handleQuantityChange}
-              onRemove={handleRemove}
+              onQuantityChange={updateQuantity}
+              onRemove={removeItem}
             />
           ) : (
             <p className="text-neon-gray">Seu carrinho está vazio.</p>
@@ -147,10 +134,11 @@ export default function CartPage() {
 
               <button
                 type="button"
+                disabled={items.length === 0}
                 onClick={() => router.push("/checkout")}
-                className="mt-5 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-neon-gradient py-3 text-base font-bold tracking-wide text-neon-white transition-opacity hover:opacity-90 md:mt-6 md:py-3.5 md:text-lg"
+                className="mt-5 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-neon-gradient py-3 text-base font-bold tracking-wide text-neon-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 md:mt-6 md:py-3.5 md:text-lg"
               >
-                PROCEED TO CHECKOUT 
+                PROCEED TO CHECKOUT
                 <Image src="/white-arrow-right.svg" alt="Proceed to Checkout" width={16} height={16} />
               </button>
             </div>

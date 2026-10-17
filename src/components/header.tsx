@@ -4,10 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { useCart } from "@/src/context/cartContext";
 
 const Header = () => {
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
+  const { itemCount, hydrated, openCart } = useCart();
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -89,18 +91,23 @@ const Header = () => {
             />
           </button>
 
-          <Link href="/cart" className="relative text-neon-pink">
+          <button
+            type="button"
+            onClick={openCart}
+            aria-label="Abrir carrinho"
+            className="relative text-neon-pink"
+          >
             <Image
               src="/header-bag-icon.svg"
-              alt="Carrinho de compras"
+              alt=""
               width={30}
               height={30}
               className="h-7 w-7 md:h-[30px] md:w-[30px]"
             />
             <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-extrabold text-black">
-              0
+              {hydrated ? itemCount : 0}
             </span>
-          </Link>
+          </button>
 
           <Link href="/profile" className="text-neon-pink">
             <Image
