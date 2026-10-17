@@ -1,6 +1,6 @@
 // app/categorias/page.tsx
-import { categories } from "../../src/components/categories/categories";
-import CategoryGrid from "../../src/components/categories/categoryGrid";
+import { categories } from "@/src/components/categories/categories";
+import CategoryGrid from "@/src/components/categories/categoryGrid";
 
 export default function CategoriasPage() {
   return (
