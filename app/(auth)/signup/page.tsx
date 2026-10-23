@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -8,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, type SignupFormData } from "../../../src/utils/auth";
 import { useRouter } from "next/navigation";
 import { signUp } from "@/src/lib/auth-client";
+import { getRedirectTarget } from "@/src/utils/redirect";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function SignupPage() {
       return;
     }
     console.log(data)
-    router.push("/shop");
+    router.push(getRedirectTarget());
   }
 
   return (

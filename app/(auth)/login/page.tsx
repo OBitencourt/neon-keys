@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginFormData } from "../../../src/utils/auth";
 import { signIn } from "@/src/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { getRedirectTarget } from "@/src/utils/redirect";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function LoginPage() {
       return;
     }
 
-    router.push("/shop");
+    router.push(getRedirectTarget());
   }
 
   async function handleGoogleSignIn() {
@@ -41,7 +42,7 @@ export default function LoginPage() {
 
     const result = await signIn.social({
       provider: "google",
-      callbackURL: "/shop",
+      callbackURL: getRedirectTarget(),
     });
 
     // Em caso de sucesso o browser é redirecionado para o Google,

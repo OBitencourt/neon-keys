@@ -2,10 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
-import { initialCartItems } from "../../src/mocks/cartmock";
-import type { CartItem } from "../../src/types/cart";
+import { useCart } from "@/src/context/cartContext";
 import { formatPrice } from "@/src/utils/priceFunctions";
 
 type PaymentMethod = "card" | "paypal" | "pix";
@@ -55,7 +53,7 @@ const paymentMethods = [
 ];
 
 export default function CheckoutPage() {
-  const [items] = useState<CartItem[]>(initialCartItems);
+  const { items, hydrated } = useCart();
 
   const [email, setEmail] = useState("");
 
@@ -153,6 +151,23 @@ export default function CheckoutPage() {
     setTimeout(() => {
       setIsProcessing(false);
     }, 1000);
+  }
+
+  if (hydrated && items.length === 0) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-black px-6 text-center">
+        <h1 className="text-3xl font-bold text-neon-white">Your cart is empty</h1>
+        <p className="text-sm text-neon-gray">
+          Add some games before checking out.
+        </p>
+        <Link
+          href="/shop"
+          className="rounded-lg bg-neon-gradient px-6 py-3 text-sm font-bold text-neon-white transition-opacity hover:opacity-90"
+        >
+          BROWSE GAMES
+        </Link>
+      </main>
+    );
   }
 
   return (
@@ -428,7 +443,7 @@ export default function CheckoutPage() {
 
               <button
                 type="button"
-                disabled={isProcessing}
+                disabled={isProcessing || items.length === 0}
                 onClick={handleCompletePurchase}
                 className="w-full mt-4 bg-neon-gradient text-neon-white font-medium text-sm tracking-wide rounded-md py-3 flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
               >

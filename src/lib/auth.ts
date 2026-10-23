@@ -1,10 +1,7 @@
 import { betterAuth } from "better-auth";
-import { MongoClient } from "mongodb";
 import { nextCookies } from "better-auth/next-js";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
-
-const client = new MongoClient("mongodb://localhost:27017/neonkeys");
-const db = client.db();
+import { db } from "./mongodb";
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,

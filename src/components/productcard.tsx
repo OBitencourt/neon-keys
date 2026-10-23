@@ -6,6 +6,8 @@ import type { Product } from "../types/product";
 import { formatPrice, getDiscountPercent } from "../utils/priceFunctions";
 import { getProductUrl } from "../utils/slug";
 import { PLATFORM_ICONS, DEFAULT_PLATFORM_ICON } from "../utils/platformIcons";
+import { useCart } from "@/src/context/cartContext";
+
 
 interface ProductCardProps {
   product: Product;
@@ -14,6 +16,7 @@ interface ProductCardProps {
 
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { addItem } = useCart()
   const { name, image, price, originalPrice, platform, genre } = product;
   const discount = getDiscountPercent(price, originalPrice);
   const iconSrc = PLATFORM_ICONS[platform] || DEFAULT_PLATFORM_ICON;
@@ -96,7 +99,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        // TODO: lógica de adicionar ao carrinho
+                        addItem(product);
                       }}
                       className="group relative flex w-full items-center justify-center gap-1 overflow-hidden rounded-full py-1.5 text-[10px] font-semibold text-neon-white transition-colors md:gap-2 md:py-2 md:text-xs"
                     >
