@@ -10,7 +10,16 @@ const productSchema = new Schema(
     platform: { type: String, required: true },
     genre: {
       type: String,
-      enum: ["Action", "Adventure", "RPG", "Racing", "Simulation", "Sports", "Strategy", "Other"],
+      enum: [
+        "Action",
+        "Adventure",
+        "RPG",
+        "Racing",
+        "Simulation",
+        "Sports",
+        "Strategy",
+        "Other",
+      ],
       default: "Other",
     },
     region: { type: String, required: true },
@@ -26,6 +35,49 @@ const productSchema = new Schema(
       enum: ["active", "inactive", "discontinued"],
       default: "active",
       index: true,
+    },
+    // Origem do cadastro
+    source: {
+      type: String,
+      enum: ["manual", "supplier"],
+      default: "supplier",
+      index: true,
+    },
+
+    // Steam - usado para obter imagens
+    steamAppId: {
+      type: Number,
+      min: 1,
+      default: null,
+    },
+
+    // Dados para publicação na Eneba
+    eneba: {
+      productId: {
+        type: String,
+        default: null,
+      },
+
+      auctionId: {
+        type: String,
+        default: null,
+      },
+
+      syncEnabled: {
+        type: Boolean,
+        default: false,
+      },
+
+      status: {
+        type: String,
+        enum: ["unpublished", "pending", "published", "failed"],
+        default: "unpublished",
+      },
+
+      lastSyncedAt: {
+        type: Date,
+        default: null,
+      },
     },
   },
   { timestamps: true },

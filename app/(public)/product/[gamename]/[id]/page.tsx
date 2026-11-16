@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getProductById } from "@/src/lib/services/products";
+import { getProductById } from "@/src/lib/eneba/products";
 import {
   formatPrice,
   getDiscountPercent,

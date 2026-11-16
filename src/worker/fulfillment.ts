@@ -1,7 +1,6 @@
 import { OrderModel } from "@/src/models/order";
 import { encryptKey } from "@/src/lib/crypto";
 import type { SupplierAdapter } from "@/src/lib/suppliers/supplierAdapter";
-import { EnebaAdapter } from "@/src/lib/suppliers/adapters/eneba/enebaAdapter";
 
 const adapters: Record<string, SupplierAdapter> = {
   eneba: new EnebaAdapter(),
