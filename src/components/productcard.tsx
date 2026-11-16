@@ -13,8 +13,6 @@ interface ProductCardProps {
   product: Product;
 }
 
-
-
 export default function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart()
   const { name, image, price, originalPrice, platform, genre } = product;

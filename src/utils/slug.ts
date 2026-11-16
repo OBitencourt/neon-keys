@@ -14,4 +14,5 @@ export function getProductSlug(name: string): string {
 */
 export function getProductUrl(product: Pick<Product, "id" | "name">): string {
   return `/product/${getProductSlug(product.name)}/${product.id}`;
-}
+} 
+
