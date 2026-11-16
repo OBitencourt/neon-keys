@@ -12,6 +12,7 @@ export interface NormalizedSupplierProduct {
   genre: GameGenre;
   region: string;
   excludedCountries: string[];
+  allowedCountries?: string[]; // quando o fornecedor dá uma lista de países permitidos
   type: string;
 }
 

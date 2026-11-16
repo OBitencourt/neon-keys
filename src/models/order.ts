@@ -3,20 +3,17 @@ import { Schema, model, models } from "mongoose";
 const orderItemSchema = new Schema(
   {
     productId: { type: Schema.Types.ObjectId, ref: "Product" },
-
     name: { type: String, required: true },
     image: { type: String, default: "" },
     platform: { type: String, required: true },
-
     quantity: { type: Number, required: true, min: 1 },
     unitSalePrice: { type: Number, required: true, min: 0 },
-    unitCostPrice: { type: Number, required: true, min: 0 },
-
+    unitCostPrice: { type: Number, required: true, min: 0 }, // cêntimos
     supplier: { type: String, required: true },
     supplierProductId: { type: String, required: true },
     supplierOfferId: { type: String },
 
-    // Guardar CIFRADAS
+    // Guardar CIFRADAS (ver src/lib/crypto.ts)
     keys: {
       type: [
         {
@@ -26,6 +23,18 @@ const orderItemSchema = new Schema(
       ],
       default: [],
     },
+
+    // Estado da compra ao fornecedor, por linha
+    fulfillment: {
+      status: {
+        type: String,
+        enum: ["pending", "processing", "completed", "failed"],
+        default: "pending",
+      },
+      ref: { type: Schema.Types.Mixed, default: null },
+      purchaseAttemptedAt: { type: Date, default: null },
+      error: { type: String, default: null },
+    },
   },
   { _id: false },
 );
@@ -34,7 +43,6 @@ const orderSchema = new Schema(
   {
     userId: { type: String, required: true, index: true },
     email: { type: String, required: true },
-
     items: {
       type: [orderItemSchema],
       required: true,
@@ -43,7 +51,6 @@ const orderSchema = new Schema(
         message: "A encomenda precisa de ter pelo menos um item.",
       },
     },
-
     currency: { type: String, required: true, uppercase: true, default: "EUR" },
     subtotal: { type: Number, required: true, min: 0 },
     total: { type: Number, required: true, min: 0 },
@@ -54,7 +61,6 @@ const orderSchema = new Schema(
       default: "pending",
       index: true,
     },
-
     fulfillmentStatus: {
       type: String,
       enum: ["pending", "processing", "completed", "failed"],
@@ -64,17 +70,12 @@ const orderSchema = new Schema(
 
     stripePaymentIntentId: { type: String, unique: true, sparse: true },
 
-    supplierOrderIds: {
-      type: [
-        {
-          supplier: { type: String, required: true },
-          orderId: { type: String, required: true },
-        },
-      ],
-      default: [],
-    },
+    // Bloqueio enquanto um worker processa a encomenda
+    lockedUntil: { type: Date, default: null },
   },
   { timestamps: true },
 );
+
+orderSchema.index({ paymentStatus: 1, fulfillmentStatus: 1, lockedUntil: 1 });
 
 export const OrderModel = models.Order ?? model("Order", orderSchema);

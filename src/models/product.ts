@@ -8,32 +8,19 @@ const productSchema = new Schema(
     image: { type: String, default: "" },
     gallery: { type: [String], default: [] },
     platform: { type: String, required: true },
-
     genre: {
       type: String,
-      enum: [
-        "Action",
-        "Adventure",
-        "RPG",
-        "Racing",
-        "Simulation",
-        "Sports",
-        "Strategy",
-        "Other",
-      ],
+      enum: ["Action", "Adventure", "RPG", "Racing", "Simulation", "Sports", "Strategy", "Other"],
       default: "Other",
     },
-
     region: { type: String, required: true },
     excludedCountries: { type: [String], default: [] },
+    allowedCountries: { type: [String], default: [] },
     type: { type: String, required: true },
-
     salePrice: { type: Number, required: true, min: 0 },
     originalPrice: { type: Number, min: 0 },
-
     rating: { type: Number, default: 0, min: 0, max: 5 },
     reviewsCount: { type: Number, default: 0, min: 0 },
-
     status: {
       type: String,
       enum: ["active", "inactive", "discontinued"],
@@ -47,5 +34,4 @@ const productSchema = new Schema(
 productSchema.index({ status: 1, genre: 1, platform: 1, salePrice: 1 });
 productSchema.index({ name: "text" });
 
-export const ProductModel =
-  models.Product ?? model("Product", productSchema);
+export const ProductModel = models.Product ?? model("Product", productSchema);

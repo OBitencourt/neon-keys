@@ -3,55 +3,53 @@ import type {
   NormalizedSupplierOffer,
 } from "@/src/types/suppliers";
 
-// Produto normalizado com as suas ofertas
 export interface SupplierCatalogEntry {
   product: NormalizedSupplierProduct;
   offers: NormalizedSupplierOffer[];
 }
 
-// Dados necessários para comprar um produto à fornecedora.
 export interface SupplierPurchaseItem {
   supplierProductId: string;
   supplierOfferId?: string;
   quantity: number;
-  unitCostPrice: number; // em cêntimos
+  unitCostPrice: number; // cêntimos
   currency: string;
 }
 
-// Resultado da criação de uma encomenda à fornecedora.
-export interface SupplierOrder {
+export interface SupplierPurchaseResult {
   supplierOrderId: string;
   status: string;
+  // Dados opacos que o adaptador precisa para continuar mais tarde
+  supplierRef: Record<string, unknown>;
 }
 
-// Chave digital devolvida pela fornecedora.
 export interface SupplierDeliveredKey {
   key: string;
   supplierProductId?: string;
 }
 
-// Contrato comum que cada adaptador de fornecedor deve implementar.
+export type FulfillmentStatus =
+  | { state: "processing"; supplierRef?: Record<string, unknown> }
+  | { state: "failed"; reason?: string }
+  | { state: "completed"; keys: SupplierDeliveredKey[] };
+
 export interface SupplierAdapter {
   readonly supplier: string;
 
-  // Catálogo paginado, para o sync
+  // Catálogo paginado por cursor
   listProducts(params: {
-    page: number;
+    cursor?: string;
     limit: number;
-  }): Promise<{ items: SupplierCatalogEntry[]; hasMore: boolean }>;
+  }): Promise<{ items: SupplierCatalogEntry[]; nextCursor: string | null }>;
 
-  // Pesquisa pontual
   searchProducts(query: string): Promise<NormalizedSupplierProduct[]>;
-
-  // Ofertas, preços e disponibilidade
   getOffers(supplierProductId: string): Promise<NormalizedSupplierOffer[]>;
 
-  // Compra à fornecedora
   purchase(
     items: SupplierPurchaseItem[],
     externalOrderId: string,
-  ): Promise<SupplierOrder>;
+  ): Promise<SupplierPurchaseResult>;
 
-  // Recuperação das chaves compradas
-  getKeys(supplierOrderId: string): Promise<SupplierDeliveredKey[]>;
+  // Chamado repetidamente até devolver "completed" ou "failed"
+  checkFulfillment(supplierRef: Record<string, unknown>): Promise<FulfillmentStatus>;
 }
