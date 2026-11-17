@@ -1,4 +1,4 @@
-import { getProducts } from "@/src/lib/eneba/products";
+import { getProducts } from "@/src/lib/products";
 import ShopClient from "./ShopClient";
 
 export const dynamic = "force-dynamic";

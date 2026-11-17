@@ -1,4 +1,4 @@
-import { getProducts } from "@/src/lib/eneba/products";
+import { getProducts } from "@/src/lib/products";
 
 import PriceDeals from "@/src/components/pricedeals";
 import BestDeals from "@/src/sections/main/bestdeals";

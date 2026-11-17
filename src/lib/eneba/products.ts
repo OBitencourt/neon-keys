@@ -1,184 +1,51 @@
-
 import "server-only";
 
-import { Types } from "mongoose";
-import { connectDB } from "@/src/lib/mongodb";
+import { enebaGraphQL } from "./client";
 
-import { ProductModel } from "@/src/models/product";
-import { ProductKeyModel } from "@/src/models/productKey";
-import { SupplierOfferModel } from "@/src/models/supplierOffer";
-
-import type { Product, GameGenre } from "@/src/types/product";
-
-type ProductRow = {
-  _id: Types.ObjectId;
-  source?: "manual" | "supplier";
+export interface EnebaProduct {
+  id: string;
   name: string;
-  image?: string;
-  heroImage?: string;
-  gallery?: string[];
-  platform: string;
-  salePrice: number;
-  originalPrice?: number;
-  genre: GameGenre;
-  region: string;
-  rating?: number;
-  reviewsCount?: number;
-  description?: string;
-  allowedCountries?: string[];
-  excludedCountries?: string[];
-  steamAppId?: number | null;
-};
+}
 
-type OfferRow = {
-  productId: Types.ObjectId;
-  availableQuantity?: number | null;
-};
-
-type KeyStockRow = {
-  _id: Types.ObjectId;
-  quantity: number;
-};
-
-// Transforma o documento do MongoDB no Product do frontend.
-function present(row: ProductRow, quantity: number): Product {
-  return {
-    id: row._id.toString(),
-    name: row.name,
-
-    // Images
-    image: row.image && row.image !== "/" ? row.image : "",
-    heroImage: row.heroImage ?? "",
-    gallery: row.gallery ?? [],
-
-    // Game information
-    platform: row.platform,
-    genre: row.genre,
-    type: "Key",
-    steamAppId: row.steamAppId ?? null,
-
-    // Pricing
-    price: row.salePrice,
-    originalPrice: row.originalPrice,
-
-    // Region restrictions
-    region: row.region,
-    allowedCountries: row.allowedCountries ?? [],
-    excludedCountries: row.excludedCountries ?? [],
-
-    // Reviews
-    rating: row.rating ?? 0,
-    reviewsCount: row.reviewsCount ?? 0,
-
-    // Description
-    description: row.description ?? "",
-
-    // Delivery
-    delivery: "Instant Delivery",
-
-    // Inventory
-    stock: quantity,
-    stockStatus: quantity > 0 ? "in_stock" : "out_of_stock",
-    // Product origin
-    source: row.source ?? "supplier",
+interface SearchProductsResponse {
+  S_products: {
+    edges: {
+      node: EnebaProduct;
+    }[];
   };
 }
 
-// Calcula o estoque conforme a origem de cada produto.
-async function getStockQuantities(
-  products: ProductRow[],
-): Promise<Map<string, number>> {
-  const quantities = new Map<string, number>();
+const SEARCH_PRODUCTS = `
+  query SearchEnebaProducts($search: String!, $first: Int!) {
+    S_products(search: $search, first: $first) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
 
-  const manualIds = products
-    .filter((product) => product.source === "manual")
-    .map((product) => product._id);
+export async function searchEnebaProducts(
+  search: string,
+): Promise<EnebaProduct[]> {
+  const term = search.trim();
 
-  const supplierIds = products
-    .filter((product) => product.source !== "manual")
-    .map((product) => product._id);
-
-  // Estoque próprio: conta as chaves disponíveis.
-  const keyStock = (await ProductKeyModel.aggregate([
-    {
-      $match: {
-        productId: { $in: manualIds },
-        status: "available",
-      },
-    },
-    {
-      $group: {
-        _id: "$productId",
-        quantity: { $sum: 1 },
-      },
-    },
-  ])) as KeyStockRow[];
-
-  for (const item of keyStock) {
-    quantities.set(item._id.toString(), item.quantity);
+  if (term.length < 2 || term.length > 100) {
+    throw new Error("Search must contain 2 to 100 characters");
   }
 
-  // Fornecedores externos: soma suas ofertas disponíveis.
-  const offers = (await SupplierOfferModel.find({
-    productId: { $in: supplierIds },
-    status: "available",
-    currency: "EUR",
-  })
-    .select("productId availableQuantity")
-    .lean()) as unknown as OfferRow[];
-
-  for (const offer of offers) {
-    const id = offer.productId.toString();
-
-    quantities.set(
-      id,
-      (quantities.get(id) ?? 0) + (offer.availableQuantity ?? 0),
-    );
-  }
-
-  return quantities;
-}
-
-// Busca todos os produtos ativos.
-export async function getProducts(): Promise<Product[]> {
-  await connectDB();
-
-  const products = (await ProductModel.find({
-    type: "Game",
-    status: "active",
-  })
-    .sort({ createdAt: -1 })
-    .lean()) as unknown as ProductRow[];
-
-  if (!products.length) return [];
-
-  const quantities = await getStockQuantities(products);
-
-  return products.map((row) =>
-    present(row, quantities.get(row._id.toString()) ?? 0),
+  const result = await enebaGraphQL<SearchProductsResponse>(
+    SEARCH_PRODUCTS,
+    {
+      search: term,
+      first: 20,
+    },
   );
-}
 
-// Busca um produto específico pelo ObjectId.
-export async function getProductById(
-  id: string,
-): Promise<Product | null> {
-  if (!Types.ObjectId.isValid(id)) return null;
-
-  await connectDB();
-
-  const product = (await ProductModel.findOne({
-    _id: id,
-    type: "Game",
-    status: "active",
-  }).lean()) as unknown as ProductRow | null;
-
-  if (!product) return null;
-
-  const quantities = await getStockQuantities([product]);
-
-  return present(
-    product,
-    quantities.get(product._id.toString()) ?? 0,
+  return result.S_products.edges.map(
+    (edge) => edge.node,
   );
 }
