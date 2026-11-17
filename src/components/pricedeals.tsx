@@ -3,9 +3,10 @@
 import useEmblaCarousel from "embla-carousel-react";
 import { useEffect, useMemo, useState } from "react";
 import ProductCard from "../components/productcard";
-import { mockProducts } from "../mocks/mockProducts";
+import type { Product } from "../types/product";
 
 interface PriceDealsProps {
+  products: Product[];
   maxPrice: number;
   minPrice?: number;
   title?: string;
@@ -32,6 +33,7 @@ export default function PriceDeals({
   minPrice = 0,
   title,
   limit,
+  products
 }: PriceDealsProps) {
   const isMobile = useIsMobile();
 
@@ -42,15 +44,17 @@ export default function PriceDeals({
   });
 
   const deals = useMemo(() => {
-    const filtered = mockProducts.filter((p) => {
+    const filtered = products.filter((p) => {
       const aboveMin =
         minPrice === 0 ? p.price >= minPrice : p.price > minPrice;
+
       return aboveMin && p.price <= maxPrice;
     });
-    return limit ? filtered.slice(0, limit) : filtered;
-  }, [minPrice, maxPrice, limit]);
 
-  const sectionTitle = `ATÉ R$${maxPrice}`;
+    return limit ? filtered.slice(0, limit) : filtered;
+  }, [products, minPrice, maxPrice, limit]);
+
+  const sectionTitle = title ?? `ATÉ ${maxPrice} €`;
 
   if (deals.length === 0) return null;
 

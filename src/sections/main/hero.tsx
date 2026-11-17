@@ -4,8 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { mockProducts } from "../../mocks/mockProducts";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "../../types/product";
 import { formatPrice, getDiscountPercent } from "../../utils/priceFunctions";
 import { getProductUrl } from "../../utils/slug";
@@ -14,23 +13,24 @@ import {
   DEFAULT_PLATFORM_ICON,
 } from "../../utils/platformIcons";
 
-const heroProducts: Product[] = [...mockProducts]
-  .sort((a, b) => b.rating - a.rating)
-  .slice(0, 5);
+export default function HeroSection({ products }: { products: Product[] }) {
+  const heroProducts = useMemo(
+    () => [...products].sort((a, b) => b.rating - a.rating).slice(0, 5),
+    [products],
+  );
 
-export default function HeroSection() {
   // useRef para o plugin não ser recriado a cada render
   const autoplay = useRef(
     Autoplay({
       delay: 3500,
       stopOnInteraction: false, // continua depois de arrastar / clicar nas setas
       stopOnMouseEnter: true, // pausa com o rato por cima (desktop)
-    })
+    }),
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "center" },
-    [autoplay.current]
+    [autoplay.current],
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -50,6 +50,10 @@ export default function HeroSection() {
       emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi, onSelect]);
+
+  if (heroProducts.length === 0) {
+    return null;
+  }
 
   return (
     <div className="relative w-full px-2 py-6 sm:px-8 sm:py-10">
@@ -164,22 +168,24 @@ function HeroSlide({
       )}
 
       {/* Avaliações */}
-      <div className="absolute right-3 top-3 inline-flex items-center overflow-hidden rounded-lg border border-zinc-500 bg-black/90 font-sans text-neon-white sm:right-4 sm:top-4">
-        <div className="flex items-center gap-1.5 px-2 py-1 sm:gap-2 sm:border-r sm:border-zinc-500 sm:px-3 sm:py-1.5">
-          <Image
-            src="/star-gradient.svg"
-            alt="Estrela"
-            width={20}
-            height={20}
-            className="h-4 w-4 sm:h-6 sm:w-6"
-          />
-          <span className="text-xs font-semibold sm:text-sm">{rating}</span>
-        </div>
+      {reviewsCount > 0 && (
+        <div className="absolute right-3 top-3 inline-flex items-center overflow-hidden rounded-lg border border-zinc-500 bg-black/90 font-sans text-neon-white sm:right-4 sm:top-4">
+          <div className="flex items-center gap-1.5 px-2 py-1 sm:gap-2 sm:border-r sm:border-zinc-500 sm:px-3 sm:py-1.5">
+            <Image
+              src="/star-gradient.svg"
+              alt="Estrela"
+              width={20}
+              height={20}
+              className="h-4 w-4 sm:h-6 sm:w-6"
+            />
+            <span className="text-xs font-semibold sm:text-sm">{rating}</span>
+          </div>
 
-        <div className="hidden px-3 py-1.5 text-sm font-semibold sm:block">
-          {(reviewsCount / 1000).toFixed(1)}K avaliações
+          <div className="hidden px-3 py-1.5 text-sm font-semibold sm:block">
+            {(reviewsCount / 1000).toFixed(1)}K avaliações
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Conteúdo inferior */}
       <div className="absolute bottom-0 left-0 w-full p-4 sm:p-6 lg:p-10">
@@ -193,10 +199,7 @@ function HeroSlide({
 
         {/* Alterações aplicadas no container dos botões/preço */}
         <div className="mt-3 flex items-center justify-between gap-2 sm:mt-2 sm:gap-4">
-          <button
-            type="button"
-            className="bg-neon-gradient shrink-0 flex items-center justify-center gap-2 rounded-md px-3 py-2 text-xs font-medium text-neon-white whitespace-nowrap transition-opacity hover:opacity-90 sm:gap-6 sm:px-6 sm:py-3 sm:text-lg"
-          >
+          <span className="bg-neon-gradient shrink-0 flex items-center justify-center gap-2 rounded-md px-3 py-2 text-xs font-medium text-neon-white whitespace-nowrap transition-opacity hover:opacity-90 sm:gap-6 sm:px-6 sm:py-3 sm:text-lg">
             <Image
               src="/shopping-cart-white.svg"
               alt="Carrinho de compras"
@@ -205,7 +208,7 @@ function HeroSlide({
               className="h-4 w-4 shrink-0 sm:h-6 sm:w-6"
             />
             <span>Comprar Agora</span>
-          </button>
+          </span>
 
           <div className="shrink-0 text-right">
             {originalPrice && (

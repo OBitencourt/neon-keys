@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import RegionFields, { emptyRegion, type RegionValue } from "./regionFields";
 import { regionLabel } from "@/src/config/regions";
+import { getProductUrl } from "@/src/utils/slug";
 
 type AdminProduct = {
   id: string;
@@ -707,7 +708,7 @@ export default function ProductsAdminClient({ products }: Props) {
                           </Link>
 
                           <Link
-                            href={`/product/${product.id}`}
+                            href={getProductUrl(product)}
                             className="text-xs text-neon-pink hover:underline"
                           >
                             View
