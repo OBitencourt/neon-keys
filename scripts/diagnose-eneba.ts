@@ -1,5 +1,5 @@
 
-import { enebaQuery } from "../src/lib/suppliers/adapters/eneba/client";
+/* import { enebaQuery } from "../src/lib/suppliers/adapters/eneba/client";
 
 async function main() {
   console.log("GraphQL URL:", process.env.ENEBA_GRAPHQL_URL);
@@ -75,3 +75,5 @@ async function main() {
 }
 
 main().catch(console.error);
+
+*/
