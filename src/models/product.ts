@@ -5,8 +5,21 @@ const productSchema = new Schema(
     slug: { type: String, required: true, unique: true, trim: true },
     name: { type: String, required: true, trim: true },
     description: { type: String, default: "" },
-    image: { type: String, default: "" },
-    gallery: { type: [String], default: [] },
+    image: {
+      type: String,
+      default: "",
+    },
+
+    heroImage: {
+      type: String,
+      default: "",
+    },
+
+    gallery: {
+      type: [String],
+      default: [],
+    },
+    
     platform: { type: String, required: true },
     genre: {
       type: String,
@@ -28,7 +41,7 @@ const productSchema = new Schema(
     includedCountries: { type: [String], default: [] },
     excludedCountries: { type: [String], default: [] },
     allowedCountries: { type: [String], default: [] },
-    
+
     type: { type: String, required: true },
     salePrice: { type: Number, required: true, min: 0 },
     originalPrice: { type: Number, min: 0 },

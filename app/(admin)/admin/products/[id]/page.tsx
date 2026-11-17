@@ -43,6 +43,7 @@ export default async function EditProductPage({ params }: PageProps) {
         salePrice: product.salePrice,
         originalPrice: product.originalPrice ?? null,
         image: product.image ?? "",
+        heroImage: product.heroImage ?? "",
         gallery: product.gallery ?? [],
         steamAppId: product.steamAppId ?? null,
         excludedCountries: product.excludedCountries ?? [],

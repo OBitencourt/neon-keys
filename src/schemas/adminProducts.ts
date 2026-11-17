@@ -49,6 +49,8 @@ const productBase = z.object({
 
   image: z.union([httpsUrl, z.literal("")]),
 
+  heroImage: z.union([httpsUrl, z.literal("")]),
+
   gallery: z.array(httpsUrl).max(8),
 
   steamAppId: z.number().int().positive().nullable(),

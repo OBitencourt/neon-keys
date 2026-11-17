@@ -86,6 +86,7 @@ export async function POST(request: NextRequest) {
       includedCountries: data.includedCountries,
 
       image: data.image,
+      heroImage: data.heroImage,
       gallery: data.gallery,
 
       salePrice: data.salePrice,

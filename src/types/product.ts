@@ -12,6 +12,7 @@ export interface Product {
   id: string;
   name: string;
   image: string;
+  heroImage?: string;
   platform: string;
   price: number;
   originalPrice?: number;

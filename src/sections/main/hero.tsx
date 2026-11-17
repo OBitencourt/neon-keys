@@ -127,6 +127,9 @@ function HeroSlide({
   const discount = getDiscountPercent(price, originalPrice);
   const iconSrc = PLATFORM_ICONS[platform] || DEFAULT_PLATFORM_ICON;
 
+  const bannerImage =
+    product.heroImage || product.gallery?.[0] || product.image;
+
   return (
     <Link
       href={getProductUrl(product)}
@@ -134,17 +137,19 @@ function HeroSlide({
         isActive ? "scale-100 opacity-100" : "scale-95 opacity-40"
       }`}
     >
-      {image ? (
+      {bannerImage ? (
         <Image
-          src={image}
-          alt={name}
+          src={bannerImage}
+          alt={product.name}
           fill
-          className="rounded-2xl object-cover"
+          priority={isActive}
+          quality={85}
+          sizes="(max-width: 640px) 88vw, (max-width: 1024px) 75vw, 65vw"
+          className="rounded-2xl object-cover object-center"
         />
       ) : (
         <div className="flex h-full w-full items-center justify-center rounded-2xl bg-neon-gray/10 text-neon-gray">
-          Capa do jogo (placeholder)
-          {platform}
+          Game artwork unavailable
         </div>
       )}
 

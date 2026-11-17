@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import RegionFields, { type RegionValue } from "./regionFields";
 import type { RegionKey } from "@/src/config/regions";
+import SteamImagePicker from "./steamImagePicker";
 
 interface EditableProduct {
   id: string;
@@ -17,6 +18,7 @@ interface EditableProduct {
   salePrice: number;
   originalPrice: number | null;
   image: string;
+  heroImage: string;
   gallery: string[];
   steamAppId: number | null;
   excludedCountries: string[];
@@ -56,6 +58,7 @@ export default function EditProductForm({
     salePrice: String(product.salePrice),
     originalPrice: String(product.originalPrice ?? ""),
     image: product.image,
+    heroImage: product.heroImage ?? "",
     gallery: product.gallery.join("\n"),
     steamAppId: String(product.steamAppId ?? ""),
     status: product.status,
@@ -93,6 +96,7 @@ export default function EditProductForm({
         ? Number(form.originalPrice.replace(",", "."))
         : null,
       image: form.image.trim(),
+      heroImage: form.heroImage.trim(),
       gallery: form.gallery
         .split(/\r?\n/)
         .map((url) => url.trim())
@@ -261,12 +265,41 @@ export default function EditProductForm({
             <section className="space-y-4 border-t border-white/10 pt-6">
               <h2 className="font-gabarito text-xl font-semibold">Images</h2>
 
+              <SteamImagePicker
+                steamAppId={form.steamAppId}
+                image={form.image}
+                heroImage={form.heroImage}
+                gallery={form.gallery
+                  .split(/\r?\n/)
+                  .map((url) => url.trim())
+                  .filter(Boolean)}
+                onChange={(value) => {
+                  setForm((prev) => ({
+                    ...prev,
+                    image: value.image,
+                    heroImage: value.heroImage,
+                    gallery: value.gallery.join("\n"),
+                  }));
+                }}
+              />
+
               <div>
                 <label className={labelClass}>Cover Image URL</label>
                 <input
                   className={fieldClass}
                   value={form.image}
                   onChange={(e) => update("image", e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label className={labelClass}>Hero Image URL</label>
+
+                <input
+                  type="url"
+                  className={fieldClass}
+                  value={form.heroImage}
+                  onChange={(e) => update("heroImage", e.target.value)}
                 />
               </div>
 

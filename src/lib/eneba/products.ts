@@ -15,6 +15,7 @@ type ProductRow = {
   source?: "manual" | "supplier";
   name: string;
   image?: string;
+  heroImage?: string;
   gallery?: string[];
   platform: string;
   salePrice: number;
@@ -43,6 +44,7 @@ function present(row: ProductRow, quantity: number): Product {
     id: row._id.toString(),
     name: row.name,
     image: row.image && row.image !== "/" ? row.image : "",
+    heroImage: row.heroImage ?? "",
     gallery: row.gallery ?? [],
     platform: row.platform,
     price: row.salePrice,

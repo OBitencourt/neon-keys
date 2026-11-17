@@ -6,6 +6,7 @@ import Link from "next/link";
 import RegionFields, { emptyRegion, type RegionValue } from "./regionFields";
 import { regionLabel } from "@/src/config/regions";
 import { getProductUrl } from "@/src/utils/slug";
+import SteamImagePicker from "./steamImagePicker";
 
 type AdminProduct = {
   id: string;
@@ -40,6 +41,7 @@ const emptyForm = {
   salePrice: "",
   originalPrice: "",
   image: "",
+  heroImage: "",
   gallery: "",
   steamAppId: "",
   keys: "",
@@ -123,6 +125,7 @@ export default function ProductsAdminClient({ products }: Props) {
         : null,
 
       image: form.image.trim(),
+      heroImage: form.heroImage.trim(),
       gallery: lines(form.gallery),
 
       steamAppId: form.steamAppId ? Number(form.steamAppId) : null,
@@ -449,6 +452,21 @@ export default function ProductsAdminClient({ products }: Props) {
                       Game Images
                     </h2>
 
+                    <SteamImagePicker
+                      steamAppId={form.steamAppId}
+                      image={form.image}
+                      heroImage={form.heroImage}
+                      gallery={lines(form.gallery)}
+                      onChange={(value) => {
+                        setForm((prev) => ({
+                          ...prev,
+                          image: value.image,
+                          heroImage: value.heroImage,
+                          gallery: value.gallery.join("\n"),
+                        }));
+                      }}
+                    />
+
                     <div className="space-y-4">
                       <div>
                         <label className={labelClass}>Cover Image URL</label>
@@ -460,6 +478,25 @@ export default function ProductsAdminClient({ products }: Props) {
                           value={form.image}
                           onChange={(e) => updateForm("image", e.target.value)}
                         />
+                      </div>
+
+                      <div>
+                        <label className={labelClass}>Hero Image URL</label>
+
+                        <input
+                          type="url"
+                          className={inputClass}
+                          placeholder="https://.../library_hero_2x.jpg"
+                          value={form.heroImage}
+                          onChange={(e) =>
+                            updateForm("heroImage", e.target.value)
+                          }
+                        />
+
+                        <p className="mt-2 text-xs text-neon-gray">
+                          High-resolution horizontal artwork for the homepage
+                          carousel.
+                        </p>
                       </div>
 
                       <div>
