@@ -1,4 +1,9 @@
 import { z } from "zod";
+import {
+  REGION_KEYS,
+  isCountryCode,
+  validateRegion,
+} from "@/src/config/regions";
 
 const httpsUrl = z
   .string()
@@ -16,7 +21,16 @@ export const productGenres = [
   "Other",
 ] as const;
 
-export const createProductSchema = z.object({
+const countryList = z
+  .array(
+    z
+      .string()
+      .regex(/^[A-Z]{2}$/)
+      .refine(isCountryCode, "Invalid country code"),
+  )
+  .max(260);
+
+const productBase = z.object({
   name: z.string().trim().min(2).max(200),
 
   description: z.string().trim().max(10000),
@@ -25,7 +39,9 @@ export const createProductSchema = z.object({
 
   genre: z.enum(productGenres),
 
-  region: z.string().trim().min(2).max(100),
+  regionPreset: z.enum(REGION_KEYS),
+
+  includedCountries: countryList,
 
   salePrice: z.number().finite().positive(),
 
@@ -37,9 +53,7 @@ export const createProductSchema = z.object({
 
   steamAppId: z.number().int().positive().nullable(),
 
-  excludedCountries: z
-    .array(z.string().regex(/^[A-Z]{2}$/))
-    .max(100),
+  excludedCountries: countryList,
 
   keys: z
     .array(z.string().trim().min(3).max(500))
@@ -50,12 +64,30 @@ export const createProductSchema = z.object({
     ),
 });
 
-export const addKeysSchema = createProductSchema.pick({
-  keys: true,
-}).refine(
-  (data) => data.keys.length > 0,
-  "Adicione pelo menos uma chave",
-);
+function checkRegion(
+  data: {
+    regionPreset: (typeof REGION_KEYS)[number];
+    includedCountries: string[];
+    excludedCountries: string[];
+  },
+  ctx: z.RefinementCtx,
+) {
+  const error = validateRegion(data);
 
-export type CreateProductInput =
-  z.infer<typeof createProductSchema>;
+  if (error) {
+    ctx.addIssue({ code: "custom", message: error, path: ["excludedCountries"] });
+  }
+}
+
+export const createProductSchema = productBase.superRefine(checkRegion);
+
+export const updateProductSchema = productBase
+  .omit({ keys: true })
+  .extend({ status: z.enum(["active", "inactive"]) })
+  .superRefine(checkRegion);
+
+export const addKeysSchema = productBase
+  .pick({ keys: true })
+  .refine((data) => data.keys.length > 0, "Adicione pelo menos uma chave");
+
+export type CreateProductInput = z.infer<typeof createProductSchema>;

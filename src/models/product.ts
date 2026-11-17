@@ -22,9 +22,13 @@ const productSchema = new Schema(
       ],
       default: "Other",
     },
+
     region: { type: String, required: true },
+    regionPreset: { type: String, default: "GLOBAL" },
+    includedCountries: { type: [String], default: [] },
     excludedCountries: { type: [String], default: [] },
     allowedCountries: { type: [String], default: [] },
+    
     type: { type: String, required: true },
     salePrice: { type: Number, required: true, min: 0 },
     originalPrice: { type: Number, min: 0 },

@@ -3,6 +3,8 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import RegionFields, { emptyRegion, type RegionValue } from "./regionFields";
+import { regionLabel } from "@/src/config/regions";
 
 type AdminProduct = {
   id: string;
@@ -34,13 +36,11 @@ const emptyForm = {
   description: "",
   platform: "Steam",
   genre: "Action",
-  region: "GLOBAL",
   salePrice: "",
   originalPrice: "",
   image: "",
   gallery: "",
   steamAppId: "",
-  excludedCountries: "",
   keys: "",
 };
 
@@ -69,20 +69,16 @@ export default function ProductsAdminClient({ products }: Props) {
 
   const [mode, setMode] = useState<"create" | "restock">("create");
   const [form, setForm] = useState(emptyForm);
+  const [region, setRegion] = useState<RegionValue>(emptyRegion);
 
-  const [selectedId, setSelectedId] = useState(
-    products[0]?.id ?? "",
-  );
+  const [selectedId, setSelectedId] = useState(products[0]?.id ?? "");
 
   const [restockKeys, setRestockKeys] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
 
-  const totalStock = products.reduce(
-    (sum, product) => sum + product.stock,
-    0,
-  );
+  const totalStock = products.reduce((sum, product) => sum + product.stock, 0);
 
   const activeProducts = products.filter(
     (product) => product.status === "active",
@@ -117,7 +113,7 @@ export default function ProductsAdminClient({ products }: Props) {
       description: form.description,
       platform: form.platform,
       genre: form.genre,
-      region: form.region,
+      ...region,
 
       salePrice: Number(form.salePrice.replace(",", ".")),
 
@@ -128,14 +124,7 @@ export default function ProductsAdminClient({ products }: Props) {
       image: form.image.trim(),
       gallery: lines(form.gallery),
 
-      steamAppId: form.steamAppId
-        ? Number(form.steamAppId)
-        : null,
-
-      excludedCountries: form.excludedCountries
-        .split(",")
-        .map((country) => country.trim().toUpperCase())
-        .filter(Boolean),
+      steamAppId: form.steamAppId ? Number(form.steamAppId) : null,
 
       keys: lines(form.keys),
     };
@@ -152,9 +141,7 @@ export default function ProductsAdminClient({ products }: Props) {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          result.error ?? "Erro ao cadastrar produto",
-        );
+        throw new Error(result.error ?? "Erro ao cadastrar produto");
       }
 
       setMessage(
@@ -162,15 +149,12 @@ export default function ProductsAdminClient({ products }: Props) {
       );
 
       setForm(emptyForm);
+      setRegion(emptyRegion);
       router.refresh();
     } catch (err) {
       setError(true);
 
-      setMessage(
-        err instanceof Error
-          ? err.message
-          : "Erro inesperado",
-      );
+      setMessage(err instanceof Error ? err.message : "Erro inesperado");
 
       // Atualiza também em caso de cadastro parcial.
       router.refresh();
@@ -205,22 +189,16 @@ export default function ProductsAdminClient({ products }: Props) {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          result.error ?? "Erro ao adicionar chaves",
-        );
+        throw new Error(result.error ?? "Erro ao adicionar chaves");
       }
 
-      setMessage(
-        `${result.added} chave(s) adicionada(s) ao estoque!`,
-      );
+      setMessage(`${result.added} chave(s) adicionada(s) ao estoque!`);
 
       setRestockKeys("");
       router.refresh();
     } catch (err) {
       setError(true);
-      setMessage(
-        err instanceof Error ? err.message : "Erro inesperado",
-      );
+      setMessage(err instanceof Error ? err.message : "Erro inesperado");
 
       router.refresh();
     } finally {
@@ -290,14 +268,9 @@ export default function ProductsAdminClient({ products }: Props) {
             { label: "Active games", value: activeProducts },
             { label: "Available keys", value: totalStock },
           ].map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl bg-neon-gradient p-px"
-            >
+            <div key={stat.label} className="rounded-2xl bg-neon-gradient p-px">
               <div className="h-full rounded-2xl bg-zinc-950 p-4 sm:p-5">
-                <p className="text-xs text-neon-gray">
-                  {stat.label}
-                </p>
+                <p className="text-xs text-neon-gray">{stat.label}</p>
 
                 <p className="mt-2 font-gabarito text-3xl font-bold text-white">
                   {stat.value}
@@ -345,10 +318,7 @@ export default function ProductsAdminClient({ products }: Props) {
               </div>
 
               {mode === "create" ? (
-                <form
-                  onSubmit={handleCreate}
-                  className="space-y-6"
-                >
+                <form onSubmit={handleCreate} className="space-y-6">
                   <div>
                     <h2 className="font-gabarito text-xl font-semibold text-white">
                       Game Information
@@ -360,49 +330,37 @@ export default function ProductsAdminClient({ products }: Props) {
                   </div>
 
                   <div>
-                    <label className={labelClass}>
-                      Game Name *
-                    </label>
+                    <label className={labelClass}>Game Name *</label>
 
                     <input
                       required
                       className={inputClass}
                       placeholder="Elden Ring"
                       value={form.name}
-                      onChange={(e) =>
-                        updateForm("name", e.target.value)
-                      }
+                      onChange={(e) => updateForm("name", e.target.value)}
                     />
                   </div>
 
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className={labelClass}>
-                        Platform *
-                      </label>
+                      <label className={labelClass}>Platform *</label>
 
                       <input
                         required
                         className={inputClass}
                         placeholder="Steam"
                         value={form.platform}
-                        onChange={(e) =>
-                          updateForm("platform", e.target.value)
-                        }
+                        onChange={(e) => updateForm("platform", e.target.value)}
                       />
                     </div>
 
                     <div>
-                      <label className={labelClass}>
-                        Genre *
-                      </label>
+                      <label className={labelClass}>Genre *</label>
 
                       <select
                         className={inputClass}
                         value={form.genre}
-                        onChange={(e) =>
-                          updateForm("genre", e.target.value)
-                        }
+                        onChange={(e) => updateForm("genre", e.target.value)}
                       >
                         {genres.map((genre) => (
                           <option key={genre} value={genre}>
@@ -413,24 +371,7 @@ export default function ProductsAdminClient({ products }: Props) {
                     </div>
 
                     <div>
-                      <label className={labelClass}>
-                        Activation Region *
-                      </label>
-
-                      <input
-                        required
-                        className={inputClass}
-                        value={form.region}
-                        onChange={(e) =>
-                          updateForm("region", e.target.value)
-                        }
-                      />
-                    </div>
-
-                    <div>
-                      <label className={labelClass}>
-                        Steam AppID
-                      </label>
+                      <label className={labelClass}>Steam AppID</label>
 
                       <input
                         type="number"
@@ -446,9 +387,7 @@ export default function ProductsAdminClient({ products }: Props) {
                   </div>
 
                   <div>
-                    <label className={labelClass}>
-                      Description
-                    </label>
+                    <label className={labelClass}>Description</label>
 
                     <textarea
                       rows={4}
@@ -469,9 +408,7 @@ export default function ProductsAdminClient({ products }: Props) {
 
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div>
-                        <label className={labelClass}>
-                          Sale Price (€) *
-                        </label>
+                        <label className={labelClass}>Sale Price (€) *</label>
 
                         <input
                           required
@@ -488,9 +425,7 @@ export default function ProductsAdminClient({ products }: Props) {
                       </div>
 
                       <div>
-                        <label className={labelClass}>
-                          Original Price (€)
-                        </label>
+                        <label className={labelClass}>Original Price (€)</label>
 
                         <input
                           type="number"
@@ -515,25 +450,19 @@ export default function ProductsAdminClient({ products }: Props) {
 
                     <div className="space-y-4">
                       <div>
-                        <label className={labelClass}>
-                          Cover Image URL
-                        </label>
+                        <label className={labelClass}>Cover Image URL</label>
 
                         <input
                           type="url"
                           className={inputClass}
                           placeholder="https://..."
                           value={form.image}
-                          onChange={(e) =>
-                            updateForm("image", e.target.value)
-                          }
+                          onChange={(e) => updateForm("image", e.target.value)}
                         />
                       </div>
 
                       <div>
-                        <label className={labelClass}>
-                          Gallery URLs
-                        </label>
+                        <label className={labelClass}>Gallery URLs</label>
 
                         <textarea
                           rows={4}
@@ -560,25 +489,12 @@ export default function ProductsAdminClient({ products }: Props) {
                       Region Restrictions
                     </h2>
 
-                    <label className={labelClass}>
-                      Excluded Countries
-                    </label>
-
-                    <input
-                      className={inputClass}
-                      placeholder="BR, RU, CN"
-                      value={form.excludedCountries}
-                      onChange={(e) =>
-                        updateForm(
-                          "excludedCountries",
-                          e.target.value,
-                        )
-                      }
+                    <RegionFields
+                      value={region}
+                      onChange={setRegion}
+                      inputClass={inputClass}
+                      labelClass={labelClass}
                     />
-
-                    <p className="mt-2 text-xs text-neon-gray">
-                      ISO country codes separated by commas.
-                    </p>
                   </div>
 
                   {/* Keys */}
@@ -596,19 +512,15 @@ export default function ProductsAdminClient({ products }: Props) {
                     <textarea
                       rows={6}
                       className={`${inputClass} font-mono`}
-                      placeholder={
-                        "XXXXX-XXXXX-XXXXX\nYYYYY-YYYYY-YYYYY"
-                      }
+                      placeholder={"XXXXX-XXXXX-XXXXX\nYYYYY-YYYYY-YYYYY"}
                       value={form.keys}
-                      onChange={(e) =>
-                        updateForm("keys", e.target.value)
-                      }
+                      onChange={(e) => updateForm("keys", e.target.value)}
                     />
 
                     <p className="mt-2 text-xs leading-relaxed text-neon-gray">
-                      Enter one activation key per line. Keys are
-                      encrypted before being stored. Without keys,
-                      the product will remain inactive.
+                      Enter one activation key per line. Keys are encrypted
+                      before being stored. Without keys, the product will remain
+                      inactive.
                     </p>
                   </div>
 
@@ -617,17 +529,12 @@ export default function ProductsAdminClient({ products }: Props) {
                     disabled={loading}
                     className="w-full rounded-xl bg-neon-gradient px-5 py-3.5 font-gabarito font-bold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {loading
-                      ? "Saving..."
-                      : "Create Product"}
+                    {loading ? "Saving..." : "Create Product"}
                   </button>
                 </form>
               ) : (
                 /* Restock */
-                <form
-                  onSubmit={handleRestock}
-                  className="space-y-6"
-                >
+                <form onSubmit={handleRestock} className="space-y-6">
                   <div>
                     <h2 className="font-gabarito text-xl font-semibold">
                       Restock Product
@@ -639,28 +546,19 @@ export default function ProductsAdminClient({ products }: Props) {
                   </div>
 
                   <div>
-                    <label className={labelClass}>
-                      Select Product
-                    </label>
+                    <label className={labelClass}>Select Product</label>
 
                     <select
                       className={inputClass}
                       value={currentSelectedId}
-                      onChange={(e) =>
-                        setSelectedId(e.target.value)
-                      }
+                      onChange={(e) => setSelectedId(e.target.value)}
                     >
                       {products.length === 0 && (
-                        <option value="">
-                          No products registered
-                        </option>
+                        <option value="">No products registered</option>
                       )}
 
                       {products.map((product) => (
-                        <option
-                          key={product.id}
-                          value={product.id}
-                        >
+                        <option key={product.id} value={product.id}>
                           {product.name} — {product.stock} available
                         </option>
                       ))}
@@ -669,9 +567,7 @@ export default function ProductsAdminClient({ products }: Props) {
 
                   <div>
                     <div className="mb-2 flex items-center justify-between">
-                      <label className={labelClass}>
-                        New Activation Keys
-                      </label>
+                      <label className={labelClass}>New Activation Keys</label>
 
                       <span className="text-xs text-neon-green">
                         {restockCount} keys
@@ -682,22 +578,16 @@ export default function ProductsAdminClient({ products }: Props) {
                       required
                       rows={9}
                       className={`${inputClass} font-mono`}
-                      placeholder={
-                        "XXXXX-XXXXX-XXXXX\nYYYYY-YYYYY-YYYYY"
-                      }
+                      placeholder={"XXXXX-XXXXX-XXXXX\nYYYYY-YYYYY-YYYYY"}
                       value={restockKeys}
-                      onChange={(e) =>
-                        setRestockKeys(e.target.value)
-                      }
+                      onChange={(e) => setRestockKeys(e.target.value)}
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={
-                      loading ||
-                      !currentSelectedId ||
-                      restockCount === 0
+                      loading || !currentSelectedId || restockCount === 0
                     }
                     className="w-full rounded-xl bg-neon-gradient px-5 py-3.5 font-gabarito font-bold text-white transition hover:brightness-110 disabled:opacity-50"
                   >
@@ -754,7 +644,7 @@ export default function ProductsAdminClient({ products }: Props) {
                     </h4>
 
                     <p className="mt-1 text-xs text-neon-gray">
-                      {form.platform} • {form.region}
+                      {form.platform} • {regionLabel(region)}
                     </p>
 
                     <p className="mt-2 font-gabarito text-xl font-bold text-neon-green">
@@ -808,18 +698,25 @@ export default function ProductsAdminClient({ products }: Props) {
                           {product.stock} available
                         </span>
 
-                        <Link
-                          href={`/product/${product.id}`}
-                          className="text-xs text-neon-pink hover:underline"
-                        >
-                          View
-                        </Link>
+                        <div className="flex items-center gap-3">
+                          <Link
+                            href={`/admin/products/${product.id}`}
+                            className="text-xs font-semibold text-neon-green hover:underline"
+                          >
+                            Edit
+                          </Link>
+
+                          <Link
+                            href={`/product/${product.id}`}
+                            className="text-xs text-neon-pink hover:underline"
+                          >
+                            View
+                          </Link>
+                        </div>
                       </div>
 
                       {product.status !== "active" && (
-                        <p className="mt-2 text-xs text-amber-400">
-                          Inactive
-                        </p>
+                        <p className="mt-2 text-xs text-amber-400">Inactive</p>
                       )}
                     </div>
                   ))}

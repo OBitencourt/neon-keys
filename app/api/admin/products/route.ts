@@ -8,6 +8,11 @@ import { ProductModel } from "@/src/models/product";
 import { ProductKeyModel } from "@/src/models/productKey";
 
 import { createProductSchema } from "@/src/schemas/adminProducts";
+import {
+  regionLabel,
+  storedAllowedCountries,
+} from "@/src/config/regions";
+
 import { getKeyFingerprint } from "@/src/lib/inventory/encryption";
 import { addKey } from "@/src/lib/inventory/addKey";
 
@@ -44,6 +49,7 @@ export async function POST(request: NextRequest) {
   }
 
   const data = parsed.data;
+  const region = regionLabel(data)
 
   await connectDB();
 
@@ -65,7 +71,7 @@ export async function POST(request: NextRequest) {
     }
 
     const baseSlug = slugify(
-      `${data.name}-${data.platform}-${data.region}`,
+      `${data.name}-${data.platform}-${region}`,
     );
 
     const product = await ProductModel.create({
@@ -75,7 +81,9 @@ export async function POST(request: NextRequest) {
       description: data.description,
       platform: data.platform,
       genre: data.genre,
-      region: data.region,
+      region,
+      regionPreset: data.regionPreset,
+      includedCountries: data.includedCountries,
 
       image: data.image,
       gallery: data.gallery,
@@ -85,6 +93,7 @@ export async function POST(request: NextRequest) {
 
       steamAppId: data.steamAppId ?? undefined,
       excludedCountries: data.excludedCountries,
+      allowedCountries: storedAllowedCountries(data),
 
       source: "manual",
       type: "Game",
