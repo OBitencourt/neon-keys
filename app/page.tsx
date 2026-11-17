@@ -17,17 +17,9 @@ export default async function MainPage() {
       <BestDeals products={products} />
 
       <PriceDeals products={products} maxPrice={20} />
-      <PriceDeals products={products} maxPrice={30} />
-      <PriceDeals
-        products={products}
-        minPrice={30}
-        maxPrice={50}
-      />
-      <PriceDeals
-        products={products}
-        minPrice={50}
-        maxPrice={100}
-      />
+      <PriceDeals products={products} minPrice={20} maxPrice={30} />
+      <PriceDeals products={products} minPrice={30} maxPrice={50} />
+      <PriceDeals products={products} minPrice={50} maxPrice={100} />
 
       <CategoriesSection />
     </div>
