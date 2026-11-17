@@ -26,6 +26,8 @@ type ProductRow = {
   reviewsCount?: number;
   description?: string;
   allowedCountries?: string[];
+  excludedCountries?: string[];
+  steamAppId?: number | null;
 };
 
 type OfferRow = {
@@ -43,22 +45,42 @@ function present(row: ProductRow, quantity: number): Product {
   return {
     id: row._id.toString(),
     name: row.name,
+
+    // Images
     image: row.image && row.image !== "/" ? row.image : "",
     heroImage: row.heroImage ?? "",
     gallery: row.gallery ?? [],
+
+    // Game information
     platform: row.platform,
+    genre: row.genre,
+    type: "Key",
+    steamAppId: row.steamAppId ?? null,
+
+    // Pricing
     price: row.salePrice,
     originalPrice: row.originalPrice,
-    genre: row.genre,
+
+    // Region restrictions
     region: row.region,
+    allowedCountries: row.allowedCountries ?? [],
+    excludedCountries: row.excludedCountries ?? [],
+
+    // Reviews
     rating: row.rating ?? 0,
     reviewsCount: row.reviewsCount ?? 0,
+
+    // Description
     description: row.description ?? "",
-    type: "Key",
+
+    // Delivery
     delivery: "Instant Delivery",
-    allowedCountries: row.allowedCountries ?? [],
-    stockStatus:
-      quantity > 0 ? `${quantity} in stock` : "Out of stock",
+
+    // Inventory
+    stock: quantity,
+    stockStatus: quantity > 0 ? "in_stock" : "out_of_stock",
+    // Product origin
+    source: row.source ?? "supplier",
   };
 }
 

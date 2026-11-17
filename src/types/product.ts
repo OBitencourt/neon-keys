@@ -8,22 +8,47 @@ export type GameGenre =
   | "Strategy"
   | "Other";
 
+export type ProductStockStatus = "in_stock" | "out_of_stock" | "unknown";
+
+export type ProductSource = "manual" | "supplier";
+
 export interface Product {
+  // Identificação
   id: string;
   name: string;
+  description: string;
+
+  // Imagens
   image: string;
   heroImage?: string;
+  gallery?: string[];
+
+  // Informações do jogo
   platform: string;
+  genre: GameGenre;
+  type: string;
+  steamAppId?: number | null;
+
+  // Região e restrições
+  region: string;
+  allowedCountries: string[];
+  excludedCountries: string[];
+
+  // Preços
   price: number;
   originalPrice?: number;
-  genre: GameGenre;
-  region: string;
+
+  // Avaliações
   rating: number;
   reviewsCount: number;
-  description: string;
-  type: string;
+
+  // Entrega
   delivery: string;
-  allowedCountries: string[];
-  gallery?: string[];
-  stockStatus?: string;
+
+  // Estoque
+  stock?: number;
+  stockStatus?: "in_stock" | "out_of_stock";
+
+  // Origem do produto
+  source?: ProductSource;
 }
