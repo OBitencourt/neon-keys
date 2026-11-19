@@ -13,8 +13,15 @@ export async function getAdminAccess() {
     .map((id) => id.trim())
     .filter(Boolean);
 
-  const isAdmin =
-    !!session && adminIds.includes(session.user.id);
+  const isAdmin = !!session && adminIds.includes(session.user.id);
+
+  console.log("[ADMIN DEBUG]", {
+    hasSession: !!session,
+    sessionUserId: session?.user.id ?? null,
+    adminIdsConfigured: adminIds.length,
+    userIdMatches: session ? adminIds.includes(session.user.id) : false,
+    isAdmin,
+  });
 
   return { session, isAdmin };
 }
