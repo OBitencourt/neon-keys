@@ -1,12 +1,26 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import RegionFields, { emptyRegion, type RegionValue } from "./regionFields";
 import { regionLabel } from "@/src/config/regions";
 import { getProductUrl } from "@/src/utils/slug";
 import SteamImagePicker from "./steamImagePicker";
+import {
+  getPlatformMatch,
+  getRegionMatch,
+  normalizeValue,
+} from "@/src/utils/regionNormalizer";
+
+type EnebaCatalogProduct = {
+  id: string;
+  name: string;
+  slug: string;
+  drm: { slug: string } | null;
+  regions: { code: string }[];
+  type: { value: string } | null;
+};
 
 type AdminProduct = {
   id: string;
@@ -81,6 +95,12 @@ export default function ProductsAdminClient({ products }: Props) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
 
+  const [enebaEnabled, setEnebaEnabled] = useState(false);
+  const [enebaProducts, setEnebaProducts] = useState<EnebaCatalogProduct[]>([]);
+  const [enebaLoading, setEnebaLoading] = useState(false);
+  const [enebaError, setEnebaError] = useState("");
+  const [selectedEnebaId, setSelectedEnebaId] = useState("");
+
   const totalStock = products.reduce((sum, product) => sum + product.stock, 0);
 
   const activeProducts = products.filter(
@@ -103,6 +123,56 @@ export default function ProductsAdminClient({ products }: Props) {
       [field]: value,
     }));
   }
+
+  useEffect(() => {
+    setSelectedEnebaId("");
+  }, [form.name, form.platform, region]);
+
+  useEffect(() => {
+    if (!enebaEnabled || form.name.trim().length < 2) {
+      return;
+    }
+
+    const controller = new AbortController();
+
+    const timeout = setTimeout(async () => {
+      setEnebaLoading(true);
+      setEnebaError("");
+
+      try {
+        const response = await fetch(
+          `/api/admin/eneba/products/search?q=${encodeURIComponent(form.name.trim())}`,
+          { signal: controller.signal },
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to search Eneba catalog");
+        }
+
+        const data = await response.json();
+
+        if (!controller.signal.aborted) {
+          setEnebaProducts(data.products ?? []);
+        }
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          setEnebaError(
+            error instanceof Error ? error.message : "Search failed",
+          );
+          setEnebaProducts([]);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setEnebaLoading(false);
+        }
+      }
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, [form.name, enebaEnabled]);
 
   async function handleCreate(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -533,6 +603,163 @@ export default function ProductsAdminClient({ products }: Props) {
                       inputClass={inputClass}
                       labelClass={labelClass}
                     />
+                  </div>
+
+                  {/* Eneba Integration */}
+                  <div className="border-t border-white/10 pt-6">
+                    <h2 className="mb-4 font-gabarito text-xl font-semibold">
+                      Eneba Integration
+                    </h2>
+
+                    <label className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={enebaEnabled}
+                        onChange={(e) => {
+                          setEnebaEnabled(e.target.checked);
+                          setSelectedEnebaId("");
+                          setEnebaProducts([]);
+                          setEnebaError("");
+                        }}
+                        className="accent-pink-500"
+                      />
+
+                      <span className="text-sm text-neon-white">
+                        Automatically list this product on Eneba
+                      </span>
+                    </label>
+
+                    <p className="mt-2 text-xs text-neon-gray">
+                      Disabled by default during sandbox testing.
+                    </p>
+
+                    {enebaEnabled && (
+                      <div className="mt-5 space-y-3 rounded-xl border border-white/10 bg-black p-4">
+                        <h3 className="text-sm font-semibold text-white">
+                          Eneba Catalog Matching
+                        </h3>
+
+                        {enebaLoading && (
+                          <p className="text-xs text-neon-gray">
+                            Searching Eneba catalog...
+                          </p>
+                        )}
+
+                        {enebaError && (
+                          <p className="text-xs text-red-400">{enebaError}</p>
+                        )}
+
+                        {!enebaLoading &&
+                          !enebaError &&
+                          enebaProducts.length === 0 && (
+                            <p className="text-xs text-neon-gray">
+                              No matching products found.
+                            </p>
+                          )}
+
+                        {enebaProducts.map((product) => {
+                          const nameMatches =
+                            normalizeValue(form.name) ===
+                            normalizeValue(product.name);
+
+                          const platformMatches = getPlatformMatch(
+                            form.platform,
+                            product.drm?.slug ?? null,
+                          );
+
+                          const productRegions = product.regions.map(
+                            (item) => item.code,
+                          );
+
+                          const regionStatus = getRegionMatch(
+                            region,
+                            productRegions,
+                          );
+
+                          // Podemos selecionar um candidato que exige revisão,
+                          // mas isso ainda NÃO autoriza a publicação na Eneba.
+                          const selectable =
+                            nameMatches &&
+                            platformMatches &&
+                            regionStatus !== "mismatch";
+
+                          const compatible =
+                            nameMatches &&
+                            platformMatches &&
+                            regionStatus === "match";
+
+                          return (
+                            <label
+                              key={product.id}
+                              className={`flex gap-3 rounded-lg border p-3 ${
+                                compatible
+                                  ? "cursor-pointer border-white/10 hover:border-neon-pink/40"
+                                  : "cursor-not-allowed border-amber-500/20 opacity-65"
+                              }`}
+                            >
+                              <input
+                                type="radio"
+                                name="enebaProduct"
+                                disabled={!selectable}
+                                checked={selectedEnebaId === product.id}
+                                onChange={() => setSelectedEnebaId(product.id)}
+                                className="accent-pink-500"
+                              />
+
+                              <div>
+                                <p className="text-sm font-semibold text-white">
+                                  {product.name}
+                                </p>
+
+                                <p className="mt-1 text-xs text-neon-gray">
+                                  DRM: {product.drm?.slug ?? "Unknown"}
+                                  {" · "}
+                                  Region: {productRegions || "Unknown"}
+                                </p>
+
+                                <div className="mt-3 space-y-1 text-xs">
+                                  <p
+                                    className={
+                                      platformMatches
+                                        ? "text-neon-green"
+                                        : "text-red-400"
+                                    }
+                                  >
+                                    Platform:{" "}
+                                    {platformMatches ? "Match" : "Mismatch"}
+                                  </p>
+
+                                  <p
+                                    className={
+                                      regionStatus === "match"
+                                        ? "text-neon-green"
+                                        : regionStatus === "review"
+                                          ? "text-amber-400"
+                                          : "text-red-400"
+                                    }
+                                  >
+                                    Region:{" "}
+                                    {regionStatus === "match"
+                                      ? "Match"
+                                      : regionStatus === "review"
+                                        ? "Requires review"
+                                        : "Mismatch"}
+                                  </p>
+
+                                  {regionStatus === "review" && (
+                                    <p className="text-amber-400">
+                                      The regional names are related, but their
+                                      activation-country restrictions must be
+                                      verified before publishing.
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
 
                   {/* Keys */}
